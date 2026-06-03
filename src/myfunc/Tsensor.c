@@ -13,14 +13,18 @@ extern ram BYTE time_wait;
 
 
 
+/**
+ * @brief Initialize one-wire temperature sensors and configure timing.
+ * @return BYTE status or result code.
+ */
 BYTE temp_init(void)
 {
 
-	/*En écriture pour le registre A : mettre à 1 le bit n°1 relatif à l'Enable Sensor*/
+	/*En ï¿½criture pour le registre A : mettre ï¿½ 1 le bit nï¿½1 relatif ï¿½ l'Enable Sensor*/
 	/*****************C3 C2 C1 N5 N4 N3 N2 N1 N0 RW D15 D14 D13 D12 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 EP ACK Sentinelle*/
 	char BitTab[] = { 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, -1 };
 
-	/*En écriture pour le registre 5 : mettre à 1 le bit n°4 relatif à l'Enable function*/
+	/*En ï¿½criture pour le registre 5 : mettre ï¿½ 1 le bit nï¿½4 relatif ï¿½ l'Enable function*/
 	/*****************C3 C2 C1 N5 N4 N3 N2 N1 N0 RW D15 D14 D13 D12 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 EP ACK Sentinelle*/
 	char BitTab2[] = { 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, -1 };
 
@@ -48,13 +52,13 @@ BYTE temp_init(void)
 			BitTab2[26]=0;
 		}
 
-		/*On initialise la valeur du PORT A pour que le bit 2 reste toujours à 0*/
+		/*On initialise la valeur du PORT A pour que le bit 2 reste toujours ï¿½ 0*/
 		valeur_portB=valeur_portB&(0b11111111^mask_capteur);
 
-		/*on relache le bit A2 du port A pdt 10 µs avant la transaction*/
+		/*on relache le bit A2 du port A pdt 10 ï¿½s avant la transaction*/
 		attente_bit1(0);
 
-		/*génération d'un signal de reset*/
+		/*gï¿½nï¿½ration d'un signal de reset*/
 		valeur_trisB=valeur_trisB&(0b11111111^mask_capteur); 
 		PORTB = valeur_portB;
 		TRISB = valeur_trisB;
@@ -62,7 +66,7 @@ BYTE temp_init(void)
                 //while(ReadTimer3()<640);
 		Delay100TCYx(time_reset);
 
-		/*on met le bit A2 du port A à 1 pdt 10 µs avant la transaction*/
+		/*on met le bit A2 du port A ï¿½ 1 pdt 10 ï¿½s avant la transaction*/
 		attente_bit1(0);
 
 		write_bit_start();
@@ -97,6 +101,11 @@ BYTE temp_init(void)
 
 
 
+/**
+ * @brief Read temperatures from all one-wire sensors via one-wire protocol.
+ * @param temperature Array to store temperature readings
+ * @return BYTE temp(int * status or result code.
+ */
 BYTE temp(int *temperature)
 {
 
@@ -146,7 +155,7 @@ BYTE temp(int *temperature)
 			timer1=0;
 			write_bit(BitTab3[co]);
 			valeur_trisB |= mask_capteur; 
-			WriteTimer1(0); /*réinitialise le timer 1*/
+			WriteTimer1(0); /*rï¿½initialise le timer 1*/
 			TRISB = valeur_trisB;
 			
 			while ((capteur_io==0)&&(timer1<tsensor_limit))
@@ -205,10 +214,13 @@ BYTE temp(int *temperature)
 
 
 
+/**
+ * @brief Generate the one-wire START bit for sensor communication.
+ */
 void write_bit_start(void)
 {
 	/*Bit de START*/
-	/*on met le bit A2 du port A à 0 pdt 90 µs*/
+	/*on met le bit A2 du port A ï¿½ 0 pdt 90 ï¿½s*/
 	valeur_trisB=valeur_trisB & (0b11111111^mask_capteur); 
 	PORTB = valeur_portB;
 	TRISB = valeur_trisB;
@@ -216,6 +228,10 @@ void write_bit_start(void)
 
 }
 
+/**
+ * @brief Write a single bit (0 or 1) to the one-wire sensor bus.
+ * @param c Bit value (0 or 1)
+ */
 void write_bit(char c)
 {
 	valeur_trisB=valeur_trisB & (0b11111111^mask_capteur); 
@@ -232,10 +248,14 @@ void write_bit(char c)
         }
 }
 
+/**
+ * @brief Release the one-wire bus and wait for sensor response.
+ * @param c Reserved parameter
+ */
 void attente_bit1(char c)
 {
 	/*temps d'attente*/
-	/*on configure le bit 2 du port A en sortie de telle manière à laisser passer le 0 */
+	/*on configure le bit 2 du port A en sortie de telle maniï¿½re ï¿½ laisser passer le 0 */
 	valeur_trisB |= mask_capteur; 
 	PORTB = valeur_portB;
 	TRISB = valeur_trisB;
@@ -243,7 +263,7 @@ void attente_bit1(char c)
 	Delay10TCYx(time_wait);
 
 	/*on relache maintenant le bit 2 du portA*/
-	/*la résistance de pull-up prend le relais*/
+	/*la rï¿½sistance de pull-up prend le relais*/
 	valeur_trisB=valeur_trisB | mask_capteur; 
 	TRISB = valeur_trisB;
 }

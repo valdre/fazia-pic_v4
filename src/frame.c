@@ -4,10 +4,19 @@
 #include <stdio.h>      // for sprintf
 #include <string.h>     // for memset, strncpy
 
+/**
+ * @brief Initialize a frame by setting the first character to null terminator.
+ * @param f Frame buffer to initialize
+ */
 void frame_init(unsigned char *f) {
    f[0] = '\0';
 }
 
+/**
+ * @brief Compute the XOR checksum of frame data up to the END keyword.
+ * @param f Frame buffer
+ * @return UINT status or result code.
+ */
 UINT frame_docrc(unsigned char *f) {
 
    int i;
@@ -19,6 +28,11 @@ UINT frame_docrc(unsigned char *f) {
    return crc;
 }
 
+/**
+ * @brief Extract and parse the 3-character instrument ID from the frame.
+ * @param f Frame buffer
+ * @return UINT status or result code.
+ */
 UINT frame_getidb(unsigned char *f) {
    char idb[4];
    UINT IDB = 0;
@@ -30,6 +44,11 @@ UINT frame_getidb(unsigned char *f) {
    return (IDB);
 }
 
+/**
+ * @brief Extract the sequence number from the frame if present.
+ * @param f Frame buffer
+ * @return unsigned char status or result code.
+ */
 unsigned char frame_getseq(unsigned char *f)
 {
    if ((f[7] == SEQNUM_DELIMITER) && (f[6] >= 0x21) && (f[6] <= 0x7E))
@@ -38,6 +57,11 @@ unsigned char frame_getseq(unsigned char *f)
       return (0);
 }
 
+/**
+ * @brief Extract the data payload from the frame.
+ * @param f Frame buffer
+ * @param d Output data buffer
+ */
 void frame_getdata(unsigned char *f, char *d)
 {
    UINT fsize = strlen((char *)f);
@@ -54,6 +78,11 @@ void frame_getdata(unsigned char *f, char *d)
    }
 }
 
+/**
+ * @brief Extract and parse the 2-character hexadecimal CRC from the frame.
+ * @param f Frame buffer
+ * @return UINT status or result code.
+ */
 UINT frame_getcrc(unsigned char *f) {
    char crc[3];
    UINT CRC = 0;

@@ -2,6 +2,10 @@
 
 
 /**********************Fonction qui retourne le numéro d'identification de la carte*******************/
+/**
+ * @brief Return the hardware board identifier.
+ * @return BYTE status or result code.
+ */
 BYTE getid(void)
 {
 	BYTE id=0;
@@ -13,6 +17,11 @@ BYTE getid(void)
 	return id;
 }
 
+/**
+ * @brief Convert a numeric nibble to its ASCII hexadecimal character.
+ * @param c Nibble value (0-15)
+ * @return BYTE status or result code.
+ */
 BYTE asciiconv(BYTE c)
 {
     BYTE asciivalue;
@@ -28,6 +37,11 @@ BYTE asciiconv(BYTE c)
     return asciivalue;
 }
 
+/**
+ * @brief Convert a 16-bit unsigned integer to its 4-character hexadecimal string.
+ * @param value 16-bit integer to convert
+ * @param s Output buffer (4 chars)
+ */
 void uinttoa(UINT value, BYTE *s)
 {
     BYTE co;
@@ -39,6 +53,11 @@ void uinttoa(UINT value, BYTE *s)
         s[co]=asciiconv((UINT)((value&(mask>>(4*co)))>>((3-co)*4)));
 }
 
+/**
+ * @brief Transmit a 16-bit unsigned integer as ASCII hex over UART.
+ * @param value 16-bit integer to transmit
+ * @return char status or result code.
+ */
 char dispuinttochar(UINT value)
 {
     BYTE co;
@@ -51,6 +70,11 @@ char dispuinttochar(UINT value)
     return 0;
 }
 
+/**
+ * @brief Transmit a 32-bit unsigned integer as binary digits over UART.
+ * @param value 32-bit integer to transmit as binary
+ * @return char status or result code.
+ */
 char dispuint32tochar(UINT32 value)
 {
     char co;
@@ -64,7 +88,12 @@ char dispuint32tochar(UINT32 value)
 }
 
 
-char dispinttobin (UINT a)
+/**
+ * @brief Transmit a 16-bit value as 16 binary digits over UART.
+ * @param a 16-bit value to transmit as binary
+ * @return char status or result code.
+ */
+char dispinttobin(UINT a)
 {
     int co;
 
@@ -76,6 +105,11 @@ char dispinttobin (UINT a)
     return 0;
 }
 
+/**
+ * @brief Transmit an 8-bit byte as 8 binary digits over UART.
+ * @param c 8-bit byte to transmit as binary
+ * @return char status or result code.
+ */
 char dispchartobin(BYTE c)
 {
     int co;
@@ -88,6 +122,12 @@ char dispchartobin(BYTE c)
     return 0;
 }
 
+/**
+ * @brief Append a decimal integer to the output buffer with optional terminator.
+ * @param container Output buffer
+ * @param a Integer value
+ * @param cend Terminator character
+ */
 void myStrCpyUint(char *container,UINT a,char cend)
 {
     UINT u[5];
@@ -130,6 +170,12 @@ void myStrCpyUint(char *container,UINT a,char cend)
         container[compt]='\0';
 }
 
+/**
+ * @brief Append a decimal byte to the output buffer with optional terminator.
+ * @param container Output buffer
+ * @param a Byte value
+ * @param cend Terminator character
+ */
 void myStrCpyByte(char *container,BYTE a,char cend)
 {
     BYTE b[3];
@@ -167,6 +213,12 @@ void myStrCpyByte(char *container,BYTE a,char cend)
         container[compt]='\0';
 }
 
+/**
+ * @brief Append a RAM string to the output buffer with optional terminator.
+ * @param container Output buffer
+ * @param chaine RAM string to append
+ * @param cend Terminator character
+ */
 void myStrCpyChar(char *container,char *chaine,char cend)
 {
     UINT comptChain,compt;
@@ -187,6 +239,12 @@ void myStrCpyChar(char *container,char *chaine,char cend)
         container[compt]='\0';
 }
 
+/**
+ * @brief Append a ROM string to the output buffer with optional terminator.
+ * @param container Output buffer
+ * @param chaine ROM string to append
+ * @param cend Terminator character
+ */
 void myStrCpyChar2(char *container,const rom char *chaine,char cend)
 {
     UINT comptChain,compt;
@@ -207,6 +265,12 @@ void myStrCpyChar2(char *container,const rom char *chaine,char cend)
         container[compt]='\0';
 }
 
+/**
+ * @brief Append a single character to the output buffer with optional terminator.
+ * @param container Output buffer
+ * @param c Character to append
+ * @param c Character to append
+ */
 void myStrCpy1Char(char *container,char c,char cend)
 {
     UINT compt;
@@ -226,6 +290,13 @@ void myStrCpy1Char(char *container,char c,char cend)
         container[compt]='\0';
 }
 
+/**
+ * @brief Append a hexadecimal representation to the output buffer.
+ * @param container Output buffer
+ * @param a Integer value
+ * @param format Hex format (8 or 16 bit)
+ * @param cend Terminator character
+ */
 void myStrCpyHex(char *container,UINT a,int format,char cend)
 {
     UINT compt,comptInt;

@@ -2,6 +2,9 @@
 
 extern struct parametres pa;
 
+/**
+ * @brief Load calibration parameters from EEPROM into RAM structures.
+ */
 void setparam(void)
 {
 	unsigned int nb_bytes,co;
@@ -41,6 +44,10 @@ void setparam(void)
         }
 }
 
+/**
+ * @brief Write calibration parameters from RAM into EEPROM storage.
+ * @return char status or result code.
+ */
 char storeparam(void)
 {
     UINT nb_bytes;
@@ -61,6 +68,11 @@ char storeparam(void)
 }
 
 
+/**
+ * @brief Read from or write to the internal data EEPROM.
+ * @param ad EEPROM address
+ * @param data Byte value to write
+ */
 void EEWrite(unsigned int ad, unsigned char data)
 {
 
@@ -84,6 +96,11 @@ void EEWrite(unsigned int ad, unsigned char data)
 	EECON1bits.WREN=0;
 }
 
+/**
+ * @brief Read from or write to the internal data EEPROM.
+ * @param ad EEPROM address
+ * @return BYTE status or result code.
+ */
 BYTE EERead(UINT ad)
 {
 

@@ -76,6 +76,9 @@ extern ram UINT lcB2;
 
 extern ram UINT GeneDacVoltage;
 
+/**
+ * @brief Initialize the microcontroller peripherals and I/O ports.
+ */
 void ucsetup(void) {
 
     UINT co,cp,dep;
@@ -88,7 +91,7 @@ void ucsetup(void) {
     /*RB1: TDO                  : Input  : Valeur 1*/
     /*RB2: TMS                  : Output : Valeur 0*/
     /*RB3: TCK                  : Output : Valeur 0*/
-    /*RB4: capteur T°C          : Input  : Valeur 1*/
+    /*RB4: capteur Tï¿½C          : Input  : Valeur 1*/
     /*RB5: UC_SPI_CS_ADC_N      : Output : Valeur 0*/
     /*RB6: PGC                  : Output : Valeur 0*/
     /*RB7: PGD                  : Output : Valeur 0*/
@@ -261,7 +264,7 @@ void ucsetup(void) {
 //    INTCON2bits.TMR0IP=1;
 //    INTCONbits.TMR0IE=0;
 
-    //The Timer1 device is required for T°C sensor functions
+    //The Timer1 device is required for Tï¿½C sensor functions
     OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
 
     //The Timer 2 device is required to wait for the OK status of the FPGA
@@ -419,6 +422,9 @@ void ucsetup(void) {
     enableHVMeas = EERead(49);
 }
 
+/**
+ * @brief Set up memory and runtime data structures.
+ */
 void memsetup(void) {
 
 }

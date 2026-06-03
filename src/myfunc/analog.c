@@ -2,7 +2,6 @@
 extern BYTE valeur_portD;
 
 /******************* PIC A/D converter******************/
-
 void get_PIC_AD_voltages(unsigned int *ADvoltages) {
     //VP5REFAM or AN5 measurement
     ADCON0 = 0b00010111;
@@ -27,6 +26,12 @@ void get_PIC_AD_voltages(unsigned int *ADvoltages) {
     ADvoltages[2] = (((UINT) (ADRESH)) << 8) + ADRESL;
 }
 
+/**
+ * @brief Retrieve and format the PIC ADC voltage readings for UART transmission.
+ * @param data Input string (unused)
+ * @param result Output buffer for formatted voltage results
+ * @return BYTE status or result code.
+ */
 BYTE getVoltages(char *data, char *result) {
     UINT voltages[3], decimaux,intpart;
     UINT32 prov;
@@ -64,7 +69,6 @@ BYTE getVoltages(char *data, char *result) {
 }
 
 /***********LTC2308 converter for switching regulators*************/
-
 BYTE getLTCswVoltages(char * data, char *result)
 {
     BYTE retval;
@@ -89,6 +93,12 @@ BYTE getLTCswVoltages(char * data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Measure and format linear regulator voltages from the LTC2308 ADC.
+ * @param data Input string (unused)
+ * @param result Output buffer for linear regulator voltages
+ * @return BYTE status or result code.
+ */
 BYTE getLTClinVoltages(char * data, char *result)
 {
     BYTE retval;
@@ -114,6 +124,12 @@ BYTE getLTClinVoltages(char * data, char *result)
 }
 
 
+/**
+ * @brief Communicate with the LTC2308 multi-channel ADC and extract voltage data.
+ * @param mask Chip select mask
+ * @param ADvoltages Array to store ADC readings
+ * @return BYTE status or result code.
+ */
 BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
 {
     BYTE din,co,os;

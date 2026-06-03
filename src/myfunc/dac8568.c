@@ -33,6 +33,10 @@ extern UINT HvInc[4];
 extern BYTE HvStatus[4];
 extern UINT HvPhysTarget[4];
 
+/**
+ * @brief Initialize the DAC8568 digital-to-analog converter with internal reference.
+ * @return char status or result code.
+ */
 char dac_init(void) {
     unsigned char mode_sync[] = {0x06, 0, 0, 0xFF};
     unsigned char ref_intern[] = {0x09, 0x0A, 0, 0};
@@ -40,7 +44,7 @@ char dac_init(void) {
     valeur_portC = valeur_portC | 0b00000001; /*on remet la patte sync du DAC a 1*/
     PORTC = valeur_portC;
 
-    valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync a  0V pour ecrire une sequence*/
+    valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync aï¿½ 0V pour ecrire une sequence*/
     PORTC = valeur_portC;
 
     myputsspi(4, mode_sync);
@@ -48,7 +52,7 @@ char dac_init(void) {
     valeur_portC = valeur_portC | 0b00000001; /*on remet la patte sync du DAC a 1*/
     PORTC = valeur_portC;
 
-    valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync a  0V pour ecrire une sequence*/
+    valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync aï¿½ 0V pour ecrire une sequence*/
     PORTC = valeur_portC;
 
     myputsspi(4, ref_intern);
@@ -60,6 +64,11 @@ char dac_init(void) {
 
 }
 
+/**
+ * @brief Send a DAC update sequence to the selected high-voltage module.
+ * @param ad DAC channel address
+ * @param data Data value to output
+ */
 void dac_sequence(char ad, unsigned int data) {
     unsigned char sequence[4];
 
@@ -71,7 +80,7 @@ void dac_sequence(char ad, unsigned int data) {
     sequence[2] = (unsigned char) (((data & 0x0FF0) >> 4));
     sequence[3] = (unsigned char) (((data & 0x000F) << 4));
 
-    valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync a  0V pour ecrire une sequence*/
+    valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync aï¿½ 0V pour ecrire une sequence*/
     PORTC = valeur_portC;
 
     myputsspi(4, sequence);
@@ -80,12 +89,23 @@ void dac_sequence(char ad, unsigned int data) {
     PORTC = valeur_portC;
 }
 
+/**
+ * @brief Configure the pulser output with the requested amplitude and timing.
+ * @param data Pulse amplitude in DAC units
+ * @param period Period in clock cycles
+ * @param high_time High pulse duration
+ * @return char status or result code.
+ */
 char pulser(UINT data, UINT period, UINT high_time) {
     dac_sequence(0x40, data);
     wrspi(2, 0x100, period);
     wrspi(2, 0x101, high_time);
 }
 
+/**
+ * @brief Query the calibrated high-voltage power supply status via SPI.
+ * @param str Output buffer for calibration status string
+ */
 void ask_hv_calibration(char *str) {
     BYTE co, cp;
     BYTE nbmodules; //contains the number of high voltage modules which are calibrated
@@ -105,6 +125,12 @@ void ask_hv_calibration(char *str) {
     str[cp] = '\0';
 }
 
+/**
+ * @brief Convert a high-voltage target value to DAC decimal output code.
+ * @param tension Target voltage in volts
+ * @param adrCal Calibration address
+ * @return UINT32 status or result code.
+ */
 UINT32 get_value_dec(UINT tension, UINT adrCal) {
 	UINT vinf, vsup, unites, dec, adr;
 	UINT32 value;
@@ -132,6 +158,14 @@ UINT32 get_value_dec(UINT tension, UINT adrCal) {
 	return value;
 }
 
+/**
+ * @brief Apply a high-voltage ramp with configurable slope to reach target voltage.
+ * @param tel Telescope (A or B)
+ * @param module Module (1 or 2)
+ * @param tension Target voltage
+ * @param slopeVS Ramp slope
+ * @return BYTE status or result code.
+ */
 BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS)
 {
     BYTE verdict;

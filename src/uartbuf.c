@@ -17,6 +17,9 @@ volatile CBuffer_large *Uart = _Uart;
 //volatile CBuffer_small *hpUart = _hpUart;
 #pragma udata
 
+/**
+ * @brief Initialize both UART receive and transmit circular buffers.
+ */
 void uartbuf_init(void) {
 
    cbuffer_large_init(&Uart[0]);
@@ -25,6 +28,11 @@ void uartbuf_init(void) {
    //cbuffer_small_init(&hpUart[1]);
 }
 
+/**
+ * @brief Return a pointer to the raw buffer data for a UART channel.
+ * @param channel UART channel identifier
+ * @return unsigned char status or result code.
+ */
 unsigned char *uartbuf_dump(UINT channel) {
    if ((channel == SLAVE_RX) || (channel == SLAVE_TX))
       return (cbuffer_large_dumpdata(&Uart[channel]));
@@ -32,6 +40,10 @@ unsigned char *uartbuf_dump(UINT channel) {
       return (cbuffer_small_dumpdata(&hpUart[channel - 2]));*/
 }
 
+/**
+ * @brief Transmit all buffered data from the TX buffer via UART.
+ * @param channel UART channel identifier
+ */
 void uartbuf_flush(UINT channel) {
 
    unsigned char ch;
@@ -65,6 +77,13 @@ void uartbuf_flush(UINT channel) {
    }*/
 }
 
+/**
+ * @brief Extract a complete frame from the RX buffer.
+ * @param channel UART channel
+ * @param f Output frame buffer
+ * @param f Output frame buffer
+ * @param f Output frame buffer
+ */
 void uartbuf_getframe(UINT channel, unsigned char *f, UINT flen, UINT foffset) {
 
    UINT i;
@@ -104,6 +123,11 @@ void uartbuf_getframe(UINT channel, unsigned char *f, UINT flen, UINT foffset) {
    }*/
 }
 
+/**
+ * @brief Append a frame to the TX buffer for transmission.
+ * @param channel UART channel
+ * @param f Frame buffer to transmit
+ */
 void uartbuf_putframe(UINT channel, unsigned char *f) {
 
    UINT i;

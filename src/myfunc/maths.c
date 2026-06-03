@@ -1,5 +1,10 @@
 #include "functions.h"
 
+/**
+ * @brief Compute 10 raised to power c as a 32-bit value.
+ * @param c Exponent (power of 10)
+ * @return UINT32 status or result code.
+ */
 UINT32 power10_32(BYTE c)
 {
     UINT32 value;
@@ -20,6 +25,12 @@ UINT32 power10_32(BYTE c)
     return value;
 }
 
+/**
+ * @brief Parse a decimal or hexadecimal string into a 32-bit unsigned integer.
+ * @param pr Input decimal or hex string
+ * @param converted_value Output parsed value
+ * @return BYTE status or result code.
+ */
 BYTE analyze_string32(char *pr,UINT32 *converted_value)
 {
     BYTE co,cp,error;
@@ -56,6 +67,12 @@ BYTE analyze_string32(char *pr,UINT32 *converted_value)
     return error;
 }
 
+/**
+ * @brief Parse a decimal or hexadecimal (0x prefix) string into a 16-bit integer.
+ * @param pr Input decimal or 0x-prefixed hex string
+ * @param converted_value Output parsed value
+ * @return BYTE status or result code.
+ */
 BYTE analyze_string(char *pr,UINT *converted_value)
 {
     BYTE co,error;
@@ -127,6 +144,11 @@ BYTE analyze_string(char *pr,UINT *converted_value)
 }
 
 
+/**
+ * @brief Convert a decimal ASCII string to a 16-bit unsigned integer.
+ * @param pr Decimal ASCII string
+ * @return UINT status or result code.
+ */
 UINT chardectoi(char *pr)
 {
     BYTE co,max;
@@ -168,6 +190,11 @@ UINT chardectoi(char *pr)
 
 }
 
+/**
+ * @brief Convert a hexadecimal ASCII string with 0x prefix to unsigned integer.
+ * @param pr Hexadecimal ASCII string with 0x prefix
+ * @return UINT status or result code.
+ */
 UINT charhextoi(char *pr)
 {
 	int co;
@@ -203,6 +230,11 @@ UINT charhextoi(char *pr)
 		return erreur;
 }
 
+/**
+ * @brief Compute 10 raised to power c as a 16-bit value.
+ * @param c Exponent (power of 10)
+ * @return UINT status or result code.
+ */
 UINT power10(BYTE c)
 {
     unsigned int value;

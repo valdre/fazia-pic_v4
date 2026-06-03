@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief Convert a hexadecimal ASCII string to a 16-bit unsigned integer.
+ * @param ptr Hexadecimal ASCII string
+ * @return unsigned int status or result code.
+ */
 unsigned int htoi(const char *ptr) {
 
    unsigned int value = 0;

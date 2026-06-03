@@ -26,6 +26,9 @@ extern UINT HvPhysCorrect[4];
 extern UINT32 time_scheduling;
 extern UINT32 time_scheduling_copy;
 
+/**
+ * @brief Initialize the ADS8332 analog-to-digital converter and configure SPI communication.
+ */
 void adc_init(void)
 {
     unsigned char sequence[2];
@@ -59,7 +62,14 @@ void adc_init(void)
     PORTB=valeur_portB;
 }
 
-UINT leak_current (char tel, char module, UINT32 lcAdcRead)
+/**
+ * @brief Measure and compute the leakage current from an ADC channel reading.
+ * @param tel Telescope identifier (A or B)
+ * @param module Module number (1 or 2)
+ * @param lcAdcRead Pointer to input/output buffer containing command data..
+ * @return UINT status or result code.
+ */
+UINT leak_current(char tel, char module, UINT32 lcAdcRead)
 {
     BYTE canal,sign,ad;
     UINT32 *coeffA,*coeffB,inside_current;
@@ -154,7 +164,7 @@ UINT leak_current (char tel, char module, UINT32 lcAdcRead)
 //    }
 
     while (TMR2>20);
-    leakage_current_na=leakage_current*9683; //correspond à 2.5/(6.62*39000)*10?
+    leakage_current_na=leakage_current*9683; //correspond ï¿½ 2.5/(6.62*39000)*10?
     while (TMR2>20);
     leakage_current_na=(leakage_current_na&0xFFFF0000); //je divise par 65536
     while (TMR2>20);
@@ -164,12 +174,16 @@ UINT leak_current (char tel, char module, UINT32 lcAdcRead)
     
     
     lc=(UINT)leakage_current_na;
- 
     return lc;
 }
 
 
 
+/**
+ * @brief Read a value from the specified ADC channel via SPI.
+ * @param canal ADC channel number
+ * @return UINT status or result code.
+ */
 UINT adc_getvalue(unsigned char *canal)
 {
     static BYTE data[2];
@@ -200,7 +214,7 @@ UINT adc_getvalue(unsigned char *canal)
     /*on toggle le signal CONVST*/
     valeur_portD = valeur_portD&0b10111111;
     PORTD = valeur_portD;
-    Delay10TCYx(1); /*délai de 156 ns. En réalité, 40 ns suffisent*/
+    Delay10TCYx(1); /*dï¿½lai de 156 ns. En rï¿½alitï¿½, 40 ns suffisent*/
     valeur_portD = valeur_portD|0b01000000;
     PORTD = valeur_portD;
 

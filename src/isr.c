@@ -28,6 +28,14 @@ extern CBuffer_large *Uart;
 #pragma code isr=0x08
 #pragma interrupt isr
 
+/**
+ * @brief Central interrupt service routine for UART receive and timer scheduling.
+ * @details Handles UART RX, clears UART errors, stores received bytes, and increments the scheduling timer.
+ * @warning Must be efficient and non-blocking.
+ */
+/**
+ * @brief Interrupt service routine for hardware events.
+ */
 void isr(void) 
 {   
     UINT test;

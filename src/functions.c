@@ -43,6 +43,9 @@ typedef BYTE(*func_p)(char *, char *);
 
 func_p fplist[MAX_FUNC_NUM];
 
+/**
+ * @brief Initialize the command handler lookup table.
+ */
 void func_init(void) {
     fplist[0] = &get_temp;                  // 0x83 : getting sensor temperatures
     fplist[1] = &spi_set_regvalue;          // 0x84 : writing the content of a FPGA register
@@ -72,7 +75,7 @@ void func_init(void) {
     fplist[25] = &getLTClinVoltages;        // 0x9C : get the voltage measurements from LTC ADC for linear regulators
     fplist[26] = &getLTCswVoltages;         // 0x9D : get the voltage measurements from LTC ADC for switching regulators
     fplist[27] = &enableDisableHVMeas;      // 0x9E : enable or disable HV meas (I and V)
-    fplist[28] = &resetPIC;                 // 0x9F : reset the PIC µC only
+    fplist[28] = &resetPIC;                 // 0x9F : reset the PIC ï¿½C only
     fplist[29] = &giveHvStatus;             // 0xA0 : give HV status
     fplist[30] = &setInspecTime;            // 0xA1 : set times for automatic HV corrections
     fplist[31] = &getInspecTime;            // 0xA2 : get times for automatic HV corrections
@@ -82,6 +85,13 @@ void func_init(void) {
     fplist[35] = &enDesHVdev;               // 0xA6 : enable or disable the HV devices
 }
 
+/**
+ * @brief Invoke the command handler associated with a function code.
+ * @param code Pointer to input/output buffer containing command data..
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE func_invoke(unsigned char code, char *data, char *result) {
     if (code < BASE_CMD_ID)
         return FUNC_CMD_NOT_VALID;
@@ -96,6 +106,12 @@ BYTE func_invoke(unsigned char code, char *data, char *result) {
 }
 
 
+/**
+ * @brief Process a simple command and return the corresponding result.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE f_echo(char *data, char *result) 
 {
     result[0]='0';
@@ -106,6 +122,12 @@ BYTE f_echo(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Reset the microcontroller.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE resetPIC(char *data, char *result) 
 {
     result[0]='0';
@@ -117,6 +139,12 @@ BYTE resetPIC(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Read or program the device serial number stored in EEPROM.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE setGetSN(char *data, char *result)
 {
     BYTE retval,error,comp;
@@ -163,6 +191,12 @@ BYTE setGetSN(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Handle a UART command and format the response result.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE uart_csi_relay(char *data, char *result) 
 {   
     result[0]='0';
@@ -174,6 +208,12 @@ BYTE uart_csi_relay(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Issue a reset command to both FPGA devices.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE uart_reset_both_fpga(char *data, char *result) 
 {
     reset_both_fpga();
@@ -185,6 +225,12 @@ BYTE uart_reset_both_fpga(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Return the operational status of a high-voltage module.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE giveHvStatus(char *data, char *result) 
 {
     BYTE retval, error, status;
@@ -221,6 +267,12 @@ BYTE giveHvStatus(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Configure which detector is biased (A or B) for CSI measurements.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE setHVCsiAB(char *data, char *result) 
 {
     BYTE retval,error;
@@ -262,6 +314,11 @@ BYTE setHVCsiAB(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Test preamplifier functionality and detect problems.
+ * @param preamp Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE preamplifier_test(BYTE preamp)
 {
     UINT tab[2], *p,value;
@@ -333,6 +390,12 @@ BYTE preamplifier_test(BYTE preamp)
     return valeur;
 }
 
+/**
+ * @brief Execute preamplifier test and return results.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE uart_preamplifier_test(char *data, char *result) 
 {
     BYTE retval,tel,module,error,valeur;
@@ -386,6 +449,12 @@ BYTE uart_preamplifier_test(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Automatically calibrate preamplifier output offset voltages.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE setautoffset(char *data, char *result)
 {
     BYTE retval, error, comp;
@@ -436,6 +505,12 @@ BYTE setautoffset(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Enable or disable high-voltage power supply devices.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE enDesHVdev(char *data, char *result)
 {
     BYTE error,retval;
@@ -512,6 +587,12 @@ BYTE enDesHVdev(char *data, char *result)
 }
 
 
+/**
+ * @brief Return the current pulser amplitude setting.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE getGeneDacVoltage(char *data, char *result) 
 {   
     result[0]='0';
@@ -522,6 +603,13 @@ BYTE getGeneDacVoltage(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Retrieve the leakage current value for a specific detector module.
+ * @param tel Pointer to input/output buffer containing command data..
+ * @param module Pointer to input/output buffer containing command data..
+ * @param lc Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE getCurrent(char tel, char module, UINT *lc) {
     BYTE error;
 
@@ -550,6 +638,12 @@ BYTE getCurrent(char tel, char module, UINT *lc) {
     return error;
 }
 
+/**
+ * @brief Read the requested value and format it into the result buffer.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_HV(char *data, char *result) 
 {
     static BYTE canal;
@@ -624,6 +718,11 @@ BYTE get_HV(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Calculate the high-voltage output from ADC reading using calibration coefficients.
+ * @param canal Pointer to input/output buffer containing command data..
+ * @return UINT status or result code.
+ */
 UINT getHvValue(BYTE *canal) 
 {
     UINT ADCResult;
@@ -640,7 +739,7 @@ UINT getHvValue(BYTE *canal)
         HVValue1 = HVValue1 + HVValue2;
     else
     {
-        HVValue1 = 0; //mis à 0 artificiellement
+        HVValue1 = 0; //mis ï¿½ 0 artificiellement
     }
 	
 	//S.V. 31/3/2017 added for better approximation
@@ -651,6 +750,12 @@ UINT getHvValue(BYTE *canal)
     return (UINT)HVValue1;
 }
 
+/**
+ * @brief Query FPGA version information and return formatted version string.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_fpga_version(char *data, char *result) 
 {
     BYTE retval, error, t, m, d, v;
@@ -701,6 +806,12 @@ BYTE get_fpga_version(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Placeholder function for undefined command codes.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE nullFunc(char *data, char *result) 
 {
     result[0]='0';
@@ -709,6 +820,12 @@ BYTE nullFunc(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Read a value from the ADS8332 8-channel ADC.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_ads8332(char *data, char *result) 
 {   
     static BYTE canal;
@@ -745,12 +862,12 @@ BYTE get_ads8332(char *data, char *result)
 }
 
 //version 21/12/2015
-// j'ai rajouté une partie pour la correction automatique des modules HV
-// si la tension à corriger dépasse les 350V, il se cantonnera à 350V et basta
+// j'ai rajoutï¿½ une partie pour la correction automatique des modules HV
+// si la tension ï¿½ corriger dï¿½passe les 350V, il se cantonnera ï¿½ 350V et basta
 
 //version du 28/01/2016
-// j'ai rajouté une fonction pour le numéro de série et pour l'activation et la désactivation du module HV
-//pour la version step_3, l'activation et la désactivation du module HV est une fonction nulle
+// j'ai rajoutï¿½ une fonction pour le numï¿½ro de sï¿½rie et pour l'activation et la dï¿½sactivation du module HV
+//pour la version step_3, l'activation et la dï¿½sactivation du module HV est une fonction nulle
 
 //version du 12/04/2017
 // many bugfixes on voltage and current readings (V4/5 only)
@@ -758,6 +875,12 @@ BYTE get_ads8332(char *data, char *result)
 //version du 13/03/2018
 // two small bugfixes (V4/5 only)
 
+/**
+ * @brief Read the requested value and format it into the result buffer.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_pic_version(char *data, char *result) 
 {
     BYTE retval;
@@ -766,11 +889,18 @@ BYTE get_pic_version(char *data, char *result)
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
+    // TODO : change the date 
     myStrCpyChar2(result,"13,03,2018,V01",'\0');
 
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Retrieve leakage current measurement for a detector.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_leak_current(char *data, char *result) 
 {
     BYTE retval, error;
@@ -824,6 +954,12 @@ BYTE get_leak_current(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Configure the pulser with amplitude, period, and high-time parameters.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE set_pulse_parameters(char *data, char *result) 
 {
     BYTE retval, error, comp, dep;
@@ -907,6 +1043,12 @@ BYTE set_pulse_parameters(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Set the preamplifier offset voltage for a specific detector channel.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE set_voltage_preamplifier(char *data, char *result) 
 {
     BYTE retval, error, comp;
@@ -1008,6 +1150,12 @@ BYTE set_voltage_preamplifier(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Increment or decrement high-voltage by specified steps.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE incdecHV(char *data, char *result) 
 {
     BYTE retval, error, comp;
@@ -1213,6 +1361,12 @@ BYTE incdecHV(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Retrieve the inspection timing values for HV corrections.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE getInspecTime(char *data, char *result)
 {
     BYTE retval;
@@ -1232,6 +1386,12 @@ BYTE getInspecTime(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Return the maximum stack depth used during execution.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE getSoftStack(char *data, char *result)
 {
     BYTE retval;
@@ -1246,6 +1406,12 @@ BYTE getSoftStack(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Set the short and long inspection timing intervals.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE setInspecTime(char *data, char *result)
 {
     BYTE retval, error, comp, dep;
@@ -1311,6 +1477,12 @@ BYTE setInspecTime(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Configure the requested device parameter based on input data.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE set_vhv(char *data, char *result)
 {
     BYTE retval, tel, module, error, comp, dep, nb_param;
@@ -1428,6 +1600,12 @@ BYTE set_vhv(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Read all temperature sensor values and return formatted results.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_temp(char *data, char *result) 
 {
 
@@ -1457,6 +1635,12 @@ BYTE get_temp(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Retrieve the maximum allowable high-voltage limit.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_hvmax(char *data, char *result) 
 {
     BYTE retval, tel, module, error;
@@ -1505,6 +1689,13 @@ BYTE get_hvmax(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Apply and store the maximum high-voltage limit to EEPROM.
+ * @param tel Pointer to input/output buffer containing command data..
+ * @param module Pointer to input/output buffer containing command data..
+ * @param tension_max Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE apply_hvmax(char tel, char module, UINT tension_max) 
 {
     BYTE error;
@@ -1553,6 +1744,12 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     return error;
 }
 
+/**
+ * @brief Enable or disable high-voltage measurement mode.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE enableDisableHVMeas(char *data, char *result) 
 {
     BYTE retval,error;
@@ -1590,6 +1787,12 @@ BYTE enableDisableHVMeas(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Set and persist the maximum high-voltage limit.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE set_hvmax(char *data, char *result) 
 {
     BYTE retval,error,comp, dep;
@@ -1635,6 +1838,12 @@ BYTE set_hvmax(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Query calibration status of all high-voltage supplies.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE uart_ask_hv_calibration(char *data, char *result) 
 {
     char myresult[14];
@@ -1649,6 +1858,12 @@ BYTE uart_ask_hv_calibration(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Store calibration parameters into EEPROM.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE store_param(char *data, char *result) 
 {
     storeparam();
@@ -1659,6 +1874,12 @@ BYTE store_param(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Write a byte to a specified EEPROM address.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE set_data_eeprom_address(char *data, char *result) 
 {
     BYTE retval, error,dep, comp;
@@ -1705,6 +1926,12 @@ BYTE set_data_eeprom_address(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Read a byte from a specified EEPROM address.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE get_data_eeprom_address(char *data, char *result) 
 {
     BYTE retval, error;
@@ -1748,6 +1975,12 @@ BYTE get_data_eeprom_address(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Read a value from an FPGA register via SPI.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE spi_get_regvalue(char *data, char *result) 
 {
     BYTE retval,error,comp,dep;
@@ -1793,6 +2026,12 @@ BYTE spi_get_regvalue(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/**
+ * @brief Write a value to an FPGA register via SPI.
+ * @param data Pointer to input/output buffer containing command data..
+ * @param result Pointer to input/output buffer containing command data..
+ * @return BYTE status or result code.
+ */
 BYTE spi_set_regvalue(char *data, char *result) 
 {
     BYTE retval,error,comp,dep;

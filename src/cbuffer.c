@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <string.h>     // for memset
 
+/**
+ * @brief Initialize a large circular buffer for frame storage.
+ * @param cb Circular buffer structure to initialize
+ */
 void cbuffer_large_init(CBuffer_large *cb) {
 
     cb->size = LARGE_BUFFER_SIZE;
@@ -18,6 +22,12 @@ void cbuffer_large_init(CBuffer_large *cb) {
     cb->rdp = cb->wrp = 0;
 }*/
 
+/**
+ * @brief Write a byte to the circular buffer with wrap-around.
+ * @param cb Circular buffer
+ * @param ch Byte to write
+ * @return BYTE status or result code.
+ */
 BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch) 
 {
     BYTE retval = BUFFER_OK;
@@ -44,6 +54,12 @@ BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch)
     return (retval);
 }*/
 
+/**
+ * @brief Remove and return the next byte from the circular buffer.
+ * @param cb Circular buffer
+ * @param ch Pointer to output byte
+ * @return BYTE status or result code.
+ */
 BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch) {
 
     if (cbuffer_isempty(cb))
@@ -66,6 +82,13 @@ BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch) {
     return BUFFER_OK;
 }*/
 
+/**
+ * @brief Scan the buffer to find and measure a complete frame.
+ * @param cb Circular buffer
+ * @param flen Frame length output
+ * @param foffset Frame offset output
+ * @return UINT status or result code.
+ */
 UINT cbuffer_large_getframe_length(CBuffer_large *cb, UINT *flen, UINT *foffset) 
 {
     UINT j,len, offset;
@@ -199,6 +222,11 @@ UINT cbuffer_large_getframe_length(CBuffer_large *cb, UINT *flen, UINT *foffset)
         return (ERR_FRAME_INCOMPLETE);
 }*/
 
+/**
+ * @brief Operate on a circular buffer used for UART frame storage.
+ * @param cb Input or output parameter.
+ * @return unsigned char status or result code.
+ */
 unsigned char *cbuffer_large_dumpdata(CBuffer_large *cb) {
 
     return (cb->data);

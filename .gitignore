@@ -1,0 +1,41 @@
+# Fichiers et dossiers générés par MPLAB X / XC8 / CMake
+
+# Dossiers de build
+build/
+_build/
+debug/
+disassembly/
+
+# Dossiers privés de projet
+nbproject/private/
+
+# compilation générés
+*.o
+*.d
+*.elf
+*.hex
+*.cof
+*.map
+*.lst
+*.sym
+*.bin
+*.cod
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+*~
+*.bak
+*.swp
+
+# CMake / ninja
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+cmake_install.cmake
+build.ninja
+
+# Autres fichiers générés
+*.cache
+*.pyc
+*.pyo

@@ -7,6 +7,12 @@ extern BYTE valeur_portC;
 extern struct parametres pa;
 
 
+/**
+ * @brief Read a 16-bit value from an FPGA register via SPI.
+ * @param id_fpga FPGA device ID (1 or 2)
+ * @param adr 16-bit register address
+ * @return unsigned int status or result code.
+ */
 unsigned int rdspi(char id_fpga,unsigned int adr)
 {
     unsigned char adr_msb;
@@ -47,6 +53,12 @@ unsigned int rdspi(char id_fpga,unsigned int adr)
 
 
 
+/**
+ * @brief Write a 16-bit value to an FPGA register via SPI.
+ * @param id_fpga FPGA device ID (1 or 2)
+ * @param adr 16-bit register address
+ * @param data 16-bit value to write
+ */
 void wrspi(char id_fpga,unsigned int adr, unsigned int data)
 {
 
@@ -89,12 +101,20 @@ void wrspi(char id_fpga,unsigned int adr, unsigned int data)
 	PORTC=valeur_portC;
 }
 
+/**
+ * @brief Send reset commands to both FPGA devices via SPI.
+ */
 void reset_both_fpga(void)
 {
     wrspi(1,3,4);
     wrspi(2,3,4);
 }
 
+/**
+ * @brief Transmit a byte sequence to the SPI bus.
+ * @param co Number of bytes
+ * @param wrptr Byte array to transmit
+ */
 void myputsspi(int co, unsigned char *wrptr)
 {
     int cp;
