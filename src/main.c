@@ -128,7 +128,7 @@ ram UINT max;
 struct parametres pa;
 #pragma udata
 char tel_table[4] = {'A', 'A', 'B', 'B'};
-char module_table[4] = {'1', '2', '1', '2'};
+int module_table[4] = {1, 2, 1, 2};
 
 
 extern CBuffer_large *Uart;
@@ -607,18 +607,20 @@ UINT32 current_leak_inspection(void) {
     UINT leak_current_table[4] = {lcA1, lcA2, lcB1, lcB2};
     flag = 0;
     
-    if (enableHVMeas == keyWordC) {
-        for (compteur = 0; compteur < 4; compteur++) {
-            if ((HvStatus[compteur] == 1) && (HvValueTab[compteur][1] != 0)) {
+    if (enableHVMeas == keyWordC) { // if autocorection is enable in the eeprom
+        for (compteur = 0; compteur < 4; compteur++) { // for all silicon of all telescope
+            if ((HvStatus[compteur] == 1) && (HvValueTab[compteur][1] != 0)) { // if ?
                 tel = tel_table[compteur];
                 module = module_table[compteur];
                 leakCur = leak_current_table[compteur];
-                if (leakCur > LOW_LC_TRSH && leakCur < HIGH_LC_TRSH) {
+
+                if (leakCur > LOW_LC_TRSH && leakCur < HIGH_LC_TRSH) { // if the leak current is inbetween thersholds
                     Rd = ((float) HvPhysCorrect[compteur]*(float) (1000000000));
                     Rd = Rd / ((float) leakCur);
                     Rd = Rd - 10200000;
                     HV = ((float) HvPhysTarget[compteur])*(1 + 10200000 / Rd);
                     hvInt = (UINT) HV;
+
                     if (HvPhysCorrect[compteur] != hvInt) {
                         if (hvInt != 0) {
                             if (((module == 1) && (hvInt < HVSi1Max + 1)) || ((module == 2) && (hvInt < HVSi2Max + 1)))

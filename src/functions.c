@@ -890,7 +890,7 @@ BYTE get_pic_version(char *data, char *result)
     result[1]='|';
     result[2]='\0';
     // TODO : change the date 
-    myStrCpyChar2(result,"13,03,2018,V01",'\0');
+    myStrCpyChar2(result,"03,06,2026,V01",'\0');
 
     return FUNC_CMD_OK;
 }
