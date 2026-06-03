@@ -1,0 +1,9 @@
+#
+#Fri Apr 29 14:34:27 CEST 2016
+default.com-microchip-mplab-nbide-toolchainC18-C18LanguageToolchain.md5=f492b890dd070cad392a89a91887e8b6
+default.languagetoolchain.dir=/vol0/microchip/mplabc18/v3.40/bin
+configurations-xml=929d5b854dcdbf4f176f61debf39f40c
+com-microchip-mplab-nbide-embedded-makeproject-MakeProject.md5=17a71d03e7d3823160f3e8681fc226e8
+default.languagetoolchain.version=3.40
+host.platform=linux
+conf.ids=default

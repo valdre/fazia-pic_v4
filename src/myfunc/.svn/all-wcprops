@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc
+END
+display.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/display.c
+END
+ads8332.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/ads8332.c
+END
+spi.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/spi.c
+END
+maths.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/maths.c
+END
+Tsensor.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/Tsensor.c
+END
+wr_eeprom.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/wr_eeprom.c
+END
+analog.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/analog.c
+END
+dac8568.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/FazziaSC/!svn/ver/1/PIC_V4_OK/src/myfunc/dac8568.c
+END
