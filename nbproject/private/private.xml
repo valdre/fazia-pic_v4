@@ -3,14 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/src/main.c</file>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/include/board.h</file>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/include/functions.h</file>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/include/frame.h</file>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/include/cbuffer.h</file>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/include/Generic.h</file>
-            <file>file:/home/baptiste/MPLABXProjects/PIC_V4-20260512T134009Z-3-001/PIC_V4/include/uartbuf.h</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

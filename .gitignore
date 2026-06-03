@@ -1,15 +1,15 @@
 # Fichiers et dossiers générés par MPLAB X / XC8 / CMake
 
-# Dossiers de build
+# build folders
 build/
 _build/
 debug/
 disassembly/
 
-# Dossiers privés de projet
+# private project files
 nbproject/private/
 
-# compilation générés
+# compilation outputs
 *.o
 *.d
 *.elf
@@ -21,7 +21,7 @@ nbproject/private/
 *.bin
 *.cod
 
-# Logs et fichiers temporaires
+# Logs and temporary files
 *.log
 *.tmp
 *~
@@ -35,7 +35,7 @@ compile_commands.json
 cmake_install.cmake
 build.ninja
 
-# Autres fichiers générés
+# other
 *.cache
 *.pyc
 *.pyo
