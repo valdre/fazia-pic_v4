@@ -11,8 +11,6 @@
 #include <delays.h>
 #include <spi.h>
 
-#define HIGH_LC_TRSH 2000
-#define LOW_LC_TRSH 100
 #pragma config FOSC = HSPLL     // HS oscillator
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
 #pragma config IESO = OFF       // Internal/External Oscillator Switchover bit (Oscillator Switchover mode disabled)
@@ -334,7 +332,7 @@ void main(void) {
                 HvStatusOld[1] = HvStatus[1];
                 HvStatusOld[2] = HvStatus[2];
                 HvStatusOld[3] = HvStatus[3];
-                // TODO : condition pour empécher la correction automatique si les valeurs de courant de fuite sont trop élevées
+                
                 HVfunc();
                 
                 if ((HvStatus[0] == 1) && (HvStatusOld[0] == 0)) 
@@ -614,7 +612,7 @@ UINT32 current_leak_inspection(void) {
                 module = module_table[compteur];
                 leakCur = leak_current_table[compteur];
 
-                if (leakCur > LOW_LC_TRSH && leakCur < HIGH_LC_TRSH) { // if the leak current is inbetween thersholds
+                if (leakCur > getLowLcTrsh() && leakCur < getHighLcTrsh()) { // if the leak current is inbetween thersholds
                     Rd = ((float) HvPhysCorrect[compteur]*(float) (1000000000));
                     Rd = Rd / ((float) leakCur);
                     Rd = Rd - 10200000;

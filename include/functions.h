@@ -50,6 +50,7 @@
 #define REG_FPGA_PA_SI2 0x05
 #define REG_FPGA_PA_CSI 0x06
 #define REG_FPGA_ID 0x7
+
 #define EEprom_cal_HV_first_adr 13
 #define EEprom_cal_HV_width 9
 #define EEprom_cal_HV_calibrated 50 // EEprom_cal_HV_first_adr + 4 * EEprom_HV_width
@@ -66,6 +67,7 @@
 #define EEprom_HV_borne_sup_A1 364
 #define EEprom_HV_short_Inspec_Time 372
 #define EEprom_HV_long_Inspec_Time 374
+
 #define timing_HV 25 // real time : 4ms * timing_HV
 #define shortInspecDelay 30000
 #define normalInspecDelay 300000 //number * 4ms = delay
@@ -74,6 +76,10 @@
 #define keyWordC 0x38
 #define snLSB 362
 #define snMSB 363
+#define EE_ADDR_HIGH_LC_TRSH_LSB 656
+#define EE_ADDR_HIGH_LC_TRSH_MSB 657
+#define EE_ADDR_LOW_LC_TRSH_LSB 658
+#define EE_ADDR_LOW_LC_TRSH_MSB 659
 
 ram struct parametres
 {
@@ -861,6 +867,11 @@ void pa_offset_settings(void);
  * @return Timing difference.
  */
 UINT32 diffLcTime(UINT32 t1,UINT32 t2,UINT32 t3);
+
+/* EEPROM-backed leak-current thresholds (16-bit, stored as two 8-bit cells) */
+UINT getHighLcTrsh(void);
+
+UINT getLowLcTrsh(void);
 
 #endif
 

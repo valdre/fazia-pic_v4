@@ -2087,4 +2087,17 @@ BYTE spi_set_regvalue(char *data, char *result)
     return FUNC_CMD_OK;
 }
 
+/* EEPROM-backed leak-current thresholds (16-bit, stored as two 8-bit cells) */
+UINT getHighLcTrsh(void) {
+    UINT lsb = (UINT)EERead(EE_ADDR_HIGH_LC_TRSH_LSB);
+    UINT msb = (UINT)EERead(EE_ADDR_HIGH_LC_TRSH_MSB);
+    return (lsb | (msb << 8));
+}
+
+UINT getLowLcTrsh(void) {
+    UINT lsb = (UINT)EERead(EE_ADDR_LOW_LC_TRSH_LSB);
+    UINT msb = (UINT)EERead(EE_ADDR_LOW_LC_TRSH_MSB);
+    return (lsb | (msb << 8));
+}
+
 // EOF

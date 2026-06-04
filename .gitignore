@@ -13,7 +13,6 @@ nbproject/private/
 *.o
 *.d
 *.elf
-*.hex
 *.cof
 *.map
 *.lst
