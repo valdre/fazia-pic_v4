@@ -153,7 +153,7 @@ BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
     for (co=1;co<8;co++)
     {
         PORTD = elt_OU; //Port D returns high
-        Delay10TCYx(3); //je suis à 2µs pile poil
+        Delay10TCYx(3); //je suis ï¿½ 2ï¿½s pile poil
         PORTD = elt_ET; //Port D returns low
         PIR1bits.SSPIF=0;
         din = os + (co<<4);
@@ -166,7 +166,7 @@ BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
     }
 
     PORTD = elt_OU; //Port D returns high
-    Delay10TCYx(3); //je suis à 2µs pil poil
+    Delay10TCYx(3); //je suis ï¿½ 2ï¿½s pil poil
     PORTD = elt_ET; //Port D returns low
     PIR1bits.SSPIF=0;
     putcSPI(os);

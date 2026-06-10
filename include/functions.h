@@ -88,8 +88,16 @@
 #define EEPROM_CAL_DAC_B1_LINEAR_CONST 680
 #define EEPROM_CAL_DAC_B2_LINEAR_COEFF 684
 #define EEPROM_CAL_DAC_B2_LINEAR_CONST 688
-ram struct parametres
-{
+
+#define EEPROM_CAL_ADC_A1_LINEAR_COEFF 692
+#define EEPROM_CAL_ADC_A1_LINEAR_CONST 696
+#define EEPROM_CAL_ADC_A2_LINEAR_COEFF 700
+#define EEPROM_CAL_ADC_A2_LINEAR_CONST 704
+#define EEPROM_CAL_ADC_B1_LINEAR_COEFF 708
+#define EEPROM_CAL_ADC_B1_LINEAR_CONST 712
+#define EEPROM_CAL_ADC_B2_LINEAR_COEFF 716
+#define EEPROM_CAL_ADC_B2_LINEAR_CONST 720
+ram struct parametres {
     UINT voltage_preamp1b;
     UINT voltage_preamp2b;
     UINT voltage_preamp3b;
@@ -705,12 +713,15 @@ char pulser(UINT data, UINT period, UINT high_time);
 void ask_hv_calibration(char *str);
 
 /**
- * @brief Convert a desired tension into a DAC/ADC calibration value.
- * @param tension Target voltage.
- * @param adrCal EEPROM calibration address.
- * @return Computed calibration result.
+ * @improve : Transfrom a reading of value in EEprom to a 2 value  in eeprom (instead of ~30,40) 
+ * and then create a equation to get the desired values
+ * @brief Convert a high-voltage target value to DAC decimal output code.
+ * @param tension Target voltage in volts
+ * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
+ * @param eeprom_adr_const EEPROM address for the DAC calibration linear constant
+ * @return value UINT32 DAC code corresponding to the target voltage
  */
-UINT32 get_value_dec(UINT tension, UINT adrCal);
+UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.

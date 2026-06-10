@@ -121,7 +121,8 @@ void ask_hv_calibration(char *str) {
  * and then create a equation to get the desired values
  * @brief Convert a high-voltage target value to DAC decimal output code.
  * @param tension Target voltage in volts
- * @param adrCal Calibration address
+ * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
+ * 
  * @return value UINT32 DAC code corresponding to the target voltage
  */
 
@@ -146,7 +147,7 @@ UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const)
  * @param tension Target voltage
  * @param slopeVS Ramp slope
  * @return BYTE status or result code.
- */ TODO Function for calibration 
+ */ 
 BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS) {
     BYTE verdict            = FUNC_EXEC_BAD_ARGS_TYPE;
     UINT32 value_dec        = 0;
@@ -154,36 +155,41 @@ BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS) {
     UINT32 default_value    = 0;
     UINT32 max_dac          = 0;
     UINT coef               = 0;
-    UINT calibration_addr   = 0;
+    UINT calibration_addr_coeff = 0;
+    UINT calibration_addr_const = 0;
     BYTE use_linear         = 0;
     BYTE channel = module - 1 + 2 * ((BYTE)(tel - 'A'));
 
     if ((module == 1) && (tel == 'A')) {
         coef = coefHV_M200;
         max_dac = (UINT32)HVSi1Max * coef / 1000;
-        calibration_addr = EEPROM_CAL_DAC_A1_LINEAR_COEFF;
+        calibration_addr_coeff = EEPROM_CAL_DAC_A1_LINEAR_COEFF;
+        calibration_addr_const = EEPROM_CAL_DAC_A1_LINEAR_CONST;
         use_linear = (EERead(EEPROM_IS_CAL_HV_DISCRET) == 0);
     } else if ((module == 1) && (tel == 'B')) {
         coef = coefHV_M200;
         max_dac = (UINT32)HVSi1Max * coef / 1000;
-        calibration_addr = EEPROM_CAL_DAC_B1_LINEAR_COEFF;
+        calibration_addr_coeff = EEPROM_CAL_DAC_B1_LINEAR_COEFF;
+        calibration_addr_const = EEPROM_CAL_DAC_B1_LINEAR_CONST;
         use_linear = (EERead(EEPROM_IS_CAL_HV_DISCRET + 1) == 0);
     } else if ((module == 2) && (tel == 'A')) {
         coef = coefHV_M400;
         max_dac = (UINT32)HVSi2Max * coef / 1000;
-        calibration_addr = EEPROM_CAL_DAC_A2_LINEAR_COEFF;
+        calibration_addr_coeff = EEPROM_CAL_DAC_A2_LINEAR_COEFF;
+        calibration_addr_const = EEPROM_CAL_DAC_A2_LINEAR_CONST;
         use_linear = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 2) == 0) && (tension <= HVSi2Max));
     } else if ((module == 2) && (tel == 'B')) {
         coef = coefHV_M400;
         max_dac = (UINT32)HVSi2Max * coef / 1000;
-        calibration_addr = EEPROM_CAL_DAC_B2_LINEAR_COEFF;
+        calibration_addr_coeff = EEPROM_CAL_DAC_B2_LINEAR_COEFF;
+        calibration_addr_const = EEPROM_CAL_DAC_B2_LINEAR_CONST;
         use_linear = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 3) == 0) && (tension <= HVSi2Max));
     }
 
     if (coef != 0) {
         default_value = ((UINT32)tension) * coef / 1000;
         if (use_linear) {
-            value_dec = get_value_dec(tension, calibration_addr);
+            value_dec = get_value_dec(tension, calibration_addr_coeff, calibration_addr_const);
             if (value_dec > max_dac) {
                 value_dec = default_value;
             }
