@@ -38,7 +38,16 @@
 #define EOC   PORTDbits.RD7
 #define coefHV_M200 141100
 #define coefHV_M400 87400
+#define timing_HV 25 // real time : 4ms * timing_HV
+#define shortInspecDelay 30000
+#define normalInspecDelay 300000 //number * 4ms = delay
+#define HVSi1Max 300
+#define HVSi2Max 400
+#define keyWordC 0x38
+#define snLSB 362
+#define snMSB 363
 #define SPI_KEY 0x38
+
 #define REG_FPGA_REQUEST 0x220
 #define REG_FPGA_CMDE 0x221
 #define REG_FPGA_FIRST_PARAM 0x222
@@ -51,36 +60,34 @@
 #define REG_FPGA_PA_CSI 0x06
 #define REG_FPGA_ID 0x7
 
-#define EEprom_cal_HV_first_adr 13
-#define EEprom_cal_HV_width 9
-#define EEprom_cal_HV_calibrated 50 // EEprom_cal_HV_first_adr + 4 * EEprom_HV_width
-#define EEprom_coef_HV_reading EEprom_cal_HV_calibrated+4
-#define EEprom_is_cal_HV_discret 78
-#define EEprom_si1A_cal_Hv_discret 82
-#define EEprom_si2A_cal_Hv_discret 142
-#define EEprom_si1B_cal_Hv_discret 222
-#define EEprom_si2B_cal_Hv_discret 282
-#define EEprom_si1A_cal_IHv_discret 376
-#define EEprom_si2A_cal_IHv_discret 436
-#define EEprom_si1B_cal_IHv_discret 516
-#define EEprom_si2B_cal_IHv_discret 576
-#define EEprom_HV_borne_sup_A1 364
-#define EEprom_HV_short_Inspec_Time 372
-#define EEprom_HV_long_Inspec_Time 374
-
-#define timing_HV 25 // real time : 4ms * timing_HV
-#define shortInspecDelay 30000
-#define normalInspecDelay 300000 //number * 4ms = delay
-#define HVSi1Max 300
-#define HVSi2Max 400
-#define keyWordC 0x38
-#define snLSB 362
-#define snMSB 363
-#define EE_ADDR_HIGH_LC_TRSH_LSB 656
-#define EE_ADDR_HIGH_LC_TRSH_MSB 657
-#define EE_ADDR_LOW_LC_TRSH_LSB 658
-#define EE_ADDR_LOW_LC_TRSH_MSB 659
-
+#define EEPROM_CAL_HV_FIRST_ADR 13
+#define EEPROM_CAL_HV_WIDTH 9
+#define EEPROM_CAL_HV_CALIBRATED 50 // EEPROM_CAL_HV_FIRST_ADR + 4 * EEprom_HV_width
+#define EEPROM_COEF_HV_READING 54
+#define EEPROM_IS_CAL_HV_DISCRET 78
+#define EEPROM_SI1A_CAL_HV_DISCRET 82   // EEprom address from 82  to 141 DAC calibration for channel A1 -> 142-82 =60 so 30 values
+#define EEPROM_SI2A_CAL_HV_DISCRET 142  // EEprom address from 142 to 221 DAC calibration for channel A2 -> 222-142=80 so 40 values
+#define EEPROM_SI1B_CAL_HV_DISCRET 222  // EEprom address from 222 to 281 DAC calibration for channel B1 -> 282-222=60 so 30 values
+#define EEPROM_SI2B_CAL_HV_DISCRET 282  // EEprom address from 282 to 361 DAC calibration for channel B2 -> 362-282=80 so 40 values
+#define EEPROM_SI1A_CAL_IHV_DISCRET 376 // EEprom address from 376 to 435 ADC calibration for channel A1 -> 436-376=60 so 30 values
+#define EEPROM_SI2A_CAL_IHV_DISCRET 436 // EEprom address from 436 to 515 ADC calibration for channel A2 -> 516-436=80 so 40 values
+#define EEPROM_SI1B_CAL_IHV_DISCRET 516 // EEprom address from 516 to 575 ADC calibration for channel B1 -> 576-516=60 so 30 values
+#define EEPROM_SI2B_CAL_IHV_DISCRET 576 // EEprom address from 576 to 655 ADC calibration for channel B2 -> 656-576=80 so 40 values
+#define EEPROM_HV_BORNE_SUP_A1 364
+#define EEPROM_HV_SHORT_INSPEC_TIME 372
+#define EEPROM_HV_LONG_INSPEC_TIME 374
+#define EEPROM_HIGH_LC_TRSH_LSB 656
+#define EEPROM_HIGH_LC_TRSH_MSB 657
+#define EEPROM_LOW_LC_TRSH_LSB 658
+#define EEPROM_LOW_LC_TRSH_MSB 659
+#define EEPROM_CAL_DAC_A1_LINEAR_COEFF 660
+#define EEPROM_CAL_DAC_A1_LINEAR_CONST 664
+#define EEPROM_CAL_DAC_A2_LINEAR_COEFF 668
+#define EEPROM_CAL_DAC_A2_LINEAR_CONST 672
+#define EEPROM_CAL_DAC_B1_LINEAR_COEFF 676
+#define EEPROM_CAL_DAC_B1_LINEAR_CONST 680
+#define EEPROM_CAL_DAC_B2_LINEAR_COEFF 684
+#define EEPROM_CAL_DAC_B2_LINEAR_CONST 688
 ram struct parametres
 {
     UINT voltage_preamp1b;

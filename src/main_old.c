@@ -190,7 +190,7 @@ void main(void)
     } while (!check);
 
 
-    //évaluation d'une tension résiduelle au démarrage après reset
+    //ï¿½valuation d'une tension rï¿½siduelle au dï¿½marrage aprï¿½s reset
     if (enableHVMeas == 0x38)
         for (co = 0; co < 4; co++) {
             HvValueTab[co][1] = 0;
@@ -643,7 +643,7 @@ void HVfunc(void) {
 
                     dac_sequence(cp * 16, HvValueTab[cp][1]);
 
-                    if (EERead(EEprom_is_cal_HV_discret + cp) == 0)
+                    if (EERead(EEPROM_IS_CAL_HV_DISCRET + cp) == 0)
                         HvStatus[cp] = 1;
                     else
                         finish[cp] = TRUE;

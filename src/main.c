@@ -567,7 +567,7 @@ void HVfunc(void) {
             if (!pendingFinalization[cp]) {
                 if (gapV <= deltaV) {
                     HvValueTab[cp][0] = HvValueTab[cp][1];
-                    if (EERead(EEprom_is_cal_HV_discret + cp) == 0) { // if EEPROM calibration allows it, mark the channel as stable
+                    if (EERead(EEPROM_IS_CAL_HV_DISCRET + cp) == 0) { // if EEPROM calibration allows it, mark the channel as stable
                         HvStatus[cp] = 1;
                     } else { // otherwise, even if the target value is reached, a last iteration is needed to set the final stable state
                         pendingFinalization[cp] = TRUE;

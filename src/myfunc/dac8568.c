@@ -43,25 +43,17 @@ char dac_init(void) {
 
     valeur_portC = valeur_portC | 0b00000001; /*on remet la patte sync du DAC a 1*/
     PORTC = valeur_portC;
-
     valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync a� 0V pour ecrire une sequence*/
     PORTC = valeur_portC;
-
     myputsspi(4, mode_sync);
-
     valeur_portC = valeur_portC | 0b00000001; /*on remet la patte sync du DAC a 1*/
     PORTC = valeur_portC;
-
     valeur_portC = valeur_portC & 0b11111110; /*on impose la patte sync a� 0V pour ecrire une sequence*/
     PORTC = valeur_portC;
-
     myputsspi(4, ref_intern);
-
     valeur_portC = valeur_portC | 0b00000001; /*on remet la patte sync du DAC a 1*/
     PORTC = valeur_portC;
-
     return 0;
-
 }
 
 /**
@@ -109,12 +101,11 @@ char pulser(UINT data, UINT period, UINT high_time) {
 void ask_hv_calibration(char *str) {
     BYTE co, cp;
     BYTE nbmodules; //contains the number of high voltage modules which are calibrated
-
     nbmodules = 0;
     str[0] = '0';
     cp = 1;
     for (co = 0; co < 4; co++) {
-        if (EERead(EEprom_cal_HV_calibrated + co) == SPI_KEY) {
+        if (EERead(EEPROM_CAL_HV_CALIBRATED + co) == SPI_KEY) {
             nbmodules++;
             str[0] = (char) nbmodules + '0';
             str[cp++] = ',';
@@ -126,36 +117,26 @@ void ask_hv_calibration(char *str) {
 }
 
 /**
+ * @improve : Transfrom a reading of value in EEprom to a 2 value  in eeprom (instead of ~30,40) 
+ * and then create a equation to get the desired values
  * @brief Convert a high-voltage target value to DAC decimal output code.
  * @param tension Target voltage in volts
  * @param adrCal Calibration address
- * @return UINT32 status or result code.
+ * @return value UINT32 DAC code corresponding to the target voltage
  */
-UINT32 get_value_dec(UINT tension, UINT adrCal) {
-	UINT vinf, vsup, unites, dec, adr;
-	UINT32 value;
-	
-	if(tension==0) value=0;
-	else {
-		vinf = 0; vsup = 0;
-		dec=tension/10;
-		unites=tension-10*dec;
-		if(unites==0) {
-			adr=2*dec+adrCal-2;
-			value=256*EERead(adr+1)+EERead(adr);
-		}
-		else {
-			if(tension<10) vinf=0;
-			else {
-				adr=2*dec+adrCal-2;
-				vinf=256*EERead(adr+1)+EERead(adr);
-			}
-			adr=2*dec+adrCal;
-			vsup=256*EERead(adr+1)+EERead(adr);
-			value=vinf+((vsup-vinf)*unites+5)/10;
-		}
-	}
-	return value;
+
+UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const) {
+    float dac_cal_linear_coeff = ((float) 
+        (EERead(eeprom_adr_coeff + 3) << 24) + 
+        (EERead(eeprom_adr_coeff + 2) << 16) + 
+        (EERead(eeprom_adr_coeff + 1) <<  8) + 
+        EERead(eeprom_adr_coeff));
+    float dac_cal_linear_const = ((float)
+        (EERead(eeprom_adr_const + 3) << 24) +
+        (EERead(eeprom_adr_const + 2) << 16) +
+        (EERead(eeprom_adr_const + 1) <<  8) +
+        EERead(eeprom_adr_const));
+    return (UINT32) ((dac_cal_linear_coeff * tension) + dac_cal_linear_const);
 }
 
 /**
@@ -165,83 +146,55 @@ UINT32 get_value_dec(UINT tension, UINT adrCal) {
  * @param tension Target voltage
  * @param slopeVS Ramp slope
  * @return BYTE status or result code.
- */
-BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS)
-{
-    BYTE verdict;
-    UINT32 value_dec;
-    UINT32 inc;
+ */ TODO Function for calibration 
+BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS) {
+    BYTE verdict            = FUNC_EXEC_BAD_ARGS_TYPE;
+    UINT32 value_dec        = 0;
+    UINT32 inc              = 0;
+    UINT32 default_value    = 0;
+    UINT32 max_dac          = 0;
+    UINT coef               = 0;
+    UINT calibration_addr   = 0;
+    BYTE use_linear         = 0;
+    BYTE channel = module - 1 + 2 * ((BYTE)(tel - 'A'));
 
-    verdict = FUNC_EXEC_BAD_ARGS_TYPE;
+    if ((module == 1) && (tel == 'A')) {
+        coef = coefHV_M200;
+        max_dac = (UINT32)HVSi1Max * coef / 1000;
+        calibration_addr = EEPROM_CAL_DAC_A1_LINEAR_COEFF;
+        use_linear = (EERead(EEPROM_IS_CAL_HV_DISCRET) == 0);
+    } else if ((module == 1) && (tel == 'B')) {
+        coef = coefHV_M200;
+        max_dac = (UINT32)HVSi1Max * coef / 1000;
+        calibration_addr = EEPROM_CAL_DAC_B1_LINEAR_COEFF;
+        use_linear = (EERead(EEPROM_IS_CAL_HV_DISCRET + 1) == 0);
+    } else if ((module == 2) && (tel == 'A')) {
+        coef = coefHV_M400;
+        max_dac = (UINT32)HVSi2Max * coef / 1000;
+        calibration_addr = EEPROM_CAL_DAC_A2_LINEAR_COEFF;
+        use_linear = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 2) == 0) && (tension <= HVSi2Max));
+    } else if ((module == 2) && (tel == 'B')) {
+        coef = coefHV_M400;
+        max_dac = (UINT32)HVSi2Max * coef / 1000;
+        calibration_addr = EEPROM_CAL_DAC_B2_LINEAR_COEFF;
+        use_linear = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 3) == 0) && (tension <= HVSi2Max));
+    }
 
-    if ((module == 1) && (tel == 'A'))
-    {
-        if (EERead(EEprom_is_cal_HV_discret) == 0)
-        {
-            value_dec = get_value_dec(tension, EEprom_si1A_cal_Hv_discret);
-            
-            if (value_dec > (UINT32)(HVSi1Max) * (UINT32)(coefHV_M200) / 1000)
-                value_dec = (((UINT32) tension) * coefHV_M200) / 1000;
+    if (coef != 0) {
+        default_value = ((UINT32)tension) * coef / 1000;
+        if (use_linear) {
+            value_dec = get_value_dec(tension, calibration_addr);
+            if (value_dec > max_dac) {
+                value_dec = default_value;
+            }
+        } else {
+            value_dec = default_value;
         }
-        else
-            value_dec = (((UINT32) tension) * coefHV_M200) / 1000;
-
-        inc = (slopeVS * coefHV_M200) / 1000;
+        inc = (slopeVS * coef) / 1000;
+        HvValueTab[channel][1] = (UINT)value_dec;
+        HvInc[channel] = (UINT)inc;
+        HvStatus[channel] = 0;
         verdict = FUNC_EXEC_OK;
-    }
-
-    if ((module == 1) && (tel == 'B'))
-    {
-        if (EERead(EEprom_is_cal_HV_discret + 1) == 0)
-        {
-            value_dec = get_value_dec(tension, EEprom_si1B_cal_Hv_discret);
-
-            if (value_dec > (UINT32)(HVSi1Max) * (UINT32)(coefHV_M200) / 1000)
-                value_dec = (((UINT32) tension) * coefHV_M200) / 1000;
-        }
-        else
-            value_dec = (((UINT32) tension) * coefHV_M200) / 1000;
-            
-
-        inc = (slopeVS * coefHV_M200) / 1000;
-        verdict = FUNC_EXEC_OK;
-    }
-
-    if ((module == 2) && (tel == 'A'))
-    {
-        if ((EERead(EEprom_is_cal_HV_discret + 2) == 0) && (tension <= HVSi2Max))
-        {
-            value_dec = get_value_dec(tension, EEprom_si2A_cal_Hv_discret);
-
-            if (value_dec > (UINT32)(HVSi2Max) * (UINT32)(coefHV_M400) / 1000)
-                value_dec = (((UINT32) tension) * coefHV_M400) / 1000;
-        }
-        else
-            value_dec = (((UINT32) tension) * coefHV_M400) / 1000;
-        inc = (slopeVS * coefHV_M400) / 1000;
-        verdict = FUNC_EXEC_OK;
-    }
-
-    if ((module == 2) && (tel == 'B')) {
-        if ((EERead(EEprom_is_cal_HV_discret + 3) == 0) && (tension <= HVSi2Max))
-        {
-            value_dec = get_value_dec(tension, EEprom_si2B_cal_Hv_discret);
-
-            if (value_dec > (UINT32)(HVSi2Max) * (UINT32)(coefHV_M400) / 1000)
-                value_dec = (((UINT32) tension) * coefHV_M400) / 1000;
-        } 
-        else
-            value_dec = (((UINT32) tension) * coefHV_M400) / 1000;
-            
-        inc = (slopeVS * coefHV_M400) / 1000;
-        verdict = FUNC_EXEC_OK;
-    }
-
-    if (verdict == FUNC_EXEC_OK)
-    {
-        HvValueTab[module - 1 + 2 * ((BYTE) (tel - 'A'))][1] = (UINT) value_dec;
-        HvInc[module - 1 + 2 * ((BYTE) (tel - 'A'))] = (UINT) inc;
-        HvStatus[module - 1 + 2 * ((BYTE) (tel - 'A'))] = 0;
     }
 
     return verdict;

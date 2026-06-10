@@ -140,13 +140,13 @@ void ucsetup(void) {
 
     for (cp=0;cp<4;cp++)
     {
-        EERead(cp+EEprom_HV_borne_sup_A1);
+        EERead(cp+EEPROM_HV_BORNE_SUP_A1);
     }
 
-    HV_borne_sup_A1 = (((UINT)EERead(EEprom_HV_borne_sup_A1+1))<<8)+((UINT)EERead(EEprom_HV_borne_sup_A1));
-    HV_borne_sup_A2 = (((UINT)EERead(EEprom_HV_borne_sup_A1+3))<<8)+((UINT)EERead(EEprom_HV_borne_sup_A1+2));
-    HV_borne_sup_B1 = (((UINT)EERead(EEprom_HV_borne_sup_A1+5))<<8)+((UINT)EERead(EEprom_HV_borne_sup_A1+4));
-    HV_borne_sup_B2 = (((UINT)EERead(EEprom_HV_borne_sup_A1+7))<<8)+((UINT)EERead(EEprom_HV_borne_sup_A1+6));
+    HV_borne_sup_A1 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+1))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1));
+    HV_borne_sup_A2 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+3))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+2));
+    HV_borne_sup_B1 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+5))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+4));
+    HV_borne_sup_B2 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+7))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+6));
 
     if (HV_borne_sup_A1>HVSi1Max)
         apply_hvmax('A','1',HVSi1Max);    
@@ -160,18 +160,18 @@ void ucsetup(void) {
     if (HV_borne_sup_B2>350)
         apply_hvmax('B','2',HVSi2Max);
 
-    sTime = (((UINT)EERead(EEprom_HV_short_Inspec_Time+1))<<8)+((UINT)EERead(EEprom_HV_short_Inspec_Time));
-    lTime = (((UINT)EERead(EEprom_HV_long_Inspec_Time+1))<<8)+((UINT)EERead(EEprom_HV_long_Inspec_Time));
+    sTime = (((UINT)EERead(EEPROM_HV_SHORT_INSPEC_TIME+1))<<8)+((UINT)EERead(EEPROM_HV_SHORT_INSPEC_TIME));
+    lTime = (((UINT)EERead(EEPROM_HV_LONG_INSPEC_TIME+1))<<8)+((UINT)EERead(EEPROM_HV_LONG_INSPEC_TIME));
 
     if ((lTime<=sTime)||(lTime==0)||(sTime==0))
     {
         shortInspecTime = shortInspecDelay;
         longInspecTime = normalInspecDelay;
-        EEWrite(EEprom_HV_short_Inspec_Time + 1, (BYTE) (((shortInspecTime/15000)& 0xFF00) >> 8));
-        EEWrite(EEprom_HV_short_Inspec_Time, (BYTE) (((shortInspecTime/15000)&0xFF)));
+        EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (BYTE) (((shortInspecTime/15000)& 0xFF00) >> 8));
+        EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (BYTE) (((shortInspecTime/15000)&0xFF)));
 
-        EEWrite(EEprom_HV_long_Inspec_Time + 1, (BYTE) (((longInspecTime/15000)& 0xFF00) >> 8));
-        EEWrite(EEprom_HV_long_Inspec_Time, (BYTE) (((longInspecTime/15000)&0xFF)));
+        EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (BYTE) (((longInspecTime/15000)& 0xFF00) >> 8));
+        EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (BYTE) (((longInspecTime/15000)&0xFF)));
     }
     else
     {
@@ -324,9 +324,9 @@ void ucsetup(void) {
     
     for (cp=0;cp<4;cp++)
     {
-        dep=EEprom_cal_HV_first_adr+cp*EEprom_cal_HV_width;
+        dep=EEPROM_CAL_HV_FIRST_ADR+cp*EEPROM_CAL_HV_WIDTH;
         
-        if (EERead(cp+EEprom_cal_HV_calibrated)==SPI_KEY)
+        if (EERead(cp+EEPROM_CAL_HV_CALIBRATED)==SPI_KEY)
         {
             switch(cp)
             {
@@ -385,7 +385,7 @@ void ucsetup(void) {
     {
         HV_read_coefA[cp]=0;
         HV_read_coefB[cp]=0;
-        dep=EEprom_coef_HV_reading+6*cp;
+        dep=EEPROM_COEF_HV_READING+6*cp;
 
         if ((EERead(dep+1)==0xFF)&&(EERead(dep)==0xFF))
         {

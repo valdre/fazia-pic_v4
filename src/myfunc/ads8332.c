@@ -33,8 +33,6 @@ void adc_init(void)
 {
     unsigned char sequence[2];
     unsigned char co;
-
-
     /*we make sure that the CONVST pin is high*/
     valeur_portD = valeur_portD|0b01000000;
     PORTD = valeur_portD;
@@ -42,21 +40,16 @@ void adc_init(void)
     /*-----------------------------------------*/
     /*-------Initialisation de l'ADC-----------*/
     /*--------------Ecriture CFR---------------*/
-
     /*le Chip select de l'ADC est mis a 1*/
     valeur_portB=valeur_portB|0b00100000;
     PORTB=valeur_portB;
-
     sequence[0]=0xE7;
     sequence[1]=0xFD;
-
     /*le Chip select de l'ADC est mis a 0*/
     valeur_portB=valeur_portB&0b11011111;
     PORTB=valeur_portB;
-
     putcSPI(sequence[0]);
     putcSPI(sequence[1]);
-
     /*le Chip select de l'ADC est mis a 1*/
     valeur_portB=valeur_portB|0b00100000;
     PORTB=valeur_portB;
@@ -86,8 +79,8 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead)
             coeffB=&coefB_B1;
             tns=HvPhysCorrect[2];
             canal=2;
-            ad=EEprom_cal_HV_first_adr+2*EEprom_cal_HV_width+8;
-            inside_current = get_value_dec(tns,EEprom_si1B_cal_IHv_discret);
+            ad=EEPROM_CAL_HV_FIRST_ADR+2*EEPROM_CAL_HV_WIDTH+8;
+            inside_current = get_value_dec(tns,EEPROM_SI1B_CAL_IHV_DISCRET);
         }
 
         if (tel=='A')
@@ -96,8 +89,8 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead)
             coeffB=&coefB_A1;
             tns=HvPhysCorrect[0];
             canal=0;
-            ad=EEprom_cal_HV_first_adr+8;
-            inside_current = get_value_dec(tns,EEprom_si1A_cal_IHv_discret);
+            ad=EEPROM_CAL_HV_FIRST_ADR+8;
+            inside_current = get_value_dec(tns,EEPROM_SI1A_CAL_IHV_DISCRET);
         }
     }
 
@@ -109,8 +102,8 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead)
             coeffB=&coefB_A2;
             tns=HvPhysCorrect[1];
             canal=1;
-            ad=EEprom_cal_HV_first_adr+EEprom_cal_HV_width+8;
-            inside_current = get_value_dec(tns,EEprom_si2A_cal_IHv_discret);
+            ad=EEPROM_CAL_HV_FIRST_ADR+EEPROM_CAL_HV_WIDTH+8;
+            inside_current = get_value_dec(tns,EEPROM_SI2A_CAL_IHV_DISCRET);
         }
 
         if (tel=='B')
@@ -119,8 +112,8 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead)
             coeffB=&coefB_B2;
             tns=HvPhysCorrect[3];
             canal=3;
-            ad=EEprom_cal_HV_first_adr+3*EEprom_cal_HV_width+8;
-            inside_current = get_value_dec(tns,EEprom_si2B_cal_IHv_discret);
+            ad=EEPROM_CAL_HV_FIRST_ADR+3*EEPROM_CAL_HV_WIDTH+8;
+            inside_current = get_value_dec(tns,EEPROM_SI2B_CAL_IHV_DISCRET);
         }
     }
     

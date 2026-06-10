@@ -1456,11 +1456,11 @@ BYTE setInspecTime(char *data, char *result)
                 shortInspecTime = 15000*((UINT32)sTime);
                 longInspecTime = 15000*((UINT32)lTime);
 
-                EEWrite(EEprom_HV_short_Inspec_Time + 1, (BYTE) ((sTime& 0xFF00) >> 8));
-                EEWrite(EEprom_HV_short_Inspec_Time, (BYTE) ((sTime&0xFF)));
+                EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (BYTE) ((sTime& 0xFF00) >> 8));
+                EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (BYTE) ((sTime&0xFF)));
 
-                EEWrite(EEprom_HV_long_Inspec_Time + 1, (BYTE) ((lTime& 0xFF00) >> 8));
-                EEWrite(EEprom_HV_long_Inspec_Time, (BYTE) ((lTime&0xFF)));
+                EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (BYTE) ((lTime& 0xFF00) >> 8));
+                EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (BYTE) ((lTime&0xFF)));
 
                 retval = FUNC_EXEC_OK;
             }
@@ -1707,8 +1707,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
         if (tension_max < HVSi1Max + 1) 
         {
             HV_borne_sup_A1 = tension_max;
-            EEWrite(EEprom_HV_borne_sup_A1 + 1, (BYTE) ((HV_borne_sup_A1 & 0xFF00) >> 8));
-            EEWrite(EEprom_HV_borne_sup_A1, (BYTE) ((HV_borne_sup_A1 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 1, (BYTE) ((HV_borne_sup_A1 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1, (BYTE) ((HV_borne_sup_A1 & 0xFF)));
         } 
         else
             error = 1;
@@ -1717,8 +1717,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     if ((tel == 'A') && (module == '2')) {
         if (tension_max < HVSi2Max + 1) {
             HV_borne_sup_A2 = tension_max;
-            EEWrite(EEprom_HV_borne_sup_A1 + 3, (BYTE) ((HV_borne_sup_A2 & 0xFF00) >> 8));
-            EEWrite(EEprom_HV_borne_sup_A1 + 2, (BYTE) ((HV_borne_sup_A2 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 3, (BYTE) ((HV_borne_sup_A2 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 2, (BYTE) ((HV_borne_sup_A2 & 0xFF)));
         } else
             error = 1;
     }
@@ -1726,8 +1726,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     if ((tel == 'B') && (module == '1')) {
         if (tension_max < HVSi1Max + 1) {
             HV_borne_sup_B1 = tension_max;
-            EEWrite(EEprom_HV_borne_sup_A1 + 5, (BYTE) ((HV_borne_sup_B1 & 0xFF00) >> 8));
-            EEWrite(EEprom_HV_borne_sup_A1 + 4, (BYTE) ((HV_borne_sup_B1 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 5, (BYTE) ((HV_borne_sup_B1 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 4, (BYTE) ((HV_borne_sup_B1 & 0xFF)));
         } else
             error = 1;
     }
@@ -1735,8 +1735,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     if ((tel == 'B') && (module == '2')) {
         if (tension_max < HVSi2Max + 1) {
             HV_borne_sup_B2 = tension_max;
-            EEWrite(EEprom_HV_borne_sup_A1 + 7, (BYTE) ((HV_borne_sup_B2 & 0xFF00) >> 8));
-            EEWrite(EEprom_HV_borne_sup_A1 + 6, (BYTE) ((HV_borne_sup_B2 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 7, (BYTE) ((HV_borne_sup_B2 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 6, (BYTE) ((HV_borne_sup_B2 & 0xFF)));
         } else
             error = 1;
     }
