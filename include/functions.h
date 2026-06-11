@@ -47,6 +47,7 @@
 #define snLSB 362
 #define snMSB 363
 #define SPI_KEY 0x38
+#define COEFF_SCALE_FACTOR 1000
 
 #define REG_FPGA_REQUEST 0x220
 #define REG_FPGA_CMDE 0x221
