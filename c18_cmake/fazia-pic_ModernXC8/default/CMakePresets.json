@@ -2,8 +2,8 @@
     "version": 6,
     "configurePresets": [
         {
-            "name": "FrontEnd_SSC_default_conf",
-            "binaryDir": "${fileDir}/../../../_build/FrontEnd-SSC/default",
+            "name": "fazia_pic_ModernXC8_default_conf",
+            "binaryDir": "${fileDir}/../../../_build/fazia-pic_ModernXC8/default",
             "generator": "Ninja",
             "toolchainFile": "${fileDir}/.generated/toolchain.cmake",
             "cacheVariables": {
@@ -12,7 +12,7 @@
                     "value": "${fileDir}/.generated/overrides.cmake"
                 },
                 "CMAKE_EXPORT_COMPILE_COMMANDS": {
-                    "type": "BOOL",
+                    "type": "bool",
                     "value": "ON"
                 }
             }

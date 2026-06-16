@@ -64,7 +64,7 @@ void frame_init(unsigned char *f);
  * @param f Frame buffer.
  * @return Computed CRC value.
  */
-UINT frame_docrc(unsigned char *f);
+uint16_t frame_docrc(unsigned char *f);
 
 #define is_startkw(ch)      ((ch == KW_STX) || (ch == KW_ACK) || (ch == KW_ESC) || (ch == KW_NAK) || (ch == KW_ERR))
 #define is_endkw(ch)        (ch == KW_END)
@@ -78,7 +78,7 @@ UINT frame_docrc(unsigned char *f);
  * @param f Frame buffer.
  * @return Decoded IDB value.
  */
-UINT frame_getidb(unsigned char *f);
+uint16_t frame_getidb(unsigned char *f);
 
 /**
  * @brief Extract the sequence byte from a protocol frame.
@@ -99,7 +99,7 @@ void frame_getdata(unsigned char *f, char *d);
  * @param f Frame buffer.
  * @return Stored CRC value.
  */
-UINT frame_getcrc(unsigned char *f);
+uint16_t frame_getcrc(unsigned char *f);
 
 #endif
 

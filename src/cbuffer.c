@@ -26,11 +26,11 @@ void cbuffer_large_init(CBuffer_large *cb) {
  * @brief Write a byte to the circular buffer with wrap-around.
  * @param cb Circular buffer
  * @param ch Byte to write
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch) 
+uint8_t cbuffer_large_write(CBuffer_large *cb, unsigned char ch) 
 {
-    BYTE retval = BUFFER_OK;
+    uint8_t retval = BUFFER_OK;
 
     cb->data[cb->wrp] = ch;
     cb->wrp = (cb->wrp + 1) % cb->size;
@@ -41,9 +41,9 @@ BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch)
     return (retval);
 }
 
-/*BYTE cbuffer_small_write(CBuffer_small *cb, unsigned char ch) 
+/*uint8_t cbuffer_small_write(CBuffer_small *cb, unsigned char ch) 
 {
-    BYTE retval = BUFFER_OK;
+    uint8_t retval = BUFFER_OK;
 
     cb->data[cb->wrp] = ch;
     cb->wrp = (cb->wrp + 1) % cb->size;
@@ -58,9 +58,9 @@ BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch)
  * @brief Remove and return the next byte from the circular buffer.
  * @param cb Circular buffer
  * @param ch Pointer to output byte
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch) {
+uint8_t cbuffer_large_read(CBuffer_large *cb, unsigned char *ch) {
 
     if (cbuffer_isempty(cb))
         return BUFFER_EMPTY;
@@ -71,7 +71,7 @@ BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch) {
     return BUFFER_OK;
 }
 
-/*BYTE cbuffer_small_read(CBuffer_small *cb, unsigned char *ch) {
+/*uint8_t cbuffer_small_read(CBuffer_small *cb, unsigned char *ch) {
 
     if (cbuffer_isempty(cb))
         return BUFFER_EMPTY;
@@ -87,17 +87,17 @@ BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch) {
  * @param cb Circular buffer
  * @param flen Frame length output
  * @param foffset Frame offset output
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT cbuffer_large_getframe_length(CBuffer_large *cb, UINT *flen, UINT *foffset) 
+uint16_t cbuffer_large_getframe_length(CBuffer_large *cb, uint16_t *flen, uint16_t *foffset) 
 {
-    UINT j,len, offset;
+    uint16_t j,len, offset;
     UINT16 lbound,hbound;
     unsigned char ch;
-    BYTE ncrc = 0;
-    BOOL frame_start = FALSE;
-    BOOL frame_end = FALSE;
-    BOOL loop_end = FALSE;
+    uint8_t ncrc = 0;
+    bool frame_start = FALSE;
+    bool frame_end = FALSE;
+    bool loop_end = FALSE;
 
     if (cbuffer_isempty(cb))
         return ERR_FRAME_EMPTY;
@@ -153,17 +153,17 @@ UINT cbuffer_large_getframe_length(CBuffer_large *cb, UINT *flen, UINT *foffset)
         return (ERR_FRAME_INCOMPLETE);
 }
 
-/*UINT cbuffer_small_getframe_length(CBuffer_small *cb, UINT *flen, UINT *foffset) 
+/*uint16_t cbuffer_small_getframe_length(CBuffer_small *cb, uint16_t *flen, uint16_t *foffset) 
 {
-    UINT j, len, offset;
+    uint16_t j, len, offset;
     UINT16 lbound = cb->rdp; // buffer lowest bound
     UINT16 hbound = cb->wrp; // buffer highest bound
     UINT16 size = cb->size; // buffer size
     unsigned char ch;
-    BYTE ncrc = 0;
-    BOOL frame_start = FALSE;
-    BOOL frame_end = FALSE;
-    BOOL loop_end = FALSE;
+    uint8_t ncrc = 0;
+    bool frame_start = FALSE;
+    bool frame_end = FALSE;
+    bool loop_end = FALSE;
 
     if (cbuffer_isempty(cb))
         return ERR_FRAME_EMPTY;

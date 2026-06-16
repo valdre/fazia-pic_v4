@@ -3,12 +3,12 @@
 /**
  * @brief Compute 10 raised to power c as a 32-bit value.
  * @param c Exponent (power of 10)
- * @return UINT32 status or result code.
+ * @return uint32_t status or result code.
  */
-UINT32 power10_32(BYTE c)
+uint32_t power10_32(uint8_t c)
 {
-    UINT32 value;
-    BYTE k;
+    uint32_t value;
+    uint8_t k;
 
     value=1;
     k=0;
@@ -29,11 +29,11 @@ UINT32 power10_32(BYTE c)
  * @brief Parse a decimal or hexadecimal string into a 32-bit unsigned integer.
  * @param pr Input decimal or hex string
  * @param converted_value Output parsed value
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE analyze_string32(char *pr,UINT32 *converted_value)
+uint8_t analyze_string32(char *pr,uint32_t *converted_value)
 {
-    BYTE co,cp,error;
+    uint8_t co,cp,error;
     
     co=0;
     error=0;
@@ -54,7 +54,7 @@ BYTE analyze_string32(char *pr,UINT32 *converted_value)
         {
             if ((pr[cp]>='0')&&(pr[cp]<='9'))
             {
-                *converted_value=*converted_value+(((UINT32)(pr[cp]-'0'))*power10_32(co-cp-1));
+                *converted_value=*converted_value+(((uint32_t)(pr[cp]-'0'))*power10_32(co-cp-1));
                 cp++;
             }
             else
@@ -71,11 +71,11 @@ BYTE analyze_string32(char *pr,UINT32 *converted_value)
  * @brief Parse a decimal or hexadecimal (0x prefix) string into a 16-bit integer.
  * @param pr Input decimal or 0x-prefixed hex string
  * @param converted_value Output parsed value
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE analyze_string(char *pr,UINT *converted_value)
+uint8_t analyze_string(char *pr,uint16_t *converted_value)
 {
-    BYTE co,error;
+    uint8_t co,error;
     
     if ((pr[0]=='0')&&((pr[1]=='x')||(pr[1]=='X')))
     {
@@ -147,12 +147,12 @@ BYTE analyze_string(char *pr,UINT *converted_value)
 /**
  * @brief Convert a decimal ASCII string to a 16-bit unsigned integer.
  * @param pr Decimal ASCII string
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT chardectoi(char *pr)
+uint16_t chardectoi(char *pr)
 {
-    BYTE co,max;
-    UINT32 result;
+    uint8_t co,max;
+    uint32_t result;
 
     co=0;
     result=0;
@@ -169,7 +169,7 @@ UINT chardectoi(char *pr)
         {
             if ((pr[co] >='0')&&(pr[co]<='9'))
             {
-                result+=(UINT32)((pr[co]-'0')*power10(max-co));
+                result+=(uint32_t)((pr[co]-'0')*power10(max-co));
                 co++;
             }
             else
@@ -186,16 +186,16 @@ UINT chardectoi(char *pr)
     if (result>65535)
         result=0;
 
-    return (UINT)result;
+    return (uint16_t)result;
 
 }
 
 /**
  * @brief Convert a hexadecimal ASCII string with 0x prefix to unsigned integer.
  * @param pr Hexadecimal ASCII string with 0x prefix
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT charhextoi(char *pr)
+uint16_t charhextoi(char *pr)
 {
 	int co;
 	int erreur=0;
@@ -233,9 +233,9 @@ UINT charhextoi(char *pr)
 /**
  * @brief Compute 10 raised to power c as a 16-bit value.
  * @param c Exponent (power of 10)
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT power10(BYTE c)
+uint16_t power10(uint8_t c)
 {
     unsigned int value;
     unsigned char k;

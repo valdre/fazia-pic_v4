@@ -2,13 +2,13 @@
 
 set(PACK_REPO_PATH "/home/baptiste/.mchp_packs" CACHE PATH "Path to the root of a pack repository.")
 
-function(FrontEnd_SSC_default_default_XC8_assemble_rule target)
+function(fazia_pic_ModernXC8_default_default_XC8_assemble_rule target)
     set(options
         "-c"
         "${MP_EXTRA_AS_PRE}"
         "-mcpu=18F46K20"
         "${DEBUGGER_NAME}"
-        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.15.303/xc8"
+        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.16.308/xc8"
         "-fno-short-double"
         "-fno-short-float"
         "-memi=wordwrite"
@@ -31,14 +31,14 @@ function(FrontEnd_SSC_default_default_XC8_assemble_rule target)
         PRIVATE "__DEBUG=1"
         PRIVATE "XPRJ_default=default")
 endfunction()
-function(FrontEnd_SSC_default_default_XC8_assemblePreprocess_rule target)
+function(fazia_pic_ModernXC8_default_default_XC8_assemblePreprocess_rule target)
     set(options
         "-c"
         "${MP_EXTRA_AS_PRE}"
         "-mcpu=18F46K20"
         "-x"
         "assembler-with-cpp"
-        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.15.303/xc8"
+        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.16.308/xc8"
         "-fno-short-double"
         "-fno-short-float"
         "-memi=wordwrite"
@@ -61,13 +61,13 @@ function(FrontEnd_SSC_default_default_XC8_assemblePreprocess_rule target)
         PRIVATE "__DEBUG=1"
         PRIVATE "XPRJ_default=default")
 endfunction()
-function(FrontEnd_SSC_default_default_XC8_compile_rule target)
+function(fazia_pic_ModernXC8_default_default_XC8_compile_rule target)
     set(options
         "-c"
         "${MP_EXTRA_CC_PRE}"
         "-mcpu=18F46K20"
         "${DEBUGGER_NAME}"
-        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.15.303/xc8"
+        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.16.308/xc8"
         "-fno-short-double"
         "-fno-short-float"
         "-memi=wordwrite"
@@ -90,14 +90,14 @@ function(FrontEnd_SSC_default_default_XC8_compile_rule target)
         PRIVATE "__DEBUG=1"
         PRIVATE "XPRJ_default=default")
 endfunction()
-function(FrontEnd_SSC_default_link_rule target)
+function(fazia_pic_ModernXC8_default_link_rule target)
     set(options
         "-Wl,-Map=mem.map"
         "${MP_EXTRA_LD_PRE}"
         "-mcpu=18F46K20"
         "${DEBUGGER_NAME}"
         "-Wl,--defsym=__MPLAB_BUILD=1"
-        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.15.303/xc8"
+        "-mdfp=${PACK_REPO_PATH}/Microchip/PIC18F-K_DFP/1.16.308/xc8"
         "-fno-short-double"
         "-fno-short-float"
         "-memi=wordwrite"

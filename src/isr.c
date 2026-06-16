@@ -9,16 +9,16 @@
 #include "functions.h"
 
 
-extern ram UINT32 time_scheduling;
+extern ram uint32_t time_scheduling;
 
 // UART ISR vars
 static unsigned char ch;
 
 // TIMER0 ISR vars
-extern ram BOOL both_fpga_ok;
-extern ram BOOL check;
+extern ram bool both_fpga_ok;
+extern ram bool check;
 
-extern ram UINT max;
+extern ram uint16_t max;
 
 extern CBuffer_large _Uart[2];
 extern CBuffer_large *Uart;
@@ -38,9 +38,9 @@ extern CBuffer_large *Uart;
  */
 void isr(void) 
 {   
-    UINT test;
+    uint16_t test;
     
-    test = (UINT)FSR1L+(UINT)(FSR1H<<8);
+    test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
     if (test>max)
         max = test;
     
@@ -52,7 +52,7 @@ void isr(void)
     
     if (PIR1bits.RCIF) 
     {
-        test = (UINT)FSR1L+(UINT)(FSR1H<<8);
+        test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
         if (test>max)
             max = test;
         

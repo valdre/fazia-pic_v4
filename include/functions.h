@@ -99,12 +99,12 @@
 #define EEPROM_CAL_ADC_B2_LINEAR_COEFF 716
 #define EEPROM_CAL_ADC_B2_LINEAR_CONST 720
 ram struct parametres {
-    UINT voltage_preamp1b;
-    UINT voltage_preamp2b;
-    UINT voltage_preamp3b;
-    UINT voltage_preamp1a;
-    UINT voltage_preamp2a;
-    UINT voltage_preamp3a;
+    uint16_t voltage_preamp1b;
+    uint16_t voltage_preamp2b;
+    uint16_t voltage_preamp3b;
+    uint16_t voltage_preamp1a;
+    uint16_t voltage_preamp2a;
+    uint16_t voltage_preamp3a;
 };
 
 /**
@@ -124,7 +124,7 @@ void func_init(void);
  * @retval FUNC_EXEC_BAD_ARGS_VALUE Invalid argument value in request.
  * @retval FUNC_EXEC_INPROGRESS Command accepted and still executing asynchronously.
  */
-BYTE func_invoke(unsigned char code, char *data, char *result);
+uint8_t func_invoke(unsigned char code, char *data, char *result);
 
 /**
  * @brief Simple echo command implementation used for communication tests.
@@ -132,7 +132,7 @@ BYTE func_invoke(unsigned char code, char *data, char *result);
  * @param result Output buffer that receives the same data.
  * @return Execution status code.
  */
-BYTE f_echo(char *data, char *result);
+uint8_t f_echo(char *data, char *result);
 
 /**
  * @brief Perform a software reset of the PIC MCU.
@@ -140,7 +140,7 @@ BYTE f_echo(char *data, char *result);
  * @param result Output buffer for status or diagnostic data.
  * @return Execution status code.
  */
-BYTE resetPIC(char *data, char *result);
+uint8_t resetPIC(char *data, char *result);
 
 /**
  * @brief Read the board serial number and return it to the host.
@@ -148,7 +148,7 @@ BYTE resetPIC(char *data, char *result);
  * @param result Output buffer containing the serial number string.
  * @return Execution status code.
  */
-BYTE setGetSN(char *data, char *result);
+uint8_t setGetSN(char *data, char *result);
 
 /**
  * @brief Configure the CSI relay state from UART command data.
@@ -156,7 +156,7 @@ BYTE setGetSN(char *data, char *result);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE uart_csi_relay(char *data, char *result);
+uint8_t uart_csi_relay(char *data, char *result);
 
 /**
  * @brief Issue a reset sequence to both connected FPGA devices.
@@ -164,7 +164,7 @@ BYTE uart_csi_relay(char *data, char *result);
  * @param result Reply buffer.
  * @return Execution status code.
  */
-BYTE uart_reset_both_fpga(char *data, char *result);
+uint8_t uart_reset_both_fpga(char *data, char *result);
 
 /**
  * @brief Retrieve the current high-voltage module status flags.
@@ -172,7 +172,7 @@ BYTE uart_reset_both_fpga(char *data, char *result);
  * @param result Output buffer containing HV status bytes.
  * @return Execution status code.
  */
-BYTE giveHvStatus(char *data, char *result);
+uint8_t giveHvStatus(char *data, char *result);
 
 /**
  * @brief Configure the high-voltage routing for CSI and AB detector chains.
@@ -180,14 +180,14 @@ BYTE giveHvStatus(char *data, char *result);
  * @param result Output state buffer.
  * @return Execution status code.
  */
-BYTE setHVCsiAB(char *data, char *result);
+uint8_t setHVCsiAB(char *data, char *result);
 
 /**
  * @brief Execute a preamplifier diagnostic routine.
  * @param preamp Identifier of the preamplifier channel to test.
  * @return Execution status code.
  */
-BYTE preamplifier_test(BYTE preamp);
+uint8_t preamplifier_test(uint8_t preamp);
 
 /**
  * @brief Handle a UART request to execute a preamplifier test.
@@ -195,7 +195,7 @@ BYTE preamplifier_test(BYTE preamp);
  * @param result Output buffer containing the test result.
  * @return Execution status code.
  */
-BYTE uart_preamplifier_test(char *data, char *result);
+uint8_t uart_preamplifier_test(char *data, char *result);
 
 /**
  * @brief Apply automatic offset calibration to preamplifier outputs.
@@ -203,7 +203,7 @@ BYTE uart_preamplifier_test(char *data, char *result);
  * @param result Output status or error code.
  * @return Execution status code.
  */
-BYTE setautoffset(char *data, char *result);
+uint8_t setautoffset(char *data, char *result);
 
 /**
  * @brief Enable or disable high-voltage measurement mode.
@@ -211,7 +211,7 @@ BYTE setautoffset(char *data, char *result);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE enDesHVdev(char *data, char *result);
+uint8_t enDesHVdev(char *data, char *result);
 
 /**
  * @brief Report the current generator DAC voltage.
@@ -219,7 +219,7 @@ BYTE enDesHVdev(char *data, char *result);
  * @param result Output buffer containing the generator DAC voltage.
  * @return Execution status code.
  */
-BYTE getGeneDacVoltage(char *data, char *result);
+uint8_t getGeneDacVoltage(char *data, char *result);
 
 /**
  * @brief Query the current leak current for a detector channel.
@@ -228,7 +228,7 @@ BYTE getGeneDacVoltage(char *data, char *result);
  * @param lc Pointer to output the computed leak current.
  * @return Execution status code.
  */
-BYTE getCurrent(char tel, char module, UINT *lc);
+uint8_t getCurrent(char tel, char module, uint16_t *lc);
 
 /**
  * @brief Retrieve the configured high-voltage values.
@@ -236,14 +236,14 @@ BYTE getCurrent(char tel, char module, UINT *lc);
  * @param result Output buffer for formatted HV data.
  * @return Execution status code.
  */
-BYTE get_HV(char *data, char *result);
+uint8_t get_HV(char *data, char *result);
 
 /**
  * @brief Read a converted ADC value from the selected ADS8332 channel.
  * @param canal Pointer to the channel identifier.
  * @return 16-bit ADC conversion result.
  */
-UINT getHvValue(BYTE *canal);
+uint16_t getHvValue(uint8_t *canal);
 
 /**
  * @brief Return the FPGA firmware version information.
@@ -251,7 +251,7 @@ UINT getHvValue(BYTE *canal);
  * @param result Output buffer receiving FPGA version data.
  * @return Execution status code.
  */
-BYTE get_fpga_version(char *data, char *result);
+uint8_t get_fpga_version(char *data, char *result);
 
 /**
  * @brief Placeholder command handler for undefined command slots.
@@ -259,7 +259,7 @@ BYTE get_fpga_version(char *data, char *result);
  * @param result Output buffer.
  * @return Execution status code indicating undefined command.
  */
-BYTE nullFunc(char *data, char *result);
+uint8_t nullFunc(char *data, char *result);
 
 /**
  * @brief Read raw ADS8332 sample data and format it for the UART response.
@@ -267,7 +267,7 @@ BYTE nullFunc(char *data, char *result);
  * @param result Output buffer containing ADC data.
  * @return Execution status code.
  */
-BYTE get_ads8332(char *data, char *result);
+uint8_t get_ads8332(char *data, char *result);
 
 /**
  * @brief Retrieve the PIC firmware version.
@@ -275,7 +275,7 @@ BYTE get_ads8332(char *data, char *result);
  * @param result Output buffer receiving version text.
  * @return Execution status code.
  */
-BYTE get_pic_version(char *data, char *result);
+uint8_t get_pic_version(char *data, char *result);
 
 /**
  * @brief Compute and return leak current metrics from ADC readback.
@@ -283,7 +283,7 @@ BYTE get_pic_version(char *data, char *result);
  * @param result Output buffer for leak current values.
  * @return Execution status code.
  */
-BYTE get_leak_current(char *data, char *result);
+uint8_t get_leak_current(char *data, char *result);
 
 /**
  * @brief Set pulse generator timing parameters.
@@ -291,7 +291,7 @@ BYTE get_leak_current(char *data, char *result);
  * @param result Output buffer for status.
  * @return Execution status code.
  */
-BYTE set_pulse_parameters(char *data, char *result);
+uint8_t set_pulse_parameters(char *data, char *result);
 
 /**
  * @brief Configure a preamplifier voltage using UART command data.
@@ -299,7 +299,7 @@ BYTE set_pulse_parameters(char *data, char *result);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE set_voltage_preamplifier(char *data, char *result);
+uint8_t set_voltage_preamplifier(char *data, char *result);
 
 /**
  * @brief Increment or decrement the high-voltage setpoint.
@@ -307,7 +307,7 @@ BYTE set_voltage_preamplifier(char *data, char *result);
  * @param result Output buffer containing the new state.
  * @return Execution status code.
  */
-BYTE incdecHV(char *data, char *result);
+uint8_t incdecHV(char *data, char *result);
 
 /**
  * @brief Return the configured inspection interval.
@@ -315,7 +315,7 @@ BYTE incdecHV(char *data, char *result);
  * @param result Output buffer receiving the inspection time.
  * @return Execution status code.
  */
-BYTE getInspecTime(char *data, char *result);
+uint8_t getInspecTime(char *data, char *result);
 
 /**
  * @brief Return software stack information for diagnostics.
@@ -323,7 +323,7 @@ BYTE getInspecTime(char *data, char *result);
  * @param result Output buffer receiving stack usage or status.
  * @return Execution status code.
  */
-BYTE getSoftStack(char *data, char *result);
+uint8_t getSoftStack(char *data, char *result);
 
 /**
  * @brief Configure the inspection interval used by the leak current scheduler.
@@ -331,7 +331,7 @@ BYTE getSoftStack(char *data, char *result);
  * @param result Output buffer for status or error.
  * @return Execution status code.
  */
-BYTE setInspecTime(char *data, char *result);
+uint8_t setInspecTime(char *data, char *result);
 
 /**
  * @brief Set the HV output value for a detector channel.
@@ -339,7 +339,7 @@ BYTE setInspecTime(char *data, char *result);
  * @param result Output buffer for status.
  * @return Execution status code.
  */
-BYTE set_vhv(char *data, char *result);
+uint8_t set_vhv(char *data, char *result);
 
 /**
  * @brief Query the current temperatures from onboard sensors.
@@ -347,7 +347,7 @@ BYTE set_vhv(char *data, char *result);
  * @param result Output buffer receiving formatted temperature values.
  * @return Execution status code.
  */
-BYTE get_temp(char *data, char *result);
+uint8_t get_temp(char *data, char *result);
 
 /**
  * @brief Return the maximum configured high-voltage limits.
@@ -355,7 +355,7 @@ BYTE get_temp(char *data, char *result);
  * @param result Output buffer for the HV limits.
  * @return Execution status code.
  */
-BYTE get_hvmax(char *data, char *result);
+uint8_t get_hvmax(char *data, char *result);
 
 /**
  * @brief Apply a hardware maximum voltage limit to a detector module.
@@ -364,7 +364,7 @@ BYTE get_hvmax(char *data, char *result);
  * @param tension_max Maximum voltage limit in applied units.
  * @return Execution status code.
  */
-BYTE apply_hvmax(char tel, char module, UINT tension_max);
+uint8_t apply_hvmax(char tel, char module, uint16_t tension_max);
 
 /**
  * @brief Enable or disable the HV measurement channel in the firmware.
@@ -372,7 +372,7 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE enableDisableHVMeas(char *data, char *result);
+uint8_t enableDisableHVMeas(char *data, char *result);
 
 /**
  * @brief Set the high-voltage maximum value from UART command input.
@@ -380,7 +380,7 @@ BYTE enableDisableHVMeas(char *data, char *result);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE set_hvmax(char *data, char *result);
+uint8_t set_hvmax(char *data, char *result);
 
 /**
  * @brief Request a high-voltage calibration procedure over UART.
@@ -388,7 +388,7 @@ BYTE set_hvmax(char *data, char *result);
  * @param result Output buffer receiving calibration status.
  * @return Execution status code.
  */
-BYTE uart_ask_hv_calibration(char *data, char *result);
+uint8_t uart_ask_hv_calibration(char *data, char *result);
 
 /**
  * @brief Store runtime parameters into EEPROM persistent storage.
@@ -396,7 +396,7 @@ BYTE uart_ask_hv_calibration(char *data, char *result);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE store_param(char *data, char *result);
+uint8_t store_param(char *data, char *result);
 
 /**
  * @brief Set the EEPROM address pointer used by subsequent data reads.
@@ -404,7 +404,7 @@ BYTE store_param(char *data, char *result);
  * @param result Output status buffer.
  * @return Execution status code.
  */
-BYTE set_data_eeprom_address(char *data, char *result);
+uint8_t set_data_eeprom_address(char *data, char *result);
 
 /**
  * @brief Read data from the current EEPROM address pointer.
@@ -412,7 +412,7 @@ BYTE set_data_eeprom_address(char *data, char *result);
  * @param result Output buffer receiving EEPROM data.
  * @return Execution status code.
  */
-BYTE get_data_eeprom_address(char *data, char *result);
+uint8_t get_data_eeprom_address(char *data, char *result);
 
 /**
  * @brief Persist a byte value into the on-board EEPROM.
@@ -434,48 +434,48 @@ unsigned char EERead(unsigned int ad);
  * @param converted_value Output pointer for the parsed value.
  * @return Zero on success, non-zero on failure.
  */
-BYTE analyze_string(char *pr,UINT *converted_value);
+uint8_t analyze_string(char *pr,uint16_t *converted_value);
 
 /**
  * @brief Convert a decimal ASCII string to an unsigned integer.
  * @param pr Input ASCII decimal string.
  * @return Parsed unsigned integer.
  */
-UINT chardectoi(char *pr);
+uint16_t chardectoi(char *pr);
 
 /**
  * @brief Convert a hexadecimal ASCII string to an unsigned integer.
  * @param pr Input ASCII hexadecimal string.
  * @return Parsed unsigned integer.
  */
-UINT charhextoi(char *pr);
+uint16_t charhextoi(char *pr);
 
 /**
  * @brief Compute 10 raised to the given power.
  * @param c Exponent value.
  * @return 10^c.
  */
-UINT power10(BYTE c);
+uint16_t power10(uint8_t c);
 
 /**
  * @brief Compute a 32-bit power of 10.
  * @param c Exponent value.
  * @return 10^c as a 32-bit unsigned value.
  */
-UINT32 power10_32(BYTE c);
+uint32_t power10_32(uint8_t c);
 
 /**
  * @brief Initialize the temperature sensor interface.
  * @return Execution status code.
  */
-BYTE temp_init(void);
+uint8_t temp_init(void);
 
 /**
  * @brief Read the temperature sensors and store their results.
  * @param temperature Output array for temperature values.
  * @return Number of successful temperature reads.
  */
-BYTE temp(int *temperature);
+uint8_t temp(int *temperature);
 
 /**
  * @brief Send the initial start sequence for 1-Wire temperature conversion.
@@ -499,42 +499,42 @@ void attente_bit1(char c);
  * @param c Nibble value 0..15.
  * @return ASCII character corresponding to c.
  */
-BYTE asciiconv(BYTE c);
+uint8_t asciiconv(uint8_t c);
 
 /**
  * @brief Convert a 16-bit unsigned value to an ASCII hex string.
  * @param value Value to convert.
  * @param s Output buffer for 4 ASCII hex digits.
  */
-void uinttoa(UINT value, BYTE *s);
+void uinttoa(uint16_t value, uint8_t *s);
 
 /**
  * @brief Output a 16-bit unsigned integer over USART as ASCII.
  * @param value Value to send.
  * @return Last transmitted character.
  */
-char dispuinttochar(UINT value);
+char dispuinttochar(uint16_t value);
 
 /**
  * @brief Output a 32-bit unsigned integer over USART as ASCII.
  * @param value Value to send.
  * @return Last transmitted character.
  */
-char dispuint32tochar(UINT32 value);
+char dispuint32tochar(uint32_t value);
 
 /**
  * @brief Output an unsigned integer in binary format over USART.
  * @param a Value to display.
  * @return Last transmitted character.
  */
-char dispinttobin (UINT a);
+char dispinttobin (uint16_t a);
 
 /**
  * @brief Output a byte in binary format over USART.
  * @param c Value to display.
  * @return Last transmitted character.
  */
-char dispchartobin(BYTE c);
+char dispchartobin(uint8_t c);
 
 /**
  * @brief Copy an unsigned integer into a character buffer with terminator.
@@ -542,7 +542,7 @@ char dispchartobin(BYTE c);
  * @param a Value to copy.
  * @param cend Terminator character.
  */
-void myStrCpyUint(char *container,UINT a,char cend);
+void myStrCpyUint(char *container,uint16_t a,char cend);
 
 /**
  * @brief Copy a byte value into a string buffer as digits.
@@ -550,7 +550,7 @@ void myStrCpyUint(char *container,UINT a,char cend);
  * @param a Byte value.
  * @param cend Terminator character.
  */
-void myStrCpyByte(char *container,BYTE a,char cend);
+void myStrCpyByte(char *container,uint8_t a,char cend);
 
 /**
  * @brief Append a string into a destination buffer.
@@ -583,7 +583,7 @@ void myStrCpy1Char(char *container,char c,char cend);
  * @param format Field width or -1 for minimal output.
  * @param cend Terminator character appended after the value.
  */
-void myStrCpyHex(char *container,UINT a,int format,char cend);
+void myStrCpyHex(char *container,uint16_t a,int format,char cend);
 
 /**
  * @brief Configure a register value via SPI from a UART command.
@@ -591,7 +591,7 @@ void myStrCpyHex(char *container,UINT a,int format,char cend);
  * @param result Output response buffer.
  * @return Execution status code.
  */
-BYTE spi_set_regvalue(char *data, char *result);
+uint8_t spi_set_regvalue(char *data, char *result);
 
 /**
  * @brief Read a register value via SPI and return it over UART.
@@ -599,7 +599,7 @@ BYTE spi_set_regvalue(char *data, char *result);
  * @param result Output buffer containing register data.
  * @return Execution status code.
  */
-BYTE spi_get_regvalue(char *data,char *result);
+uint8_t spi_get_regvalue(char *data,char *result);
 
 /**
  * @brief Read an FPGA register over SPI.
@@ -607,7 +607,7 @@ BYTE spi_get_regvalue(char *data,char *result);
  * @param adr Register address to read.
  * @return Register value.
  */
-UINT rdspi(char id_fpga,unsigned int adr);
+uint16_t rdspi(char id_fpga,unsigned int adr);
 
 /**
  * @brief Write a register into an FPGA via SPI.
@@ -629,42 +629,42 @@ void myputsspi(int co, unsigned char *wrptr);
  * @param value Offset code.
  * @return Execution status code.
  */
-BYTE set_off_V_preamp1a(UINT value);
+uint8_t set_off_V_preamp1a(uint16_t value);
 
 /**
  * @brief Set the offset voltage for preamplifier channel 1B.
  * @param value Offset code.
  * @return Execution status code.
  */
-BYTE set_off_V_preamp1b(UINT value);
+uint8_t set_off_V_preamp1b(uint16_t value);
 
 /**
  * @brief Set the offset voltage for preamplifier channel 2A.
  * @param value Offset code.
  * @return Execution status code.
  */
-BYTE set_off_V_preamp2a(UINT value);
+uint8_t set_off_V_preamp2a(uint16_t value);
 
 /**
  * @brief Set the offset voltage for preamplifier channel 2B.
  * @param value Offset code.
  * @return Execution status code.
  */
-BYTE set_off_V_preamp2b(UINT value);
+uint8_t set_off_V_preamp2b(uint16_t value);
 
 /**
  * @brief Set the offset voltage for preamplifier channel 3A.
  * @param value Offset code.
  * @return Execution status code.
  */
-BYTE set_off_V_preamp3a(UINT value);
+uint8_t set_off_V_preamp3a(uint16_t value);
 
 /**
  * @brief Set the offset voltage for preamplifier channel 3B.
  * @param value Offset code.
  * @return Execution status code.
  */
-BYTE set_off_V_preamp3b(UINT value);
+uint8_t set_off_V_preamp3b(uint16_t value);
 
 /**
  * @brief Reset both FPGA devices through control pins.
@@ -677,13 +677,13 @@ void reset_both_fpga(void);
  * @param result Output buffer for diagnostic data.
  * @return Execution status code.
  */
-BYTE func_test(char *data, char *result);
+uint8_t func_test(char *data, char *result);
 
 /**
  * @brief Read the board identity jumpers.
  * @return ASCII character representing the board ID.
  */
-BYTE getid(void);
+uint8_t getid(void);
 
 /**
  * @brief Initialize the DAC8568 and apply default configuration.
@@ -705,7 +705,7 @@ void dac_sequence(char ad,unsigned int data);
  * @param high_time High time in timer ticks.
  * @return Execution status or error code.
  */
-char pulser(UINT data, UINT period, UINT high_time);
+char pulser(uint16_t data, uint16_t period, uint16_t high_time);
 
 /**
  * @brief Initiate an HV calibration request string.
@@ -720,9 +720,9 @@ void ask_hv_calibration(char *str);
  * @param tension Target voltage in volts
  * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
  * @param eeprom_adr_const EEPROM address for the DAC calibration linear constant
- * @return value UINT32 DAC code corresponding to the target voltage
+ * @return value uint32_t DAC code corresponding to the target voltage
  */
-UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const);
+uint32_t get_value_dec(uint16_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.
@@ -732,7 +732,7 @@ UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const)
  * @param slopeVS Slope coefficient.
  * @return Execution status code.
  */
-BYTE slop_vhv(char tel,BYTE module,UINT tension,UINT32 slopeVS);
+uint8_t slop_vhv(char tel,uint8_t module,uint16_t tension,uint32_t slopeVS);
 
 /**
  * @brief Load runtime parameters from onboard EEPROM and sensors.
@@ -750,7 +750,7 @@ char storeparam(void);
  * @param pr Null-terminated input string.
  * @return Parsed integer value.
  */
-UINT htoi(const char *pr);
+uint16_t htoi(const char *pr);
 
 /**
  * @brief Acquire PIC ADC channel voltages into the provided buffer.
@@ -764,7 +764,7 @@ void get_PIC_AD_voltages(unsigned int *voltages);
  * @param result Output buffer receiving formatted values.
  * @return Execution status code.
  */
-BYTE getVoltages(char *data, char *result);
+uint8_t getVoltages(char *data, char *result);
 
 /**
  * @brief Read LTC switch analog voltages and report them.
@@ -772,7 +772,7 @@ BYTE getVoltages(char *data, char *result);
  * @param result Output buffer containing voltage values.
  * @return Execution status code.
  */
-BYTE getLTCswVoltages(char * data, char *result);
+uint8_t getLTCswVoltages(char * data, char *result);
 
 /**
  * @brief Read LTC linear converter input voltages and report them.
@@ -780,7 +780,7 @@ BYTE getLTCswVoltages(char * data, char *result);
  * @param result Output buffer containing voltage values.
  * @return Execution status code.
  */
-BYTE getLTClinVoltages(char * data, char *result);
+uint8_t getLTClinVoltages(char * data, char *result);
 
 /**
  * @brief Read multiple LTC2308 ADC channels selected by a mask.
@@ -788,7 +788,7 @@ BYTE getLTClinVoltages(char * data, char *result);
  * @param ADvoltages Output buffer receiving ADC results.
  * @return Execution status code.
  */
-BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages);
+uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages);
 
 /**
  * @brief Initialize the ADS8332 ADC device.
@@ -800,7 +800,7 @@ void adc_init(void);
  * @param canal Pointer to the channel index.
  * @return 16-bit channel reading.
  */
-UINT adc_getvalue(unsigned char *canal);
+uint16_t adc_getvalue(unsigned char *canal);
 
 /**
  * @brief Compute leakage current for the selected detector channel.
@@ -809,7 +809,7 @@ UINT adc_getvalue(unsigned char *canal);
  * @param lcAdcRead Raw ADC leak current reading.
  * @return Computed leak current in board units.
  */
-UINT leak_current (char tel, char module, UINT32 lcAdcRead);
+uint16_t leak_current (char tel, char module, uint32_t lcAdcRead);
 
 /**
  * @brief Compute the actual low-level leak current from the measured ADC value.
@@ -817,7 +817,7 @@ UINT leak_current (char tel, char module, UINT32 lcAdcRead);
  * @param result Output buffer containing computed leak current.
  * @return Execution status code.
  */
-BYTE get_leak_current(char *data, char *result);
+uint8_t get_leak_current(char *data, char *result);
 
 /**
  * @brief Enable or disable the high-voltage measurement function.
@@ -825,7 +825,7 @@ BYTE get_leak_current(char *data, char *result);
  * @param result Output buffer for status.
  * @return Execution status code.
  */
-BYTE enDesHVdev(char *data, char *result);
+uint8_t enDesHVdev(char *data, char *result);
 
 /**
  * @brief Request the maximum allowed high-voltage value for the current board.
@@ -833,7 +833,7 @@ BYTE enDesHVdev(char *data, char *result);
  * @param result Output buffer containing max HV values.
  * @return Execution status code.
  */
-BYTE get_hvmax(char *data, char *result);
+uint8_t get_hvmax(char *data, char *result);
 
 /**
  * @brief Set the maximum allowable high-voltage threshold via UART.
@@ -841,7 +841,7 @@ BYTE get_hvmax(char *data, char *result);
  * @param result Output buffer for status.
  * @return Execution status code.
  */
-BYTE set_hvmax(char *data, char *result);
+uint8_t set_hvmax(char *data, char *result);
 
 /**
  * @brief Run the high-voltage control routine.
@@ -855,13 +855,13 @@ void HVfunc(void);
  * @param lcAdcReadB1 ADC leak current reading for B1.
  * @param lcAdcReadB2 ADC leak current reading for B2.
  */
-void cal_HVfunc(UINT lcAdcReadA1,UINT lcAdcReadA2, UINT lcAdcReadB1, UINT lcAdcReadB2);
+void cal_HVfunc(uint16_t lcAdcReadA1,uint16_t lcAdcReadA2, uint16_t lcAdcReadB1, uint16_t lcAdcReadB2);
 
 /**
  * @brief Perform the scheduled leak current inspection routine.
  * @return Computed interval or leak inspection status.
  */
-UINT32 current_leak_inspection(void);
+uint32_t current_leak_inspection(void);
 
 /**
  * @brief Blink status LEDs in the primary pattern.
@@ -885,12 +885,12 @@ void pa_offset_settings(void);
  * @param t3 Third timestamp.
  * @return Timing difference.
  */
-UINT32 diffLcTime(UINT32 t1,UINT32 t2,UINT32 t3);
+uint32_t diffLcTime(uint32_t t1,uint32_t t2,uint32_t t3);
 
 /* EEPROM-backed leak-current thresholds (16-bit, stored as two 8-bit cells) */
-UINT getHighLcTrsh(void);
+uint16_t getHighLcTrsh(void);
 
-UINT getLowLcTrsh(void);
+uint16_t getLowLcTrsh(void);
 
 #endif
 

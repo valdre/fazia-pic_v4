@@ -10,7 +10,7 @@
 cmake_minimum_required(VERSION 3.24.0)
 set(CMAKE_SYSTEM_NAME "Generic")
 
-project(FrontEnd_SSC_default_project LANGUAGES C ASM)
+project(fazia_pic_ModernXC8_default_project LANGUAGES C ASM)
 
 include("${CMAKE_CURRENT_LIST_DIR}/.generated/main.cmake")
 

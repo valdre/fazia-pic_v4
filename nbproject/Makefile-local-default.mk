@@ -33,4 +33,4 @@ MP_CC_DIR="/opt/microchip/xc8/v3.10/bin"
 MP_AS_DIR="/opt/microchip/xc8/v3.10/bin"
 MP_LD_DIR="/opt/microchip/xc8/v3.10/bin"
 MP_AR_DIR="/opt/microchip/xc8/v3.10/bin"
-DFP_DIR=/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.15.303
+DFP_DIR=/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308

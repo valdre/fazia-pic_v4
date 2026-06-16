@@ -3,7 +3,7 @@
 #include <p18cxxx.h>
 
 
-extern BYTE valeur_portC;
+extern uint8_t valeur_portC;
 extern struct parametres pa;
 
 
@@ -123,42 +123,42 @@ void myputsspi(int co, unsigned char *wrptr)
         putcSPI(wrptr[cp]);
 }
 
-BYTE set_off_V_preamp3a(UINT value) //Si1A
+uint8_t set_off_V_preamp3a(uint16_t value) //Si1A
 {   
     pa.voltage_preamp3a=value;
     wrspi(1,REG_FPGA_PA_SI1,value);
     Delay10KTCYx(100);
 }
 
-BYTE set_off_V_preamp3b(UINT value) //Si1B
+uint8_t set_off_V_preamp3b(uint16_t value) //Si1B
 {
     pa.voltage_preamp3b=value;
     wrspi(2,REG_FPGA_PA_SI1,value);
     Delay10KTCYx(100);
 }
 
-BYTE set_off_V_preamp2a(UINT value) //Si2A
+uint8_t set_off_V_preamp2a(uint16_t value) //Si2A
 {
     pa.voltage_preamp2a=value;
     wrspi(1,REG_FPGA_PA_SI2,value);
     Delay10KTCYx(100);
 }
 
-BYTE set_off_V_preamp2b(UINT value) //Si2B
+uint8_t set_off_V_preamp2b(uint16_t value) //Si2B
 {
     pa.voltage_preamp2b=value;
     wrspi(2,REG_FPGA_PA_SI2,value);
     Delay10KTCYx(100);
 }
 
-BYTE set_off_V_preamp1a(UINT value) //CSIA
+uint8_t set_off_V_preamp1a(uint16_t value) //CSIA
 {
     pa.voltage_preamp1a=value;
     wrspi(1,REG_FPGA_PA_CSI,value);
     Delay10KTCYx(100);
 }
 
-BYTE set_off_V_preamp1b(UINT value) //CSIB
+uint8_t set_off_V_preamp1b(uint16_t value) //CSIB
 {
     pa.voltage_preamp1b=value;
     wrspi(2,REG_FPGA_PA_CSI,value);

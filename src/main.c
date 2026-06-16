@@ -39,90 +39,90 @@
 unsigned char fIn[MAX_FRAME_SIZE], fOut[MAX_FRAME_SIZE];
 char data[MAX_DATA_SIZE], result[SMALL_DATA_SIZE];
 char fpre[10];
-BYTE done, done2, done3, done4, done_ins, done6, done7;
-BYTE HvStatusOld[4];
-UINT HVmeas;
-UINT32 lcAdcReadA1, lcAdcReadA2, lcAdcReadB1, lcAdcReadB2;
+uint8_t done, done2, done3, done4, done_ins, done6, done7;
+uint8_t HvStatusOld[4];
+uint16_t HVmeas;
+uint32_t lcAdcReadA1, lcAdcReadA2, lcAdcReadB1, lcAdcReadB2;
 
-UINT32 HVmeas_bin;
+uint32_t HVmeas_bin;
 int temperature_array[nbcapteurs + 2];
-BYTE co;
-UINT rd_data_fpga1, rd_data_fpga2, get_data_fpga1;
+uint8_t co;
+uint16_t rd_data_fpga1, rd_data_fpga2, get_data_fpga1;
 char mmax[20];
-UINT i;
+uint16_t i;
 char kw;
-UINT idb;
+uint16_t idb;
 enum slaveid ids;
-BYTE cmd;
-BYTE cmdres, funcres;
-BYTE seq;
-UINT crc, docrc;
-UINT flen, foffset;
-UINT ferr;
+uint8_t cmd;
+uint8_t cmdres, funcres;
+uint8_t seq;
+uint16_t crc, docrc;
+uint16_t flen, foffset;
+uint16_t ferr;
 char myC[2];
 
 /*global variables*/
-BYTE valeur_portA;
-BYTE valeur_trisA;
-BYTE valeur_portB;
-BYTE valeur_trisB;
-BYTE valeur_portC;
-BYTE valeur_trisC;
-BYTE valeur_portD;
-BYTE valeur_trisD;
-BYTE valeur_trisE;
+uint8_t valeur_portA;
+uint8_t valeur_trisA;
+uint8_t valeur_portB;
+uint8_t valeur_trisB;
+uint8_t valeur_portC;
+uint8_t valeur_trisC;
+uint8_t valeur_portD;
+uint8_t valeur_trisD;
+uint8_t valeur_trisE;
 
 //global variable for high voltage modules
-BYTE enableHVMeas;
-UINT HvValueTab[4][2];
-UINT HvInc[4];
-BYTE HvStatus[4];
-UINT HvPhysTarget[4];
-UINT HvPhysCorrect[4];
-BYTE cal_preampli_offset;
-BYTE marge_pa_offset;
-BYTE default_DA1; //warning for a problem detected for the A1 detector
-BYTE default_DA2; //warning for a problem detected for the A2 detector
-BYTE default_DB1; //warning for a problem detected for the B1 detector
-BYTE default_DB2; //warning for a problem detected for the B2 detector
-UINT HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-UINT HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-UINT HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-UINT HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
-UINT32 coefA_A1; // coefficient required to determine the leakage current
-UINT32 coefA_A2; // coefficient required to determine the leakage current
-UINT32 coefA_B1; // coefficient required to determine the leakage current
-UINT32 coefA_B2; // coefficient required to determine the leakage current
-UINT32 coefB_A1; // coefficient required to determine the leakage current
-UINT32 coefB_A2; // coefficient required to determine the leakage current
-UINT32 coefB_B1; // coefficient required to determine the leakage current
-UINT32 coefB_B2; // coefficient required to determine the leakage current
+uint8_t enableHVMeas;
+uint16_t HvValueTab[4][2];
+uint16_t HvInc[4];
+uint8_t HvStatus[4];
+uint16_t HvPhysTarget[4];
+uint16_t HvPhysCorrect[4];
+uint8_t cal_preampli_offset;
+uint8_t marge_pa_offset;
+uint8_t default_DA1; //warning for a problem detected for the A1 detector
+uint8_t default_DA2; //warning for a problem detected for the A2 detector
+uint8_t default_DB1; //warning for a problem detected for the B1 detector
+uint8_t default_DB2; //warning for a problem detected for the B2 detector
+uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+uint32_t coefA_A1; // coefficient required to determine the leakage current
+uint32_t coefA_A2; // coefficient required to determine the leakage current
+uint32_t coefA_B1; // coefficient required to determine the leakage current
+uint32_t coefA_B2; // coefficient required to determine the leakage current
+uint32_t coefB_A1; // coefficient required to determine the leakage current
+uint32_t coefB_A2; // coefficient required to determine the leakage current
+uint32_t coefB_B1; // coefficient required to determine the leakage current
+uint32_t coefB_B2; // coefficient required to determine the leakage current
 
-ram UINT tsensor_1_min;
-ram UINT tsensor_1_max;
-ram UINT tsensor_limit;
-ram BYTE time_reset;
-ram BYTE time_start;
-ram BYTE time_bit0;
-ram BYTE time_bit1;
-ram BYTE time_wait;
-ram BYTE CSI_relay;
-ram UINT32 time_scheduling;
-ram UINT32 time_scheduling_copy;
-ram BOOL both_fpga_ok = FALSE;
-ram BOOL check = TRUE;
+ram uint16_t tsensor_1_min;
+ram uint16_t tsensor_1_max;
+ram uint16_t tsensor_limit;
+ram uint8_t time_reset;
+ram uint8_t time_start;
+ram uint8_t time_bit0;
+ram uint8_t time_bit1;
+ram uint8_t time_wait;
+ram uint8_t CSI_relay;
+ram uint32_t time_scheduling;
+ram uint32_t time_scheduling_copy;
+ram bool both_fpga_ok = FALSE;
+ram bool check = TRUE;
 ram long int HV_read_coefA[4];
 ram long int HV_read_coefB[4];
-ram UINT lcA1;
-ram UINT lcA2;
-ram UINT lcB1;
-ram UINT lcB2;
-ram UINT32 timing_inspection;
-ram UINT32 time_lc_prec;
-ram UINT32 shortInspecTime;
-ram UINT32 longInspecTime;
-ram UINT GeneDacVoltage;
-ram UINT max;
+ram uint16_t lcA1;
+ram uint16_t lcA2;
+ram uint16_t lcB1;
+ram uint16_t lcB2;
+ram uint32_t timing_inspection;
+ram uint32_t time_lc_prec;
+ram uint32_t shortInspecTime;
+ram uint32_t longInspecTime;
+ram uint16_t GeneDacVoltage;
+ram uint16_t max;
 struct parametres pa;
 #pragma udata
 char tel_table[4] = {'A', 'A', 'B', 'B'};
@@ -139,7 +139,7 @@ extern CBuffer_large *Uart;
  * @brief Main firmware entry point and primary execution loop.
  */
 void main(void) {
-    static BYTE canal;
+    static uint8_t canal;
     
     ucsetup();
     memsetup();
@@ -161,7 +161,7 @@ void main(void) {
     lcAdcReadB2 = 0;
 
     while (!both_fpga_ok) {
-        get_data_fpga1 = (UINT) (getid() << 1);
+        get_data_fpga1 = (uint16_t) (getid() << 1);
         wrspi(1, 0x02, get_data_fpga1);
         wrspi(2, 0x02, get_data_fpga1 + 0x01);
         rd_data_fpga1 = rdspi(1, 0x02);
@@ -194,14 +194,14 @@ void main(void) {
 
             if (HVmeas > 3) {
                 if ((co == 0) || (co == 2)) {
-                    HVmeas_bin = ((UINT32) HVmeas * coefHV_M200) / 1000;
+                    HVmeas_bin = ((uint32_t) HVmeas * coefHV_M200) / 1000;
                     HvInc[co] = coefHV_M200 / 100;
                 }
                 if ((co == 1) || (co == 3)) {
-                    HVmeas_bin = (((UINT32) HVmeas * coefHV_M400)) / 1000;
+                    HVmeas_bin = (((uint32_t) HVmeas * coefHV_M400)) / 1000;
                     HvInc[co] = coefHV_M400 / 100;
                 }
-                HvValueTab[co][0] = (UINT) HVmeas_bin;
+                HvValueTab[co][0] = (uint16_t) HVmeas_bin;
                 HvStatus[co] = 0;
             } else {
                 HvValueTab[co][0] = 0;
@@ -301,25 +301,25 @@ void main(void) {
 
         if (HvStatus[0] == 1) {
             canal = 0;
-            lcAdcReadA1 = ((UINT32) adc_getvalue(&canal));
+            lcAdcReadA1 = ((uint32_t) adc_getvalue(&canal));
         } else
             lcAdcReadA1 = 0;
 
         if (HvStatus[1] == 1) {
             canal = 1;
-            lcAdcReadA2 = ((UINT32) adc_getvalue(&canal));
+            lcAdcReadA2 = ((uint32_t) adc_getvalue(&canal));
         } else
             lcAdcReadA2 = 0;
 
         if (HvStatus[2] == 1) {
             canal = 2;
-            lcAdcReadB1 = ((UINT32) adc_getvalue(&canal));
+            lcAdcReadB1 = ((uint32_t) adc_getvalue(&canal));
         } else
             lcAdcReadB1 = 0;
 
         if (HvStatus[3] == 1) {
             canal = 3;
-            lcAdcReadB2 = ((UINT32) adc_getvalue(&canal));
+            lcAdcReadB2 = ((uint32_t) adc_getvalue(&canal));
         } else
             lcAdcReadB2 = 0;
 
@@ -418,10 +418,10 @@ void main(void) {
  * @param t1 Pointer to input/output buffer containing command data..
  * @param t2 Pointer to input/output buffer containing command data..
  * @param t3 Pointer to input/output buffer containing command data..
- * @return UINT32 status or result code.
+ * @return uint32_t status or result code.
  */
-UINT32 diffLcTime(UINT32 t1, UINT32 t2, UINT32 t3) {
-    UINT32 t4;
+uint32_t diffLcTime(uint32_t t1, uint32_t t2, uint32_t t3) {
+    uint32_t t4;
 
     if (t2 < 4294967294 - t3)
         t4 = t1 - t2;
@@ -435,13 +435,13 @@ UINT32 diffLcTime(UINT32 t1, UINT32 t2, UINT32 t3) {
  * @brief Apply current preamplifier offset calibration settings.
  */
 void pa_offset_settings(void) {
-    static BYTE state = 0;
+    static uint8_t state = 0;
     static char i;
     static long borne_lim_inf, borne_lim_sup;
-    static UINT value;
+    static uint16_t value;
     int regAdc1;
-    UINT regfpga, regfpga2, *p;
-    BYTE cp, co;
+    uint16_t regfpga, regfpga2, *p;
+    uint8_t cp, co;
     char id;
 
     cp = 0;
@@ -510,7 +510,7 @@ void pa_offset_settings(void) {
                 } while (co != 20);
                 if ((regAdc1 >= borne_lim_inf) && (regAdc1 < borne_lim_sup)) {
                     state = 1;
-                    p = ((UINT *) & pa) + 5 - i;
+                    p = ((uint16_t *) & pa) + 5 - i;
                     *p = value;
                     cp = 25;
                 }
@@ -544,13 +544,13 @@ void pa_offset_settings(void) {
  * and uses the `pendingFinalization` array to prevent repeated transitions for channels that have already reached their target.
  */
 void HVfunc(void) {
-    UINT HVvalue_meas;
-    BYTE cp;
-    BYTE HV_direction;
-    UINT32 deltaV;
-    UINT32 delta;
-    UINT32 gapV;
-    static BOOL pendingFinalization[4] = {FALSE, FALSE, FALSE, FALSE};
+    uint16_t HVvalue_meas;
+    uint8_t cp;
+    uint8_t HV_direction;
+    uint32_t deltaV;
+    uint32_t delta;
+    uint32_t gapV;
+    static bool pendingFinalization[4] = {FALSE, FALSE, FALSE, FALSE};
     delta = 0;
     HVvalue_meas = 0;
     
@@ -558,12 +558,12 @@ void HVfunc(void) {
         if (HvStatus[cp] == 0) { //down by default
             HV_direction = 0;
             if (HvValueTab[cp][0] < HvValueTab[cp][1]) { // if : measured is < to target
-                gapV = (UINT32) HvValueTab[cp][1]-(UINT32) HvValueTab[cp][0];
+                gapV = (uint32_t) HvValueTab[cp][1]-(uint32_t) HvValueTab[cp][0];
                 HV_direction = 1; //up
             } else { // else : measured is >= target
-                gapV = (UINT32) HvValueTab[cp][0]-(UINT32) HvValueTab[cp][1];
+                gapV = (uint32_t) HvValueTab[cp][0]-(uint32_t) HvValueTab[cp][1];
             }
-            deltaV = (UINT32) HvInc[cp]*4 * timing_HV / 1000;
+            deltaV = (uint32_t) HvInc[cp]*4 * timing_HV / 1000;
             if (!pendingFinalization[cp]) {
                 if (gapV <= deltaV) {
                     HvValueTab[cp][0] = HvValueTab[cp][1];
@@ -574,10 +574,10 @@ void HVfunc(void) {
                     }
                 } else {
                     if (HV_direction == 1) {
-                        HvValueTab[cp][0] += (UINT) deltaV;
+                        HvValueTab[cp][0] += (uint16_t) deltaV;
                     }
                     if (HV_direction == 0) {
-                        HvValueTab[cp][0] -= (UINT) deltaV;
+                        HvValueTab[cp][0] -= (uint16_t) deltaV;
                     }
                 }
                 dac_sequence(cp * 16, HvValueTab[cp][0]);
@@ -594,15 +594,15 @@ void HVfunc(void) {
 
 /**
  * @brief Perform periodic leakage current inspection for all detectors. and the high-voltage correction.
- * @return UINT32 status or result code.
+ * @return uint32_t status or result code.
  */
-UINT32 current_leak_inspection(void) {
-    BYTE compteur, module, flag;
+uint32_t current_leak_inspection(void) {
+    uint8_t compteur, module, flag;
     float Rd, HV;
-    UINT leakCur, hvInt;
-    UINT32 timing;
+    uint16_t leakCur, hvInt;
+    uint32_t timing;
     char tel;
-    UINT leak_current_table[4] = {lcA1, lcA2, lcB1, lcB2};
+    uint16_t leak_current_table[4] = {lcA1, lcA2, lcB1, lcB2};
     flag = 0;
     
     if (enableHVMeas == keyWordC) { // if autocorection is enable in the eeprom
@@ -617,7 +617,7 @@ UINT32 current_leak_inspection(void) {
                     Rd = Rd / ((float) leakCur);
                     Rd = Rd - 10200000;
                     HV = ((float) HvPhysTarget[compteur])*(1 + 10200000 / Rd);
-                    hvInt = (UINT) HV;
+                    hvInt = (uint16_t) HV;
 
                     if (HvPhysCorrect[compteur] != hvInt) {
                         if (hvInt != 0) {
@@ -646,17 +646,17 @@ UINT32 current_leak_inspection(void) {
 
 ///////////////////UARTFUNC FUNCTION//////////////////////////////
 
-//BYTE uartfunc(void) {
-//    static UINT i;
+//uint8_t uartfunc(void) {
+//    static uint16_t i;
 //    static char kw;
-//    static UINT idb;
+//    static uint16_t idb;
 //    static enum slaveid ids;
-//    static BYTE cmd;
-//    static BYTE cmdres, funcres;
-//    static BYTE seq;
-//    static UINT crc, docrc;
-//    static UINT flen, foffset;
-//    static UINT ferr;
+//    static uint8_t cmd;
+//    static uint8_t cmdres, funcres;
+//    static uint8_t seq;
+//    static uint16_t crc, docrc;
+//    static uint16_t flen, foffset;
+//    static uint16_t ferr;
 //    static char myC[2];
 //
 //    ferr = cbuffer_large_getframe_length(&Uart[SLAVE_RX], &flen, &foffset);

@@ -1,5 +1,5 @@
 #include "functions.h"
-extern BYTE valeur_portD;
+extern uint8_t valeur_portD;
 
 /******************* PIC A/D converter******************/
 void get_PIC_AD_voltages(unsigned int *ADvoltages) {
@@ -7,7 +7,7 @@ void get_PIC_AD_voltages(unsigned int *ADvoltages) {
     ADCON0 = 0b00010111;
     while (!PIR1bits.ADIF);
     ADCON0 = 0b00010100;
-    ADvoltages[0] = (((UINT) (ADRESH)) << 8) + ADRESL;
+    ADvoltages[0] = (((uint16_t) (ADRESH)) << 8) + ADRESL;
     //the real measured value is divided by two. So we have to multiply by 2
     ADvoltages[0] = ADvoltages[0] << 1;
 
@@ -15,7 +15,7 @@ void get_PIC_AD_voltages(unsigned int *ADvoltages) {
     ADCON0 = 0b00011011;
     while (!PIR1bits.ADIF);
     ADCON0 = 0b00011000;
-    ADvoltages[1] = (((UINT) (ADRESH)) << 8) + ADRESL;
+    ADvoltages[1] = (((uint16_t) (ADRESH)) << 8) + ADRESL;
     //the real measured value is divided by two. So we have to multiply by 2
     ADvoltages[1] = ADvoltages[1] << 1;
 
@@ -23,19 +23,19 @@ void get_PIC_AD_voltages(unsigned int *ADvoltages) {
     ADCON0 = 0b00011111;
     while (!PIR1bits.ADIF);
     ADCON0 = 0b00011100;
-    ADvoltages[2] = (((UINT) (ADRESH)) << 8) + ADRESL;
+    ADvoltages[2] = (((uint16_t) (ADRESH)) << 8) + ADRESL;
 }
 
 /**
  * @brief Retrieve and format the PIC ADC voltage readings for UART transmission.
  * @param data Input string (unused)
  * @param result Output buffer for formatted voltage results
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getVoltages(char *data, char *result) {
-    UINT voltages[3], decimaux,intpart;
-    UINT32 prov;
-    BYTE co, retval;
+uint8_t getVoltages(char *data, char *result) {
+    uint16_t voltages[3], decimaux,intpart;
+    uint32_t prov;
+    uint8_t co, retval;
     char tab[18];
 
     get_PIC_AD_voltages(voltages);
@@ -45,9 +45,9 @@ BYTE getVoltages(char *data, char *result) {
     for (co = 0; co < 3; co++)
     {
         intpart = voltages[co] / 310;
-        prov = ((UINT32) (voltages[co]-(intpart*310)))*3300;
+        prov = ((uint32_t) (voltages[co]-(intpart*310)))*3300;
         prov = prov / 1024;
-        decimaux = (UINT) prov;
+        decimaux = (uint16_t) prov;
         tab[0+6*co] = '0' + (char) (intpart);
         tab[1+6*co] = ',';
         tab[2+6*co] = '0' + (char) (decimaux / 100);
@@ -69,10 +69,10 @@ BYTE getVoltages(char *data, char *result) {
 }
 
 /***********LTC2308 converter for switching regulators*************/
-BYTE getLTCswVoltages(char * data, char *result)
+uint8_t getLTCswVoltages(char * data, char *result)
 {
-    BYTE retval;
-    UINT v[8];
+    uint8_t retval;
+    uint16_t v[8];
 
     // Switching regulators
     getLTC2308Voltages(0b00100000,v);
@@ -97,12 +97,12 @@ BYTE getLTCswVoltages(char * data, char *result)
  * @brief Measure and format linear regulator voltages from the LTC2308 ADC.
  * @param data Input string (unused)
  * @param result Output buffer for linear regulator voltages
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getLTClinVoltages(char * data, char *result)
+uint8_t getLTClinVoltages(char * data, char *result)
 {
-    BYTE retval;
-    UINT u[8];
+    uint8_t retval;
+    uint16_t u[8];
 
     // Linear regulators
     getLTC2308Voltages(0b00010000,u);
@@ -128,13 +128,13 @@ BYTE getLTClinVoltages(char * data, char *result)
  * @brief Communicate with the LTC2308 multi-channel ADC and extract voltage data.
  * @param mask Chip select mask
  * @param ADvoltages Array to store ADC readings
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
+uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages)
 {
-    BYTE din,co,os;
-    BYTE elt_ET,elt_OU;
-    UINT mot,mot2;
+    uint8_t din,co,os;
+    uint8_t elt_ET,elt_OU;
+    uint16_t mot,mot2;
 
     CloseSPI();
     OpenSPI(SPI_FOSC_16, MODE_00,SMPEND); // Mode (CKP,/CKE) with CKP = 0 and CKE = 1
@@ -147,7 +147,7 @@ BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
     PIR1bits.SSPIF=0;
     putcSPI(os);
     while (!PIR1bits.SSPIF); //SPI transmission and reception at the same time
-        mot=((UINT)SSPBUF)<<4;
+        mot=((uint16_t)SSPBUF)<<4;
     getcSPI();
 
     for (co=1;co<8;co++)
@@ -159,8 +159,8 @@ BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
         din = os + (co<<4);
         putcSPI(din);
         while (!PIR1bits.SSPIF);
-        mot=(((UINT)SSPBUF)<<4)&65520;
-        mot2=(UINT)(getcSPI());
+        mot=(((uint16_t)SSPBUF)<<4)&65520;
+        mot2=(uint16_t)(getcSPI());
         mot+=((mot2>>4)&15);
         ADvoltages[co-1]=mot;
     }
@@ -171,8 +171,8 @@ BYTE getLTC2308Voltages(BYTE mask, UINT *ADvoltages)
     PIR1bits.SSPIF=0;
     putcSPI(os);
     while (!PIR1bits.SSPIF);
-        mot=((((UINT)SSPBUF)<<4)&65520);
-    mot2=(UINT)(getcSPI());
+        mot=((((uint16_t)SSPBUF)<<4)&65520);
+    mot2=(uint16_t)(getcSPI());
     mot+=((mot2>>4)&15);
 
     ADvoltages[7]=mot;

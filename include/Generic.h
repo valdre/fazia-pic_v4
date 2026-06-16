@@ -12,28 +12,28 @@
 #define PROTECTED
 #define PRIVATE                 static
 
-typedef unsigned char       BYTE;               // 8-bit
+typedef unsigned char       uint8_t;               // 8-bit
 typedef unsigned short int  WORD;               // 16-bit
 typedef unsigned long       DWORD;              // 32-bit
 
-typedef unsigned int        UINT;
+typedef unsigned int        uint16_t;
 typedef unsigned char       UINT8;              // other name for 8-bit integer
 typedef unsigned short      UINT16;             // other name for 16-bit integer
-typedef unsigned long       UINT32;             // other name for 32-bit integer
+typedef unsigned long       uint32_t;             // other name for 32-bit integer
 
 
-typedef enum _BOOL { FALSE = 0, TRUE } BOOL;
+typedef enum _BOOL { FALSE = 0, TRUE } bool;
 
 typedef struct
 {
-    BYTE    b0:     1;
-    BYTE    b1:     1;
-    BYTE    b2:     1;
-    BYTE    b3:     1;
-    BYTE    b4:     1;
-    BYTE    b5:     1;
-    BYTE    b6:     1;
-    BYTE    b7:     1;
+    uint8_t    b0:     1;
+    uint8_t    b1:     1;
+    uint8_t    b2:     1;
+    uint8_t    b3:     1;
+    uint8_t    b4:     1;
+    uint8_t    b5:     1;
+    uint8_t    b6:     1;
+    uint8_t    b7:     1;
 
 }BYTE_BITS;
 typedef struct
@@ -59,7 +59,7 @@ typedef struct
 typedef union _BYTE_VAL
 {
     BYTE_BITS bits;
-    BYTE Val;
+    uint8_t Val;
 } BYTE_VAL;
 
 
@@ -69,8 +69,8 @@ typedef union _WORD_VAL
     WORD_BITS   bits;
     struct
     {
-        BYTE LB;
-        BYTE HB;
+        uint8_t LB;
+        uint8_t HB;
     } byte;
     struct
     {
@@ -78,7 +78,7 @@ typedef union _WORD_VAL
         BYTE_VAL    high;
     }byteUnion;
 
-    BYTE v[2];
+    uint8_t v[2];
 } WORD_VAL;
 
 typedef union _DWORD_VAL
@@ -86,10 +86,10 @@ typedef union _DWORD_VAL
     DWORD Val;
     struct
     {
-        BYTE LB;
-        BYTE HB;
-        BYTE UB;
-        BYTE MB;
+        uint8_t LB;
+        uint8_t HB;
+        uint8_t UB;
+        uint8_t MB;
     } byte;
     struct
     {
@@ -108,7 +108,7 @@ typedef union _DWORD_VAL
         BYTE_VAL    highLSB;
         BYTE_VAL    highMSB;
     }byteUnion;
-    BYTE v[4];
+    uint8_t v[4];
     WORD w[2];
 } DWORD_VAL;
 

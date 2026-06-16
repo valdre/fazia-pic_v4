@@ -1,30 +1,30 @@
 #include "functions.h"
 
-extern BYTE valeur_portB;
-extern BYTE valeur_portD;
+extern uint8_t valeur_portB;
+extern uint8_t valeur_portD;
 //extern ram unsigned int data_vhva1; // 200V high voltage module for A telescope
 //extern ram unsigned int data_vhva2; // 400V high voltage module for A telescope
 //extern ram unsigned int data_vhvb1; // 200V high voltage module for B telescope
 //extern ram unsigned int data_vhvb2; // 400V high voltage module for B telescope
-extern ram UINT HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-extern ram UINT HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-extern ram UINT HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-extern ram UINT HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
-extern UINT32 coefA_A1;
-extern UINT32 coefA_A2;
-extern UINT32 coefA_B1;
-extern UINT32 coefA_B2;
-extern UINT32 coefB_A1;
-extern UINT32 coefB_A2;
-extern UINT32 coefB_B1;
-extern UINT32 coefB_B2;
+extern ram uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+extern ram uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+extern ram uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+extern ram uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+extern uint32_t coefA_A1;
+extern uint32_t coefA_A2;
+extern uint32_t coefA_B1;
+extern uint32_t coefA_B2;
+extern uint32_t coefB_A1;
+extern uint32_t coefB_A2;
+extern uint32_t coefB_B1;
+extern uint32_t coefB_B2;
 
-extern UINT HvValueTab[4][2];
-extern UINT HvInc[4];
-extern BYTE HvStatus[4];
-extern UINT HvPhysCorrect[4];
-extern UINT32 time_scheduling;
-extern UINT32 time_scheduling_copy;
+extern uint16_t HvValueTab[4][2];
+extern uint16_t HvInc[4];
+extern uint8_t HvStatus[4];
+extern uint16_t HvPhysCorrect[4];
+extern uint32_t time_scheduling;
+extern uint32_t time_scheduling_copy;
 
 /**
  * @brief Initialize the ADS8332 analog-to-digital converter and configure SPI communication.
@@ -59,19 +59,19 @@ void adc_init(void) {
  * @param tel Telescope identifier (A or B)
  * @param module Module number (1 or 2)
  * @param lcAdcRead Pointer to input/output buffer containing command data..
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
-    BYTE   canal;
-    BYTE   sign;
-    BYTE   ad;
-    UINT32 *coeffA;
-    UINT32 *coeffB;
-    UINT32 inside_current;
-    UINT32 corrected_voltage;
-    UINT   lc = 0;
-    static UINT32 leakage_current;
-    static UINT32 leakage_current_na;
+uint16_t leak_current(char tel, char module, uint32_t lcAdcRead) {
+    uint8_t   canal;
+    uint8_t   sign;
+    uint8_t   ad;
+    uint32_t *coeffA;
+    uint32_t *coeffB;
+    uint32_t inside_current;
+    uint32_t corrected_voltage;
+    uint16_t   lc = 0;
+    static uint32_t leakage_current;
+    static uint32_t leakage_current_na;
     
     if (module == '1') {
         if (tel == 'B') {
@@ -139,7 +139,7 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
     leakage_current_na = leakage_current_na >> 8;
     while (TMR2 > 20); // wait
     leakage_current_na = leakage_current_na >> 8;
-    lc = (UINT)leakage_current_na;
+    lc = (uint16_t)leakage_current_na;
     return lc;
 }
 
@@ -148,12 +148,12 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
 /**
  * @brief Read a value from the specified ADC channel via SPI.
  * @param canal ADC channel number
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT adc_getvalue(unsigned char *canal)
+uint16_t adc_getvalue(unsigned char *canal)
 {
-    static BYTE data[2];
-    static UINT value,value2;
+    static uint8_t data[2];
+    static uint16_t value,value2;
     static unsigned char sequence[2];
 
     valeur_portB = valeur_portB|0b00100000;
@@ -206,8 +206,8 @@ UINT adc_getvalue(unsigned char *canal)
     PORTB = valeur_portB;
     
     //value = ((unsigned int)data[0]<<8) + (unsigned int)data[1];
-    value2 = (UINT)data[0];
-    value = (UINT)data[1];
+    value2 = (uint16_t)data[0];
+    value = (uint16_t)data[1];
     while (TMR2 > 50);
     value2 = value2<<8;
     value = value + value2;

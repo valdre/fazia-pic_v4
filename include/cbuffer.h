@@ -40,7 +40,7 @@ void cbuffer_large_init(CBuffer_large *cb);
  * @param ch Byte to append.
  * @return BUFFER_OK if the byte was stored, BUFFER_FULL if the buffer is full.
  */
-BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch);
+uint8_t cbuffer_large_write(CBuffer_large *cb, unsigned char ch);
 
 /**
  * @brief Read a byte from the circular buffer.
@@ -48,7 +48,7 @@ BYTE cbuffer_large_write(CBuffer_large *cb, unsigned char ch);
  * @param ch Output pointer for the read byte.
  * @return BUFFER_OK if a byte was available, BUFFER_EMPTY otherwise.
  */
-BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch);
+uint8_t cbuffer_large_read(CBuffer_large *cb, unsigned char *ch);
 
 /**
  * @brief Detect the size and offset of a complete frame stored in the circular buffer.
@@ -57,7 +57,7 @@ BYTE cbuffer_large_read(CBuffer_large *cb, unsigned char *ch);
  * @param foffset Output buffer offset at which the frame starts.
  * @return Error code describing frame validity.
  */
-UINT cbuffer_large_getframe_length(CBuffer_large *cb, UINT *flen, UINT *foffset);
+uint16_t cbuffer_large_getframe_length(CBuffer_large *cb, uint16_t *flen, uint16_t *foffset);
 
 /**
  * @brief Access the internal raw data pointer of a large circular buffer.

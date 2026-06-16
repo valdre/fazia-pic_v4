@@ -1,14 +1,14 @@
 #include "functions.h"
 
 
-/**********************Fonction qui retourne le numéro d'identification de la carte*******************/
+/**********************Fonction qui retourne le numï¿½ro d'identification de la carte*******************/
 /**
  * @brief Return the hardware board identifier.
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getid(void)
+uint8_t getid(void)
 {
-	BYTE id=0;
+	uint8_t id=0;
 
 	id |= GEOA0;
 	id |= GEOA1<<1;
@@ -20,11 +20,11 @@ BYTE getid(void)
 /**
  * @brief Convert a numeric nibble to its ASCII hexadecimal character.
  * @param c Nibble value (0-15)
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE asciiconv(BYTE c)
+uint8_t asciiconv(uint8_t c)
 {
-    BYTE asciivalue;
+    uint8_t asciivalue;
 
     asciivalue=0;
 
@@ -42,15 +42,15 @@ BYTE asciiconv(BYTE c)
  * @param value 16-bit integer to convert
  * @param s Output buffer (4 chars)
  */
-void uinttoa(UINT value, BYTE *s)
+void uinttoa(uint16_t value, uint8_t *s)
 {
-    BYTE co;
-    UINT mask;
+    uint8_t co;
+    uint16_t mask;
 
     mask=0xF000;
 
     for(co=0;co<4;co++)
-        s[co]=asciiconv((UINT)((value&(mask>>(4*co)))>>((3-co)*4)));
+        s[co]=asciiconv((uint16_t)((value&(mask>>(4*co)))>>((3-co)*4)));
 }
 
 /**
@@ -58,10 +58,10 @@ void uinttoa(UINT value, BYTE *s)
  * @param value 16-bit integer to transmit
  * @return char status or result code.
  */
-char dispuinttochar(UINT value)
+char dispuinttochar(uint16_t value)
 {
-    BYTE co;
-    BYTE s[4];
+    uint8_t co;
+    uint8_t s[4];
 
     uinttoa(value,s);
     for (co=0;co<4;co++)
@@ -75,7 +75,7 @@ char dispuinttochar(UINT value)
  * @param value 32-bit integer to transmit as binary
  * @return char status or result code.
  */
-char dispuint32tochar(UINT32 value)
+char dispuint32tochar(uint32_t value)
 {
     char co;
 
@@ -93,7 +93,7 @@ char dispuint32tochar(UINT32 value)
  * @param a 16-bit value to transmit as binary
  * @return char status or result code.
  */
-char dispinttobin(UINT a)
+char dispinttobin(uint16_t a)
 {
     int co;
 
@@ -110,7 +110,7 @@ char dispinttobin(UINT a)
  * @param c 8-bit byte to transmit as binary
  * @return char status or result code.
  */
-char dispchartobin(BYTE c)
+char dispchartobin(uint8_t c)
 {
     int co;
 
@@ -128,12 +128,12 @@ char dispchartobin(BYTE c)
  * @param a Integer value
  * @param cend Terminator character
  */
-void myStrCpyUint(char *container,UINT a,char cend)
+void myStrCpyUint(char *container,uint16_t a,char cend)
 {
-    UINT u[5];
-    UINT compt,comptInt;
+    uint16_t u[5];
+    uint16_t compt,comptInt;
     
-    u[4] = a-10*(a/10);  //unités
+    u[4] = a-10*(a/10);  //unitï¿½s
     u[3] = a-100*(a/100)-u[4];  //dizaines
     u[3] = u[3]/10;
     u[2] = a-1000*(a/1000)-(10*u[3])-u[4];  //centaines
@@ -176,10 +176,10 @@ void myStrCpyUint(char *container,UINT a,char cend)
  * @param a Byte value
  * @param cend Terminator character
  */
-void myStrCpyByte(char *container,BYTE a,char cend)
+void myStrCpyByte(char *container,uint8_t a,char cend)
 {
-    BYTE b[3];
-    UINT compt,comptInt;
+    uint8_t b[3];
+    uint16_t compt,comptInt;
     
     b[2] = a-10*(a/10);
     b[1] = a-100*(a/100)-b[2];
@@ -221,7 +221,7 @@ void myStrCpyByte(char *container,BYTE a,char cend)
  */
 void myStrCpyChar(char *container,char *chaine,char cend)
 {
-    UINT comptChain,compt;
+    uint16_t comptChain,compt;
     
     comptChain=0;
     compt=0;
@@ -247,7 +247,7 @@ void myStrCpyChar(char *container,char *chaine,char cend)
  */
 void myStrCpyChar2(char *container,const rom char *chaine,char cend)
 {
-    UINT comptChain,compt;
+    uint16_t comptChain,compt;
     
     comptChain=0;
     compt=0;
@@ -273,7 +273,7 @@ void myStrCpyChar2(char *container,const rom char *chaine,char cend)
  */
 void myStrCpy1Char(char *container,char c,char cend)
 {
-    UINT compt;
+    uint16_t compt;
     
     compt=0;
     while (container[compt]!='\0')
@@ -297,10 +297,10 @@ void myStrCpy1Char(char *container,char c,char cend)
  * @param format Hex format (8 or 16 bit)
  * @param cend Terminator character
  */
-void myStrCpyHex(char *container,UINT a,int format,char cend)
+void myStrCpyHex(char *container,uint16_t a,int format,char cend)
 {
-    UINT compt,comptInt;
-    BYTE co;
+    uint16_t compt,comptInt;
+    uint8_t co;
     char b[4];
     
     comptInt=0;

@@ -33,7 +33,7 @@ void uartbuf_init(void) {
  * @param channel UART channel identifier
  * @return unsigned char status or result code.
  */
-unsigned char *uartbuf_dump(UINT channel) {
+unsigned char *uartbuf_dump(uint16_t channel) {
    if ((channel == SLAVE_RX) || (channel == SLAVE_TX))
       return (cbuffer_large_dumpdata(&Uart[channel]));
    /*if (channel == SLAVE_HPTX)
@@ -44,7 +44,7 @@ unsigned char *uartbuf_dump(UINT channel) {
  * @brief Transmit all buffered data from the TX buffer via UART.
  * @param channel UART channel identifier
  */
-void uartbuf_flush(UINT channel) {
+void uartbuf_flush(uint16_t channel) {
 
    unsigned char ch;
 
@@ -84,9 +84,9 @@ void uartbuf_flush(UINT channel) {
  * @param f Output frame buffer
  * @param f Output frame buffer
  */
-void uartbuf_getframe(UINT channel, unsigned char *f, UINT flen, UINT foffset) {
+void uartbuf_getframe(uint16_t channel, unsigned char *f, uint16_t flen, uint16_t foffset) {
 
-   UINT i;
+   uint16_t i;
    unsigned char ch;
 
    if ((channel == SLAVE_TX) || (channel == SLAVE_RX)) {
@@ -128,10 +128,10 @@ void uartbuf_getframe(UINT channel, unsigned char *f, UINT flen, UINT foffset) {
  * @param channel UART channel
  * @param f Frame buffer to transmit
  */
-void uartbuf_putframe(UINT channel, unsigned char *f) {
+void uartbuf_putframe(uint16_t channel, unsigned char *f) {
 
-   UINT i;
-   UINT fsize = strlen((char *)f);
+   uint16_t i;
+   uint16_t fsize = strlen((char *)f);
 
    if ((channel == SLAVE_TX) || (channel == SLAVE_RX)) {
 

@@ -23,13 +23,13 @@ void uartbuf_init(void);
  * @param channel Buffer channel identifier.
  * @return Pointer to the internal data array.
  */
-unsigned char *uartbuf_dump(UINT channel);
+unsigned char *uartbuf_dump(uint16_t channel);
 
 /**
  * @brief Flush the specified UART buffer channel.
  * @param channel Buffer channel identifier.
  */
-void uartbuf_flush(UINT channel);
+void uartbuf_flush(uint16_t channel);
 
 /**
  * @brief Copy a frame from the UART receive buffer into a destination buffer.
@@ -38,14 +38,14 @@ void uartbuf_flush(UINT channel);
  * @param flen Length of the frame to copy.
  * @param foffset Offset into the internal buffer.
  */
-void uartbuf_getframe(UINT channel, unsigned char *f, UINT flen, UINT foffset);
+void uartbuf_getframe(uint16_t channel, unsigned char *f, uint16_t flen, uint16_t foffset);
 
 /**
  * @brief Enqueue a frame for UART transmission.
  * @param channel Buffer channel identifier.
  * @param f Source frame buffer.
  */
-void uartbuf_putframe(UINT channel, unsigned char *f);
+void uartbuf_putframe(uint16_t channel, unsigned char *f);
 
 #endif
 

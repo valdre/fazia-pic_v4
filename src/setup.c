@@ -10,80 +10,80 @@
 #define BAUDRATE  115200
 #define _SPBRG ((FOSC/BAUDRATE)/16)-1
 
-extern BYTE valeur_portA;
-extern BYTE valeur_trisA;
-extern BYTE valeur_portB;
-extern BYTE valeur_trisB;
-extern BYTE valeur_portC;
-extern BYTE valeur_trisC;
-extern BYTE valeur_portD;
-extern BYTE valeur_trisD;
-extern BYTE valeur_trisE;
+extern uint8_t valeur_portA;
+extern uint8_t valeur_trisA;
+extern uint8_t valeur_portB;
+extern uint8_t valeur_trisB;
+extern uint8_t valeur_portC;
+extern uint8_t valeur_trisC;
+extern uint8_t valeur_portD;
+extern uint8_t valeur_trisD;
+extern uint8_t valeur_trisE;
 
 
-extern UINT HvValueTab[4][2];
-extern UINT HvInc[4];
-extern BYTE HvStatus[4];
-extern BYTE enableHVMeas;
-extern UINT HvPhysTarget[4];
-extern UINT HvPhysCorrect[4];
+extern uint16_t HvValueTab[4][2];
+extern uint16_t HvInc[4];
+extern uint8_t HvStatus[4];
+extern uint8_t enableHVMeas;
+extern uint16_t HvPhysTarget[4];
+extern uint16_t HvPhysCorrect[4];
 
-extern UINT HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-extern UINT HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-extern UINT HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-extern UINT HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
 
-extern BYTE default_DA1; //warning for a problem detected for the A1 detector
-extern BYTE default_DA2; //warning for a problem detected for the A2 detector
-extern BYTE default_DB1; //warning for a problem detected for the B1 detector
-extern BYTE default_DB2; //warning for a problem detected for the B2 detector
+extern uint8_t default_DA1; //warning for a problem detected for the A1 detector
+extern uint8_t default_DA2; //warning for a problem detected for the A2 detector
+extern uint8_t default_DB1; //warning for a problem detected for the B1 detector
+extern uint8_t default_DB2; //warning for a problem detected for the B2 detector
 
 
-extern UINT32 coefA_A1;
-extern UINT32 coefA_A2;
-extern UINT32 coefA_B1;
-extern UINT32 coefA_B2;
-extern UINT32 coefB_A1;
-extern UINT32 coefB_A2;
-extern UINT32 coefB_B1;
-extern UINT32 coefB_B2;
+extern uint32_t coefA_A1;
+extern uint32_t coefA_A2;
+extern uint32_t coefA_B1;
+extern uint32_t coefA_B2;
+extern uint32_t coefB_A1;
+extern uint32_t coefB_A2;
+extern uint32_t coefB_B1;
+extern uint32_t coefB_B2;
 
-extern BYTE cal_preampli_offset;
-extern BYTE marge_pa_offset;
+extern uint8_t cal_preampli_offset;
+extern uint8_t marge_pa_offset;
 
-extern ram UINT tsensor_1_min;
-extern ram UINT tsensor_1_max;
-extern ram UINT tsensor_limit;
-extern ram BYTE time_reset;
-extern ram BYTE time_start;
-extern ram BYTE time_bit0;
-extern ram BYTE time_bit1;
-extern ram BYTE time_wait;
+extern ram uint16_t tsensor_1_min;
+extern ram uint16_t tsensor_1_max;
+extern ram uint16_t tsensor_limit;
+extern ram uint8_t time_reset;
+extern ram uint8_t time_start;
+extern ram uint8_t time_bit0;
+extern ram uint8_t time_bit1;
+extern ram uint8_t time_wait;
 
-extern ram BYTE CSI_relay;
+extern ram uint8_t CSI_relay;
 
-extern ram UINT32 time_scheduling;
-extern ram UINT32 shortInspecTime;
-extern ram UINT32 longInspecTime;
+extern ram uint32_t time_scheduling;
+extern ram uint32_t shortInspecTime;
+extern ram uint32_t longInspecTime;
 
 extern ram long int HV_read_coefA[4];
 extern ram long int HV_read_coefB[4];
 
-extern ram UINT lcA1;
-extern ram UINT lcA2;
-extern ram UINT lcB1;
-extern ram UINT lcB2;
+extern ram uint16_t lcA1;
+extern ram uint16_t lcA2;
+extern ram uint16_t lcB1;
+extern ram uint16_t lcB2;
 
-extern ram UINT GeneDacVoltage;
+extern ram uint16_t GeneDacVoltage;
 
 /**
  * @brief Initialize the microcontroller peripherals and I/O ports.
  */
 void ucsetup(void) {
 
-    UINT co,cp,dep;
-    UINT sTime,lTime;
-    UINT32 *coefA,*coefB;
+    uint16_t co,cp,dep;
+    uint16_t sTime,lTime;
+    uint32_t *coefA,*coefB;
 
     // configure PORT A,B,C,D
     /*Port name : function name : I/O    : TRIS value */
@@ -134,19 +134,19 @@ void ucsetup(void) {
     time_reset=64;
     time_start=144;
     time_wait=64;
-    tsensor_1_min=(UINT)(6);
-    tsensor_1_max=(UINT)(800);
-    tsensor_limit=(UINT)(800);
+    tsensor_1_min=(uint16_t)(6);
+    tsensor_1_max=(uint16_t)(800);
+    tsensor_limit=(uint16_t)(800);
 
     for (cp=0;cp<4;cp++)
     {
         EERead(cp+EEPROM_HV_BORNE_SUP_A1);
     }
 
-    HV_borne_sup_A1 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+1))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1));
-    HV_borne_sup_A2 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+3))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+2));
-    HV_borne_sup_B1 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+5))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+4));
-    HV_borne_sup_B2 = (((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+7))<<8)+((UINT)EERead(EEPROM_HV_BORNE_SUP_A1+6));
+    HV_borne_sup_A1 = (((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+1))<<8)+((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1));
+    HV_borne_sup_A2 = (((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+3))<<8)+((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+2));
+    HV_borne_sup_B1 = (((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+5))<<8)+((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+4));
+    HV_borne_sup_B2 = (((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+7))<<8)+((uint16_t)EERead(EEPROM_HV_BORNE_SUP_A1+6));
 
     if (HV_borne_sup_A1>HVSi1Max)
         apply_hvmax('A','1',HVSi1Max);    
@@ -160,23 +160,23 @@ void ucsetup(void) {
     if (HV_borne_sup_B2>350)
         apply_hvmax('B','2',HVSi2Max);
 
-    sTime = (((UINT)EERead(EEPROM_HV_SHORT_INSPEC_TIME+1))<<8)+((UINT)EERead(EEPROM_HV_SHORT_INSPEC_TIME));
-    lTime = (((UINT)EERead(EEPROM_HV_LONG_INSPEC_TIME+1))<<8)+((UINT)EERead(EEPROM_HV_LONG_INSPEC_TIME));
+    sTime = (((uint16_t)EERead(EEPROM_HV_SHORT_INSPEC_TIME+1))<<8)+((uint16_t)EERead(EEPROM_HV_SHORT_INSPEC_TIME));
+    lTime = (((uint16_t)EERead(EEPROM_HV_LONG_INSPEC_TIME+1))<<8)+((uint16_t)EERead(EEPROM_HV_LONG_INSPEC_TIME));
 
     if ((lTime<=sTime)||(lTime==0)||(sTime==0))
     {
         shortInspecTime = shortInspecDelay;
         longInspecTime = normalInspecDelay;
-        EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (BYTE) (((shortInspecTime/15000)& 0xFF00) >> 8));
-        EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (BYTE) (((shortInspecTime/15000)&0xFF)));
+        EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (uint8_t) (((shortInspecTime/15000)& 0xFF00) >> 8));
+        EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (uint8_t) (((shortInspecTime/15000)&0xFF)));
 
-        EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (BYTE) (((longInspecTime/15000)& 0xFF00) >> 8));
-        EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (BYTE) (((longInspecTime/15000)&0xFF)));
+        EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (uint8_t) (((longInspecTime/15000)& 0xFF00) >> 8));
+        EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (uint8_t) (((longInspecTime/15000)&0xFF)));
     }
     else
     {
-        shortInspecTime = 15000*((UINT32)sTime);
-        longInspecTime = 15000*((UINT32)lTime);
+        shortInspecTime = 15000*((uint32_t)sTime);
+        longInspecTime = 15000*((uint32_t)lTime);
     }
     
     default_DA1=0;
@@ -362,14 +362,14 @@ void ucsetup(void) {
                 {
                     printf("EEPROM:%u\r\n",EERead(co));
                     while(BusyUSART());
-                    printf("EEPROM decalee:%lu\r\n",(((UINT32)(EERead(co)))<<(8*(co-dep))));
+                    printf("EEPROM decalee:%lu\r\n",(((uint32_t)(EERead(co)))<<(8*(co-dep))));
                     while(BusyUSART());
                 }*/
-                *coefA=*coefA+(((UINT32)(EERead(co)))<<(8*(co-dep)));
+                *coefA=*coefA+(((uint32_t)(EERead(co)))<<(8*(co-dep)));
             }
 
             for(co=dep+4;co<dep+8;co++)
-                *coefB=*coefB+(((UINT32)(EERead(co)))<<(8*(co-dep-4)));
+                *coefB=*coefB+(((uint32_t)(EERead(co)))<<(8*(co-dep-4)));
             
             /*if (cp==0)
             {

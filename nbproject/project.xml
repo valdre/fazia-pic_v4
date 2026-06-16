@@ -3,18 +3,21 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>to_delet</name>
-            <creation-uuid>6d1aefb7-7392-40cb-b0b9-d99e5e440e39</creation-uuid>
+            <name>fazia-pic_ModernXC8</name>
+            <creation-uuid>6bc4a6f6-0926-4194-b1c4-44fc7dfd2f2a</creation-uuid>
             <make-project-type>0</make-project-type>
+            <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
-            <sourceRootList/>
+            <sourceRootList>
+                <sourceRootElem>include</sourceRootElem>
+                <sourceRootElem>src</sourceRootElem>
+            </sourceRootList>
             <confList>
                 <confElem>
                     <name>default</name>
                     <type>2</type>
                 </confElem>
             </confList>
-            <sourceEncoding>ISO-8859-1</sourceEncoding>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>
             </formatting>

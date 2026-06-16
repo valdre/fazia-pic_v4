@@ -8,36 +8,36 @@
 #include <string.h>
 #include <stdlib.h>
 
-extern BYTE valeur_portD;
-extern ram UINT HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-extern ram UINT HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-extern ram UINT HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-extern ram UINT HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
-extern UINT HvValueTab[4][2];
-extern UINT HvInc[4];
-extern UINT HvPhysTarget[4];
-extern UINT HvPhysCorrect[4];
-extern BYTE HvStatus[4];
-extern BYTE enableHVMeas;
-extern BYTE cal_preampli_offset;
-extern BYTE marge_pa_offset;
-extern ram BYTE CSI_relay;
-extern ram UINT32 time_scheduling;
-extern ram UINT32 time_lc_prec;
+extern uint8_t valeur_portD;
+extern ram uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+extern ram uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+extern ram uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+extern ram uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+extern uint16_t HvValueTab[4][2];
+extern uint16_t HvInc[4];
+extern uint16_t HvPhysTarget[4];
+extern uint16_t HvPhysCorrect[4];
+extern uint8_t HvStatus[4];
+extern uint8_t enableHVMeas;
+extern uint8_t cal_preampli_offset;
+extern uint8_t marge_pa_offset;
+extern ram uint8_t CSI_relay;
+extern ram uint32_t time_scheduling;
+extern ram uint32_t time_lc_prec;
 extern struct parametres pa;
 extern ram long int HV_read_coefA[4];
 extern ram long int HV_read_coefB[4];
-extern ram UINT lcA1;
-extern ram UINT lcA2;
-extern ram UINT lcB1;
-extern ram UINT lcB2;
-extern ram UINT GeneDacVoltage;
-extern ram UINT32 timing_inspection;
-extern ram UINT32 shortInspecTime;
-extern ram UINT32 longInspecTime;
-extern ram UINT max;
+extern ram uint16_t lcA1;
+extern ram uint16_t lcA2;
+extern ram uint16_t lcB1;
+extern ram uint16_t lcB2;
+extern ram uint16_t GeneDacVoltage;
+extern ram uint32_t timing_inspection;
+extern ram uint32_t shortInspecTime;
+extern ram uint32_t longInspecTime;
+extern ram uint16_t max;
 
-typedef BYTE(*func_p)(char *, char *);
+typedef uint8_t(*func_p)(char *, char *);
 
 //func_p hpfunc[] = {&f_reset, &f_clear, &f_echo};
 
@@ -90,9 +90,9 @@ void func_init(void) {
  * @param code Pointer to input/output buffer containing command data..
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE func_invoke(unsigned char code, char *data, char *result) {
+uint8_t func_invoke(unsigned char code, char *data, char *result) {
     if (code < BASE_CMD_ID)
         return FUNC_CMD_NOT_VALID;
 
@@ -110,9 +110,9 @@ BYTE func_invoke(unsigned char code, char *data, char *result) {
  * @brief Process a simple command and return the corresponding result.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE f_echo(char *data, char *result) 
+uint8_t f_echo(char *data, char *result) 
 {
     result[0]='0';
     result[1]='|';
@@ -126,9 +126,9 @@ BYTE f_echo(char *data, char *result)
  * @brief Reset the microcontroller.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE resetPIC(char *data, char *result) 
+uint8_t resetPIC(char *data, char *result) 
 {
     result[0]='0';
     result[1]='|';
@@ -143,18 +143,18 @@ BYTE resetPIC(char *data, char *result)
  * @brief Read or program the device serial number stored in EEPROM.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE setGetSN(char *data, char *result)
+uint8_t setGetSN(char *data, char *result)
 {
-    BYTE retval,error,comp;
-    UINT sn,data_value;
+    uint8_t retval,error,comp;
+    uint16_t sn,data_value;
     char charDataSN[6];
     
     if ((data[0]=='Q')&&(data[1]=='\0'))
     {
-        data_value = (UINT)EERead(snLSB);
-        data_value += ((UINT)EERead(snMSB))<<8; 
+        data_value = (uint16_t)EERead(snLSB);
+        data_value += ((uint16_t)EERead(snMSB))<<8; 
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
@@ -174,8 +174,8 @@ BYTE setGetSN(char *data, char *result)
         
         if (error==0)
         {
-            EEWrite(snLSB,(BYTE)(sn&0xFF));
-            EEWrite(snMSB,(BYTE)((sn&0xFF00)>>8));
+            EEWrite(snLSB,(uint8_t)(sn&0xFF));
+            EEWrite(snMSB,(uint8_t)((sn&0xFF00)>>8));
             retval = FUNC_EXEC_OK;
         }
         else
@@ -195,9 +195,9 @@ BYTE setGetSN(char *data, char *result)
  * @brief Handle a UART command and format the response result.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE uart_csi_relay(char *data, char *result) 
+uint8_t uart_csi_relay(char *data, char *result) 
 {   
     result[0]='0';
     result[1]='|';
@@ -212,9 +212,9 @@ BYTE uart_csi_relay(char *data, char *result)
  * @brief Issue a reset command to both FPGA devices.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE uart_reset_both_fpga(char *data, char *result) 
+uint8_t uart_reset_both_fpga(char *data, char *result) 
 {
     reset_both_fpga();
 
@@ -229,11 +229,11 @@ BYTE uart_reset_both_fpga(char *data, char *result)
  * @brief Return the operational status of a high-voltage module.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE giveHvStatus(char *data, char *result) 
+uint8_t giveHvStatus(char *data, char *result) 
 {
-    BYTE retval, error, status;
+    uint8_t retval, error, status;
     
     error = 1;
     status = 4;
@@ -271,11 +271,11 @@ BYTE giveHvStatus(char *data, char *result)
  * @brief Configure which detector is biased (A or B) for CSI measurements.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE setHVCsiAB(char *data, char *result) 
+uint8_t setHVCsiAB(char *data, char *result) 
 {
-    BYTE retval,error;
+    uint8_t retval,error;
 
     error = 1;
     
@@ -298,7 +298,7 @@ BYTE setHVCsiAB(char *data, char *result)
             valeur_portD = valeur_portD & 0xF7;
 
         PORTD = valeur_portD;
-        CSI_relay = 2 * ((BYTE) (data[2] - '0'))+(BYTE) (data[0] - '0');
+        CSI_relay = 2 * ((uint8_t) (data[2] - '0'))+(uint8_t) (data[0] - '0');
         
         retval = FUNC_EXEC_OK;
     }
@@ -317,12 +317,12 @@ BYTE setHVCsiAB(char *data, char *result)
 /**
  * @brief Test preamplifier functionality and detect problems.
  * @param preamp Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE preamplifier_test(BYTE preamp)
+uint8_t preamplifier_test(uint8_t preamp)
 {
-    UINT tab[2], *p,value;
-    BYTE co, i,valeur;
+    uint16_t tab[2], *p,value;
+    uint8_t co, i,valeur;
     char id;
     int essais, regAdc[2], regfpga[3];
 
@@ -333,7 +333,7 @@ BYTE preamplifier_test(BYTE preamp)
     regfpga[1] = REG_FPGA_Q2;
     regfpga[2] = REG_FPGA_QH1;
 
-    p = (UINT *) & pa;
+    p = (uint16_t *) & pa;
     valeur = 0;
 
 
@@ -379,7 +379,7 @@ BYTE preamplifier_test(BYTE preamp)
     regAdc[0] = 0;
     regAdc[1] = 0;
 
-    value = *(p + (((UINT) preamp) % 3) + 3 * (2 - (UINT) id));
+    value = *(p + (((uint16_t) preamp) % 3) + 3 * (2 - (uint16_t) id));
 
     if (value < 0x400)
     {
@@ -394,11 +394,11 @@ BYTE preamplifier_test(BYTE preamp)
  * @brief Execute preamplifier test and return results.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE uart_preamplifier_test(char *data, char *result) 
+uint8_t uart_preamplifier_test(char *data, char *result) 
 {
-    BYTE retval,tel,module,error,valeur;
+    uint8_t retval,tel,module,error,valeur;
     
     error = 1;
     
@@ -411,7 +411,7 @@ BYTE uart_preamplifier_test(char *data, char *result)
     if (error == 0) 
     {
         tel = data[0];
-        module = (BYTE) (data[2] - '0');
+        module = (uint8_t) (data[2] - '0');
         valeur = 0;
         
         if ((tel == 'A') && (module == 3))
@@ -453,12 +453,12 @@ BYTE uart_preamplifier_test(char *data, char *result)
  * @brief Automatically calibrate preamplifier output offset voltages.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE setautoffset(char *data, char *result)
+uint8_t setautoffset(char *data, char *result)
 {
-    BYTE retval, error, comp;
-    UINT marge;
+    uint8_t retval, error, comp;
+    uint16_t marge;
     char charDataMarge[10];
 
     error = 1;
@@ -481,7 +481,7 @@ BYTE setautoffset(char *data, char *result)
         if ((data[comp]=='\0')&&(comp!=0))
         {
             error = analyze_string(charDataMarge, &marge);
-            marge_pa_offset = (BYTE) marge;
+            marge_pa_offset = (uint8_t) marge;
         }
     }
     
@@ -509,11 +509,11 @@ BYTE setautoffset(char *data, char *result)
  * @brief Enable or disable high-voltage power supply devices.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE enDesHVdev(char *data, char *result)
+uint8_t enDesHVdev(char *data, char *result)
 {
-    BYTE error,retval;
+    uint8_t error,retval;
     
     result[0]='0';
     result[1]='|';
@@ -555,20 +555,20 @@ BYTE enDesHVdev(char *data, char *result)
                             if ((data[6]=='0')||(data[6]=='1'))
                                 if (data[7]=='\0')
                                 {
-                                    if ((BYTE)(data[6]-'0')==0)
-                                        valeur_portD = valeur_portD & (0xFF-1-(BYTE)(data[4]-'A'));
+                                    if ((uint8_t)(data[6]-'0')==0)
+                                        valeur_portD = valeur_portD & (0xFF-1-(uint8_t)(data[4]-'A'));
                                     else
-                                        valeur_portD = valeur_portD | (1+(BYTE)(data[4]-'A'));
+                                        valeur_portD = valeur_portD | (1+(uint8_t)(data[4]-'A'));
                                     error = 0;
                                 }
                 }
                 
                 if (data[3]=='\0')
                 {   
-                    if ((BYTE)(data[2]-'0')==0)
-                        valeur_portD = valeur_portD & (0xFF-1-(BYTE)(data[0]-'A'));
+                    if ((uint8_t)(data[2]-'0')==0)
+                        valeur_portD = valeur_portD & (0xFF-1-(uint8_t)(data[0]-'A'));
                     else
-                        valeur_portD = valeur_portD | (1+(BYTE)(data[0]-'A'));
+                        valeur_portD = valeur_portD | (1+(uint8_t)(data[0]-'A'));
                     error = 0;
                 }
                 
@@ -591,9 +591,9 @@ BYTE enDesHVdev(char *data, char *result)
  * @brief Return the current pulser amplitude setting.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getGeneDacVoltage(char *data, char *result) 
+uint8_t getGeneDacVoltage(char *data, char *result) 
 {   
     result[0]='0';
     result[1]='|';
@@ -608,10 +608,10 @@ BYTE getGeneDacVoltage(char *data, char *result)
  * @param tel Pointer to input/output buffer containing command data..
  * @param module Pointer to input/output buffer containing command data..
  * @param lc Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getCurrent(char tel, char module, UINT *lc) {
-    BYTE error;
+uint8_t getCurrent(char tel, char module, uint16_t *lc) {
+    uint8_t error;
 
     error = 1;
 
@@ -642,14 +642,14 @@ BYTE getCurrent(char tel, char module, UINT *lc) {
  * @brief Read the requested value and format it into the result buffer.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_HV(char *data, char *result) 
+uint8_t get_HV(char *data, char *result) 
 {
-    static BYTE canal;
-    BYTE module,error,retval;
+    static uint8_t canal;
+    uint8_t module,error,retval;
     char tel;
-    UINT HVvalue, HVvalueDetector, lc;
+    uint16_t HVvalue, HVvalueDetector, lc;
     
     error = 1;
     if ((data[0]=='A')||(data[0]=='B'))
@@ -661,13 +661,13 @@ BYTE get_HV(char *data, char *result)
     if (error == 0) 
     {
         tel = data[0];
-        module = (BYTE) (data[2] - '0');
+        module = (uint8_t) (data[2] - '0');
         
         lc = 0;
-        canal = 3 + module + 2 * ((BYTE) (tel - 'A'));
+        canal = 3 + module + 2 * ((uint8_t) (tel - 'A'));
         HVvalue = getHvValue(&canal);
 
-        if (HvStatus[module - 1 + 2 * ((BYTE) (tel - 'A'))] == 0)
+        if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0)
         {
             retval=FUNC_EXEC_OK;
             result[0]='0'+(char)retval;
@@ -679,7 +679,7 @@ BYTE get_HV(char *data, char *result)
         }
         else 
         {
-            if (HvValueTab[module - 1 + 2 * (BYTE) (tel - 'A')][0] == 0)
+            if (HvValueTab[module - 1 + 2 * (uint8_t) (tel - 'A')][0] == 0)
             {
                 retval=FUNC_EXEC_OK;
                 result[0]='0'+(char)retval;
@@ -721,11 +721,11 @@ BYTE get_HV(char *data, char *result)
 /**
  * @brief Calculate the high-voltage output from ADC reading using calibration coefficients.
  * @param canal Pointer to input/output buffer containing command data..
- * @return UINT status or result code.
+ * @return uint16_t status or result code.
  */
-UINT getHvValue(BYTE *canal) 
+uint16_t getHvValue(uint8_t *canal) 
 {
-    UINT ADCResult;
+    uint16_t ADCResult;
     long int HVValue1, HVValue2;
 
     ADCResult = adc_getvalue(canal);
@@ -747,19 +747,19 @@ UINT getHvValue(BYTE *canal)
 	
     HVValue1 = HVValue1 / 100000; //10000000
 
-    return (UINT)HVValue1;
+    return (uint16_t)HVValue1;
 }
 
 /**
  * @brief Query FPGA version information and return formatted version string.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_fpga_version(char *data, char *result) 
+uint8_t get_fpga_version(char *data, char *result) 
 {
-    BYTE retval, error, t, m, d, v;
-    UINT version, y;
+    uint8_t retval, error, t, m, d, v;
+    uint16_t version, y;
     
     error = 1;
     
@@ -774,11 +774,11 @@ BYTE get_fpga_version(char *data, char *result)
         if (data[0] == 'B') 
             version = rdspi(2, 0x0000);
 
-        t = (BYTE) ((version & 32768) >> 15);
+        t = (uint8_t) ((version & 32768) >> 15);
         y = 2012 + ((version & 30720) >> 11);
-        m = (BYTE) ((version & 1920) >> 7);
-        d = (BYTE) ((version & 124) >> 2);
-        v = (BYTE) (version & 3); 
+        m = (uint8_t) ((version & 1920) >> 7);
+        d = (uint8_t) ((version & 124) >> 2);
+        v = (uint8_t) (version & 3); 
     
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
@@ -810,9 +810,9 @@ BYTE get_fpga_version(char *data, char *result)
  * @brief Placeholder function for undefined command codes.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE nullFunc(char *data, char *result) 
+uint8_t nullFunc(char *data, char *result) 
 {
     result[0]='0';
     result[1]='|';
@@ -824,13 +824,13 @@ BYTE nullFunc(char *data, char *result)
  * @brief Read a value from the ADS8332 8-channel ADC.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_ads8332(char *data, char *result) 
+uint8_t get_ads8332(char *data, char *result) 
 {   
-    static BYTE canal;
-    BYTE retval, error;
-    UINT value;
+    static uint8_t canal;
+    uint8_t retval, error;
+    uint16_t value;
 
     value = 0;
     error = 1;
@@ -838,7 +838,7 @@ BYTE get_ads8332(char *data, char *result)
     if (((data[0] >= '0') && (data[0] <= '7'))&&(data[1]=='\0')) 
     {
         error = 0;
-        canal = (BYTE)(data[0] - '0');
+        canal = (uint8_t)(data[0] - '0');
         value = adc_getvalue(&canal);
     }
 
@@ -879,11 +879,11 @@ BYTE get_ads8332(char *data, char *result)
  * @brief Read the requested value and format it into the result buffer.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_pic_version(char *data, char *result) 
+uint8_t get_pic_version(char *data, char *result) 
 {
-    BYTE retval;
+    uint8_t retval;
 
     retval = FUNC_EXEC_OK;
     result[0]='0'+(char)retval;
@@ -899,12 +899,12 @@ BYTE get_pic_version(char *data, char *result)
  * @brief Retrieve leakage current measurement for a detector.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_leak_current(char *data, char *result) 
+uint8_t get_leak_current(char *data, char *result) 
 {
-    BYTE retval, error;
-    UINT lc;
+    uint8_t retval, error;
+    uint16_t lc;
     char tel, module;
 
     error = 1;
@@ -919,14 +919,14 @@ BYTE get_leak_current(char *data, char *result)
         tel = data[0];
         module = data[2];
 
-        if (HvStatus[(BYTE) (module - '1') + 2 * (BYTE) (tel - 'A')] == 1)
+        if (HvStatus[(uint8_t) (module - '1') + 2 * (uint8_t) (tel - 'A')] == 1)
             error=getCurrent(tel, module, &lc);
 
         if (error == 0) 
         {
             retval = FUNC_EXEC_OK;
 
-            if (HvStatus[(BYTE) (module - '1') + 2 * (BYTE) (tel - 'A')] == 1)
+            if (HvStatus[(uint8_t) (module - '1') + 2 * (uint8_t) (tel - 'A')] == 1)
             {
                 result[0]='0'+(char)retval;
                 result[1]='|';
@@ -958,16 +958,16 @@ BYTE get_leak_current(char *data, char *result)
  * @brief Configure the pulser with amplitude, period, and high-time parameters.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE set_pulse_parameters(char *data, char *result) 
+uint8_t set_pulse_parameters(char *data, char *result) 
 {
-    BYTE retval, error, comp, dep;
+    uint8_t retval, error, comp, dep;
     char charDataValue[10];
     char charDataPeriod[10];
     char charDataHighTime[10];
-    UINT value, period, high_time;
-    UINT32 value2;
+    uint16_t value, period, high_time;
+    uint32_t value2;
 
     error = 1;
     comp = 0;
@@ -1010,7 +1010,7 @@ BYTE set_pulse_parameters(char *data, char *result)
         error = analyze_string(charDataValue, &value);
 
         if ((error == 0) && (value <= 2000))
-            value2 = (33294 * ((UINT32)value)+1000) / 2000;
+            value2 = (33294 * ((uint32_t)value)+1000) / 2000;
         else
             error = 1;
 
@@ -1020,7 +1020,7 @@ BYTE set_pulse_parameters(char *data, char *result)
         if ((error == 0) && ((period > high_time) || (period == 0))) 
         {
             GeneDacVoltage = value;
-            pulser((UINT) value2, period, high_time);
+            pulser((uint16_t) value2, period, high_time);
         } 
         else
             error = 1;
@@ -1047,13 +1047,13 @@ BYTE set_pulse_parameters(char *data, char *result)
  * @brief Set the preamplifier offset voltage for a specific detector channel.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE set_voltage_preamplifier(char *data, char *result) 
+uint8_t set_voltage_preamplifier(char *data, char *result) 
 {
-    BYTE retval, error, comp;
+    uint8_t retval, error, comp;
     char charDataValue[10];
-    UINT value;
+    uint16_t value;
     
     error = 1;
     
@@ -1154,14 +1154,14 @@ BYTE set_voltage_preamplifier(char *data, char *result)
  * @brief Increment or decrement high-voltage by specified steps.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE incdecHV(char *data, char *result) 
+uint8_t incdecHV(char *data, char *result) 
 {
-    BYTE retval, error, comp;
+    uint8_t retval, error, comp;
     char module, tel, sens;
     char charDataStep[10];
-    UINT step;
+    uint16_t step;
     
     error = 1;
     retval = FUNC_EXEC_BAD_ARGS_TYPE;
@@ -1365,15 +1365,15 @@ BYTE incdecHV(char *data, char *result)
  * @brief Retrieve the inspection timing values for HV corrections.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getInspecTime(char *data, char *result)
+uint8_t getInspecTime(char *data, char *result)
 {
-    BYTE retval;
-    UINT sTime,lTime;
+    uint8_t retval;
+    uint16_t sTime,lTime;
 
-    sTime = (UINT)(shortInspecTime/15000);
-    lTime = (UINT)(longInspecTime/15000);
+    sTime = (uint16_t)(shortInspecTime/15000);
+    lTime = (uint16_t)(longInspecTime/15000);
 
     retval = FUNC_EXEC_OK;
     
@@ -1390,11 +1390,11 @@ BYTE getInspecTime(char *data, char *result)
  * @brief Return the maximum stack depth used during execution.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE getSoftStack(char *data, char *result)
+uint8_t getSoftStack(char *data, char *result)
 {
-    BYTE retval;
+    uint8_t retval;
 
     retval = FUNC_EXEC_OK;
     
@@ -1410,14 +1410,14 @@ BYTE getSoftStack(char *data, char *result)
  * @brief Set the short and long inspection timing intervals.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE setInspecTime(char *data, char *result)
+uint8_t setInspecTime(char *data, char *result)
 {
-    BYTE retval, error, comp, dep;
+    uint8_t retval, error, comp, dep;
     char charDataStime[10];
     char charDataLtime[10];
-    UINT sTime,lTime;
+    uint16_t sTime,lTime;
     
     error = 1;
     comp = 0;
@@ -1453,14 +1453,14 @@ BYTE setInspecTime(char *data, char *result)
         {
             if ((sTime<lTime)&&(sTime!=0)&&(lTime!=0))
             {
-                shortInspecTime = 15000*((UINT32)sTime);
-                longInspecTime = 15000*((UINT32)lTime);
+                shortInspecTime = 15000*((uint32_t)sTime);
+                longInspecTime = 15000*((uint32_t)lTime);
 
-                EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (BYTE) ((sTime& 0xFF00) >> 8));
-                EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (BYTE) ((sTime&0xFF)));
+                EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (uint8_t) ((sTime& 0xFF00) >> 8));
+                EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (uint8_t) ((sTime&0xFF)));
 
-                EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (BYTE) ((lTime& 0xFF00) >> 8));
-                EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (BYTE) ((lTime&0xFF)));
+                EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (uint8_t) ((lTime& 0xFF00) >> 8));
+                EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (uint8_t) ((lTime&0xFF)));
 
                 retval = FUNC_EXEC_OK;
             }
@@ -1481,15 +1481,15 @@ BYTE setInspecTime(char *data, char *result)
  * @brief Configure the requested device parameter based on input data.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE set_vhv(char *data, char *result)
+uint8_t set_vhv(char *data, char *result)
 {
-    BYTE retval, tel, module, error, comp, dep, nb_param;
-    UINT tension, intslopeVS;
+    uint8_t retval, tel, module, error, comp, dep, nb_param;
+    uint16_t tension, intslopeVS;
     char charDataVoltage[10];
     char charDataInc[10];
-    UINT32 slopeVS;
+    uint32_t slopeVS;
     
     error = 1;
     retval = FUNC_EXEC_BAD_ARGS_TYPE;
@@ -1538,7 +1538,7 @@ BYTE set_vhv(char *data, char *result)
     if (error == 0) 
     {
         tel = data[0];
-        module = (BYTE) (data[2] - '0');
+        module = (uint8_t) (data[2] - '0');
 
         error = analyze_string(charDataVoltage, &tension);
 
@@ -1547,7 +1547,7 @@ BYTE set_vhv(char *data, char *result)
             error = error + analyze_string(charDataInc, &intslopeVS);
 
             if (error == 0)
-                slopeVS = (UINT32) intslopeVS;
+                slopeVS = (uint32_t) intslopeVS;
         } else
             slopeVS = 10;
 
@@ -1570,7 +1570,7 @@ BYTE set_vhv(char *data, char *result)
 
         if (error == 0) 
         {
-            if (HvStatus[module - 1 + 2 * ((BYTE) (tel - 'A'))] == 0)
+            if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0)
             retval = FUNC_EXEC_INPROGRESS;
         
             if ((tel=='A')&&((valeur_portD & 0x01) == 0))
@@ -1588,8 +1588,8 @@ BYTE set_vhv(char *data, char *result)
             if (retval != FUNC_EXEC_INPROGRESS)
             {
                 retval = slop_vhv(tel, module, tension, slopeVS);
-                HvPhysTarget[module - 1 + 2 * ((BYTE) (tel - 'A'))] = tension;
-                HvPhysCorrect[module - 1 + 2 * ((BYTE) (tel - 'A'))] = tension;
+                HvPhysTarget[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
+                HvPhysCorrect[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
             } 
         }
     }
@@ -1604,12 +1604,12 @@ BYTE set_vhv(char *data, char *result)
  * @brief Read all temperature sensor values and return formatted results.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_temp(char *data, char *result) 
+uint8_t get_temp(char *data, char *result) 
 {
 
-    BYTE retval;
+    uint8_t retval;
     int temperature_array[nbcapteurs + 2];
 
     PIE1bits.TMR2IE=0;
@@ -1625,12 +1625,12 @@ BYTE get_temp(char *data, char *result)
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
-    myStrCpyUint(result,(UINT)temperature_array[0],',');
-    myStrCpyUint(result,(UINT)temperature_array[1],',');
-    myStrCpyUint(result,(UINT)temperature_array[2],',');
-    myStrCpyUint(result,(UINT)temperature_array[3],',');
-    myStrCpyUint(result,(UINT)temperature_array[4],',');
-    myStrCpyUint(result,(UINT)temperature_array[5],'\0');
+    myStrCpyUint(result,(uint16_t)temperature_array[0],',');
+    myStrCpyUint(result,(uint16_t)temperature_array[1],',');
+    myStrCpyUint(result,(uint16_t)temperature_array[2],',');
+    myStrCpyUint(result,(uint16_t)temperature_array[3],',');
+    myStrCpyUint(result,(uint16_t)temperature_array[4],',');
+    myStrCpyUint(result,(uint16_t)temperature_array[5],'\0');
     
     return FUNC_CMD_OK;
 }
@@ -1639,12 +1639,12 @@ BYTE get_temp(char *data, char *result)
  * @brief Retrieve the maximum allowable high-voltage limit.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_hvmax(char *data, char *result) 
+uint8_t get_hvmax(char *data, char *result) 
 {
-    BYTE retval, tel, module, error;
-    UINT valeur;
+    uint8_t retval, tel, module, error;
+    uint16_t valeur;
 
     error = 1;
     
@@ -1657,7 +1657,7 @@ BYTE get_hvmax(char *data, char *result)
     if (error == 0) 
     {
         tel = data[0];
-        module = (BYTE) (data[2] - '0');
+        module = (uint8_t) (data[2] - '0');
 
         
         if ((tel == 'A') && (module == 1))
@@ -1694,11 +1694,11 @@ BYTE get_hvmax(char *data, char *result)
  * @param tel Pointer to input/output buffer containing command data..
  * @param module Pointer to input/output buffer containing command data..
  * @param tension_max Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE apply_hvmax(char tel, char module, UINT tension_max) 
+uint8_t apply_hvmax(char tel, char module, uint16_t tension_max) 
 {
-    BYTE error;
+    uint8_t error;
 
     error = 0;
 
@@ -1707,8 +1707,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
         if (tension_max < HVSi1Max + 1) 
         {
             HV_borne_sup_A1 = tension_max;
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 1, (BYTE) ((HV_borne_sup_A1 & 0xFF00) >> 8));
-            EEWrite(EEPROM_HV_BORNE_SUP_A1, (BYTE) ((HV_borne_sup_A1 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 1, (uint8_t) ((HV_borne_sup_A1 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1, (uint8_t) ((HV_borne_sup_A1 & 0xFF)));
         } 
         else
             error = 1;
@@ -1717,8 +1717,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     if ((tel == 'A') && (module == '2')) {
         if (tension_max < HVSi2Max + 1) {
             HV_borne_sup_A2 = tension_max;
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 3, (BYTE) ((HV_borne_sup_A2 & 0xFF00) >> 8));
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 2, (BYTE) ((HV_borne_sup_A2 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 3, (uint8_t) ((HV_borne_sup_A2 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 2, (uint8_t) ((HV_borne_sup_A2 & 0xFF)));
         } else
             error = 1;
     }
@@ -1726,8 +1726,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     if ((tel == 'B') && (module == '1')) {
         if (tension_max < HVSi1Max + 1) {
             HV_borne_sup_B1 = tension_max;
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 5, (BYTE) ((HV_borne_sup_B1 & 0xFF00) >> 8));
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 4, (BYTE) ((HV_borne_sup_B1 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 5, (uint8_t) ((HV_borne_sup_B1 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 4, (uint8_t) ((HV_borne_sup_B1 & 0xFF)));
         } else
             error = 1;
     }
@@ -1735,8 +1735,8 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
     if ((tel == 'B') && (module == '2')) {
         if (tension_max < HVSi2Max + 1) {
             HV_borne_sup_B2 = tension_max;
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 7, (BYTE) ((HV_borne_sup_B2 & 0xFF00) >> 8));
-            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 6, (BYTE) ((HV_borne_sup_B2 & 0xFF)));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 7, (uint8_t) ((HV_borne_sup_B2 & 0xFF00) >> 8));
+            EEWrite(EEPROM_HV_BORNE_SUP_A1 + 6, (uint8_t) ((HV_borne_sup_B2 & 0xFF)));
         } else
             error = 1;
     }
@@ -1748,11 +1748,11 @@ BYTE apply_hvmax(char tel, char module, UINT tension_max)
  * @brief Enable or disable high-voltage measurement mode.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE enableDisableHVMeas(char *data, char *result) 
+uint8_t enableDisableHVMeas(char *data, char *result) 
 {
-    BYTE retval,error;
+    uint8_t retval,error;
 
     error = 1;
     
@@ -1791,13 +1791,13 @@ BYTE enableDisableHVMeas(char *data, char *result)
  * @brief Set and persist the maximum high-voltage limit.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE set_hvmax(char *data, char *result) 
+uint8_t set_hvmax(char *data, char *result) 
 {
-    BYTE retval,error,comp, dep;
+    uint8_t retval,error,comp, dep;
     char charDataVoltage[10], tel, module;
-    UINT tension_max;
+    uint16_t tension_max;
 
     error = 1;
     
@@ -1842,9 +1842,9 @@ BYTE set_hvmax(char *data, char *result)
  * @brief Query calibration status of all high-voltage supplies.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE uart_ask_hv_calibration(char *data, char *result) 
+uint8_t uart_ask_hv_calibration(char *data, char *result) 
 {
     char myresult[14];
 
@@ -1862,9 +1862,9 @@ BYTE uart_ask_hv_calibration(char *data, char *result)
  * @brief Store calibration parameters into EEPROM.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE store_param(char *data, char *result) 
+uint8_t store_param(char *data, char *result) 
 {
     storeparam();
     result[0]='0';
@@ -1878,13 +1878,13 @@ BYTE store_param(char *data, char *result)
  * @brief Write a byte to a specified EEPROM address.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE set_data_eeprom_address(char *data, char *result) 
+uint8_t set_data_eeprom_address(char *data, char *result) 
 {
-    BYTE retval, error,dep, comp;
+    uint8_t retval, error,dep, comp;
     char charDataAdr[10],charDataValue[10];
-    UINT data_adr, data_value;
+    uint16_t data_adr, data_value;
 
     error = 1;
     
@@ -1911,7 +1911,7 @@ BYTE set_data_eeprom_address(char *data, char *result)
         {
             error = analyze_string(charDataAdr, &data_adr);
             error += analyze_string(charDataValue, &data_value);
-            EEWrite(data_adr, (BYTE)data_value);
+            EEWrite(data_adr, (uint8_t)data_value);
         }
     }
 
@@ -1930,14 +1930,14 @@ BYTE set_data_eeprom_address(char *data, char *result)
  * @brief Read a byte from a specified EEPROM address.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE get_data_eeprom_address(char *data, char *result) 
+uint8_t get_data_eeprom_address(char *data, char *result) 
 {
-    BYTE retval, error;
+    uint8_t retval, error;
     char charDataAdr[10];
-    UINT data_adr;
-    BYTE data_value,comp;
+    uint16_t data_adr;
+    uint8_t data_value,comp;
 
     error = 1;
     
@@ -1979,13 +1979,13 @@ BYTE get_data_eeprom_address(char *data, char *result)
  * @brief Read a value from an FPGA register via SPI.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE spi_get_regvalue(char *data, char *result) 
+uint8_t spi_get_regvalue(char *data, char *result) 
 {
-    BYTE retval,error,comp,dep;
+    uint8_t retval,error,comp,dep;
     char charDataAdr[10];
-    UINT data_adr, data_value;
+    uint16_t data_adr, data_value;
     
     error = 1;
     
@@ -2030,14 +2030,14 @@ BYTE spi_get_regvalue(char *data, char *result)
  * @brief Write a value to an FPGA register via SPI.
  * @param data Pointer to input/output buffer containing command data..
  * @param result Pointer to input/output buffer containing command data..
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE spi_set_regvalue(char *data, char *result) 
+uint8_t spi_set_regvalue(char *data, char *result) 
 {
-    BYTE retval,error,comp,dep;
+    uint8_t retval,error,comp,dep;
     char charDataAdr[10];
     char charDataValue[10];
-    UINT data_adr,data_value;
+    uint16_t data_adr,data_value;
     char nb_fpga;
     
     error = 1;
@@ -2088,15 +2088,15 @@ BYTE spi_set_regvalue(char *data, char *result)
 }
 
 /* EEPROM-backed leak-current thresholds (16-bit, stored as two 8-bit cells) */
-UINT getHighLcTrsh(void) {
-    UINT lsb = (UINT)EERead(EEPROM_HIGH_LC_TRSH_LSB);
-    UINT msb = (UINT)EERead(EEPROM_HIGH_LC_TRSH_MSB);
+uint16_t getHighLcTrsh(void) {
+    uint16_t lsb = (uint16_t)EERead(EEPROM_HIGH_LC_TRSH_LSB);
+    uint16_t msb = (uint16_t)EERead(EEPROM_HIGH_LC_TRSH_MSB);
     return (lsb | (msb << 8));
 }
 
-UINT getLowLcTrsh(void) {
-    UINT lsb = (UINT)EERead(EEPROM_LOW_LC_TRSH_LSB);
-    UINT msb = (UINT)EERead(EEPROM_LOW_LC_TRSH_MSB);
+uint16_t getLowLcTrsh(void) {
+    uint16_t lsb = (uint16_t)EERead(EEPROM_LOW_LC_TRSH_LSB);
+    uint16_t msb = (uint16_t)EERead(EEPROM_LOW_LC_TRSH_MSB);
     return (lsb | (msb << 8));
 }
 

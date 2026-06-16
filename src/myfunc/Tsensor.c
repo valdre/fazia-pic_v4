@@ -1,23 +1,23 @@
 #include "functions.h"
 
-extern BYTE valeur_portB;
-extern BYTE valeur_trisB;
-extern ram UINT tsensor_1_min;
-extern ram UINT tsensor_1_max;
-extern ram UINT tsensor_limit;
-extern ram BYTE time_reset;
-extern ram BYTE time_start;
-extern ram BYTE time_bit0;
-extern ram BYTE time_bit1;
-extern ram BYTE time_wait;
+extern uint8_t valeur_portB;
+extern uint8_t valeur_trisB;
+extern ram uint16_t tsensor_1_min;
+extern ram uint16_t tsensor_1_max;
+extern ram uint16_t tsensor_limit;
+extern ram uint8_t time_reset;
+extern ram uint8_t time_start;
+extern ram uint8_t time_bit0;
+extern ram uint8_t time_bit1;
+extern ram uint8_t time_wait;
 
 
 
 /**
  * @brief Initialize one-wire temperature sensors and configure timing.
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE temp_init(void)
+uint8_t temp_init(void)
 {
 
 	/*En �criture pour le registre A : mettre � 1 le bit n�1 relatif � l'Enable Sensor*/
@@ -104,16 +104,16 @@ BYTE temp_init(void)
 /**
  * @brief Read temperatures from all one-wire sensors via one-wire protocol.
  * @param temperature Array to store temperature readings
- * @return BYTE temp(int * status or result code.
+ * @return uint8_t temp(int * status or result code.
  */
-BYTE temp(int *temperature)
+uint8_t temp(int *temperature)
 {
 
     /*En lecture pour le registre 9*/
     /*****************C3 C2 C1 N5 N4 N3 N2 N1 N0 RW D15 D14 D13 D12 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 EP ACK Sentinelle*/
     char BitTab3[] = { 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 };
 
-    BYTE erreur;
+    uint8_t erreur;
     char co, parity;
     char *s,j;
     unsigned int timer1,mask;

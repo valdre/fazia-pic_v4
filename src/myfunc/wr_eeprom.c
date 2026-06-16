@@ -50,9 +50,9 @@ void setparam(void)
  */
 char storeparam(void)
 {
-    UINT nb_bytes;
-    UINT co;
-    BYTE *p=(unsigned char *)&pa;
+    uint16_t nb_bytes;
+    uint16_t co;
+    uint8_t *p=(unsigned char *)&pa;
 
     nb_bytes=sizeof(pa);
 
@@ -99,15 +99,15 @@ void EEWrite(unsigned int ad, unsigned char data)
 /**
  * @brief Read from or write to the internal data EEPROM.
  * @param ad EEPROM address
- * @return BYTE status or result code.
+ * @return uint8_t status or result code.
  */
-BYTE EERead(UINT ad)
+uint8_t EERead(uint16_t ad)
 {
 
-	BYTE ad_lsb,ad_msb;
+	uint8_t ad_lsb,ad_msb;
 
-	ad_lsb=(BYTE)(ad&255);
-	ad_msb=(BYTE)((ad&768)>>8);
+	ad_lsb=(uint8_t)(ad&255);
+	ad_msb=(uint8_t)((ad&768)>>8);
 
 	EECON1bits.EEPGD = 0;
 	EECON1bits.CFGS = 0;
