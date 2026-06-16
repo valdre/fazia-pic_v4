@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=fazia-pic_v4
+PROJECTNAME=to_delet.X
 
 # Active Configuration
 DEFAULTCONF=default
