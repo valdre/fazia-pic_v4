@@ -216,20 +216,28 @@ uint8_t giveHvStatus(char *data, char *result) { // TODO : to rewrite
     uint8_t retval, error, status;
     error = 1;
     status = 4;
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1] == ',')
-            if ((data[2]=='1')||(data[2]=='2'))
-                if (data[3]=='\0')
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1] == ',') {
+            if ((data[2]=='1')||(data[2]=='2')) {
+                if (data[3]=='\0') {
                     error = 0;
+                }
+            }
+        }
+    }
     if (error == 0) {
-        if ((data[0] == 'A') && (data[2] == '1'))
+        if ((data[0] == 'A') && (data[2] == '1')) {
             status = HvStatus[0];
-        if ((data[0] == 'A') && (data[2] == '2'))
+        }
+        if ((data[0] == 'A') && (data[2] == '2')) {
             status = HvStatus[1];
-        if ((data[0] == 'B') && (data[2] == '1'))
+        }
+        if ((data[0] == 'B') && (data[2] == '1')) {
             status = HvStatus[2];
-        if ((data[0] == 'B') && (data[2] == '2'))
+        }
+        if ((data[0] == 'B') && (data[2] == '2')) {
             status = HvStatus[3];
+        }
     }
     retval = FUNC_EXEC_OK;
     result[0]='0'+(char)retval;
@@ -248,20 +256,26 @@ uint8_t giveHvStatus(char *data, char *result) { // TODO : to rewrite
 uint8_t setHVCsiAB(char *data, char *result) { // TODO : to rewrite
     uint8_t retval,error;
     error = 1;
-    if ((data[0]=='0')||(data[0]=='1'))
-        if (data[1] == ',')
-            if ((data[2]=='0')||(data[2]=='1'))
-                if (data[3]=='\0')
+    if ((data[0]=='0')||(data[0]=='1')) {
+        if (data[1] == ',') {
+            if ((data[2]=='0')||(data[2]=='1')) {
+                if (data[3]=='\0') {
                     error = 0;
+                }
+            }
+        }
+    }
     if (error == 0) {    
-        if (data[0] == '0')
+        if (data[0] == '0') {
             valeur_portD = valeur_portD | 0x04;
-        else
+        } else {
             valeur_portD = valeur_portD & 0xFB;
-        if (data[2] == '0')
+        }
+        if (data[2] == '0') {
             valeur_portD = valeur_portD | 0x08;
-        else
+        } else {
             valeur_portD = valeur_portD & 0xF7;
+        }
         PORTD = valeur_portD;
         CSI_relay = 2 * ((uint8_t) (data[2] - '0'))+(uint8_t) (data[0] - '0');
         retval = FUNC_EXEC_OK;
@@ -336,27 +350,37 @@ uint8_t preamplifier_test(uint8_t preamp) { // TODO : to rewrite
 uint8_t uart_preamplifier_test(char *data, char *result) { // TODO : to rewrite
     uint8_t retval,tel,module,error,valeur;
     error = 1;
-    if ((data[0] == 'A')||(data[0] == 'B'))
-        if (data[1] == ',')
-            if ((data[2] == '1')||(data[2] == '2')||(data[2] == '3'))
-                if (data[3] == '\0')
+    if ((data[0] == 'A')||(data[0] == 'B')) {
+        if (data[1] == ',') {
+            if ((data[2] == '1')||(data[2] == '2')||(data[2] == '3')) {
+                if (data[3] == '\0') {
                     error = 0;
+                }
+            }
+        }
+    }
     if (error == 0) {
         tel = data[0];
         module = (uint8_t) (data[2] - '0');
         valeur = 0;
-        if ((tel == 'A') && (module == 3))
+        if ((tel == 'A') && (module == 3)) {
             valeur = preamplifier_test(0);
-        if ((tel == 'A') && (module == 2))
+        }
+        if ((tel == 'A') && (module == 2)) {
             valeur = preamplifier_test(1);
-        if ((tel == 'A') && (module == 1))
+        }
+        if ((tel == 'A') && (module == 1)) {
             valeur = preamplifier_test(2);
-        if ((tel == 'B') && (module == 3))
+        }
+        if ((tel == 'B') && (module == 3)) {
             valeur = preamplifier_test(3);
-        if ((tel == 'B') && (module == 2))
+        }
+        if ((tel == 'B') && (module == 2)) {
             valeur = preamplifier_test(4);
-        if ((tel == 'B') && (module == 1))
+        }
+        if ((tel == 'B') && (module == 1)) {
             valeur = preamplifier_test(5);
+        }
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
@@ -446,43 +470,44 @@ uint8_t enDesHVdev(char *data, char *result) {
         result[9]='\0';
     }
     
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1] == ',')
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1] == ',') {
             if ((data[2]=='0')||(data[2]=='1')) {
                 error = 1;
                 if (data[3]==',') {
-                    if ((data[4]=='A')||(data[4]=='B'))
-                        if (data[5] == ',')
-                            if ((data[6]=='0')||(data[6]=='1'))
+                    if ((data[4]=='A')||(data[4]=='B')) {
+                        if (data[5] == ',') {
+                            if ((data[6]=='0')||(data[6]=='1')) {
                                 if (data[7]=='\0') {
-                                    if ((uint8_t)(data[6]-'0')==0)
+                                    if ((uint8_t)(data[6]-'0')==0) {
                                         valeur_portD = valeur_portD & (0xFF-1-(uint8_t)(data[4]-'A'));
-                                    else
+                                    } else {
                                         valeur_portD = valeur_portD | (1+(uint8_t)(data[4]-'A'));
+                                    }
                                     error = 0;
                                 }
+                            }
+                        }
+                    }
                 }
-                
-                if (data[3]=='\0')
-                {   
-                    if ((uint8_t)(data[2]-'0')==0)
+                if (data[3]=='\0') {   
+                    if ((uint8_t)(data[2]-'0')==0) {
                         valeur_portD = valeur_portD & (0xFF-1-(uint8_t)(data[0]-'A'));
-                    else
+                    } else {
                         valeur_portD = valeur_portD | (1+(uint8_t)(data[0]-'A'));
+                    }
                     error = 0;
                 }
-                
-                if (error == 0)
-                {
+                if (error == 0) {
                     PORTD=valeur_portD;
                     retval = FUNC_EXEC_OK;
-                }
-                else
+                } else {
                     retval = FUNC_EXEC_BAD_ARGS_TYPE;
-                
+                }
                 result[0]='0'+(char)retval;
             }
-            
+        }
+    }
     return FUNC_CMD_OK;
 }
 
@@ -493,13 +518,11 @@ uint8_t enDesHVdev(char *data, char *result) {
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t getGeneDacVoltage(char *data, char *result) 
-{   
+uint8_t getGeneDacVoltage(char *data, char *result) {   
     result[0]='0';
     result[1]='|';
     result[2]='\0';
     myStrCpyUint(result,GeneDacVoltage,'\0');
-
     return FUNC_CMD_OK;
 }
 
@@ -512,29 +535,23 @@ uint8_t getGeneDacVoltage(char *data, char *result)
  */
 uint8_t getCurrent(char tel, char module, uint16_t *lc) {
     uint8_t error;
-
     error = 1;
-
     if ((tel == 'A') && (module == '1')) {
         error = 0;
         *lc = lcA1;
     }
-
     if ((tel == 'A') && (module == '2')) {
         *lc = lcA2;
         error = 0;
     }
-
     if ((tel == 'B') && (module == '1')) {
         *lc = lcB1;
         error = 0;
     }
-
     if ((tel == 'B') && (module == '2')) {
         *lc = lcB2;
         error = 0;
     }
-
     return error;
 }
 
@@ -544,31 +561,28 @@ uint8_t getCurrent(char tel, char module, uint16_t *lc) {
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_HV(char *data, char *result) 
-{
+uint8_t get_HV(char *data, char *result) {
     static uint8_t canal;
     uint8_t module,error,retval;
     char tel;
     uint16_t HVvalue, HVvalueDetector, lc;
-    
     error = 1;
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1]==',')
-            if ((data[2]=='1')||(data[2]=='2'))
-                if (data[3]=='\0')
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1]==',') {
+            if ((data[2]=='1')||(data[2]=='2')) {
+                if (data[3]=='\0') {
                     error = 0;
-
-    if (error == 0) 
-    {
+                }
+            }
+        }
+    }
+    if (error == 0) {
         tel = data[0];
         module = (uint8_t) (data[2] - '0');
-        
         lc = 0;
         canal = 3 + module + 2 * ((uint8_t) (tel - 'A'));
         HVvalue = getHvValue(&canal);
-
-        if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0)
-        {
+        if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0) {
             retval=FUNC_EXEC_OK;
             result[0]='0'+(char)retval;
             result[1]='|';
@@ -576,19 +590,14 @@ uint8_t get_HV(char *data, char *result)
             result[3]='\0';
             myStrCpyUint(result,HVvalue/10,',');
             myStrCpyChar2(result,"NC",'\0');
-        }
-        else 
-        {
-            if (HvValueTab[module - 1 + 2 * (uint8_t) (tel - 'A')][0] == 0)
-            {
+        } else {
+            if (HvValueTab[module - 1 + 2 * (uint8_t) (tel - 'A')][0] == 0) {
                 retval=FUNC_EXEC_OK;
                 result[0]='0'+(char)retval;
                 result[1]='|';
                 result[2]='\0';
                 myStrCpyChar2(result,"0,0",'\0');
-            }
-            else 
-            {
+            } else {
                 retval=FUNC_EXEC_OK;
                 getCurrent(tel, (char) (module + '0'), &lc);
                 HVvalueDetector = lc / 25;
@@ -606,15 +615,12 @@ uint8_t get_HV(char *data, char *result)
             }
         }
     }
-
-    if (error == 1) 
-    {
+    if (error == 1) {
         retval = FUNC_EXEC_BAD_ARGS_VALUE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-    
     return FUNC_CMD_OK;
 }
 
@@ -623,30 +629,23 @@ uint8_t get_HV(char *data, char *result)
  * @param canal Pointer to input/output buffer containing command data..
  * @return uint16_t status or result code.
  */
-uint16_t getHvValue(uint8_t *canal) 
-{
+uint16_t getHvValue(uint8_t *canal) {
     uint16_t ADCResult;
     long int HVValue1, HVValue2;
-
     ADCResult = adc_getvalue(canal);
     HVValue1 = 0;
     HVValue2 = 0;
-
     HVValue1 = HV_read_coefB[*canal - 4];
     HVValue2 = (((long int) ADCResult) * HV_read_coefA[*canal - 4]);
         
-    if (HVValue2 + HVValue1 > 0)
+    if (HVValue2 + HVValue1 > 0) {
         HVValue1 = HVValue1 + HVValue2;
-    else
-    {
-        HVValue1 = 0; //mis � 0 artificiellement
+    } else {
+        HVValue1 = 0; //mis a 0 artificiellement
     }
-	
 	//S.V. 31/3/2017 added for better approximation
 	HVValue1 = HVValue1 + 50000;
-	
     HVValue1 = HVValue1 / 100000; //10000000
-
     return (uint16_t)HVValue1;
 }
 
@@ -656,30 +655,26 @@ uint16_t getHvValue(uint8_t *canal)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_fpga_version(char *data, char *result) 
-{
+uint8_t get_fpga_version(char *data, char *result) {
     uint8_t retval, error, t, m, d, v;
     uint16_t version, y;
-    
     error = 1;
-    
-    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]=='\0'))
+    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]=='\0')) {
         error = 0;
-
-    if (error == 0) 
-    {
-        if (data[0] == 'A') 
+    }
+    if (error == 0) {
+        if (data[0] == 'A') {
             version = rdspi(1, 0x0000);
-
-        if (data[0] == 'B') 
+        }
+        if (data[0] == 'B')  {
             version = rdspi(2, 0x0000);
-
+        }
         t = (uint8_t) ((version & 32768) >> 15);
         y = 2012 + ((version & 30720) >> 11);
         m = (uint8_t) ((version & 1920) >> 7);
         d = (uint8_t) ((version & 124) >> 2);
         v = (uint8_t) (version & 3); 
-    
+        
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
@@ -694,15 +689,12 @@ uint8_t get_fpga_version(char *data, char *result)
         myStrCpyUint(result,y,',');
         myStrCpyChar2(result,"variant=",'\0');
         myStrCpyUint(result,v,'\0');
-    } 
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-    
     return FUNC_CMD_OK;
 }
 
@@ -712,8 +704,7 @@ uint8_t get_fpga_version(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t nullFunc(char *data, char *result) 
-{
+uint8_t nullFunc(char *data, char *result) {
     result[0]='0';
     result[1]='|';
     result[2]='\0';
@@ -726,38 +717,29 @@ uint8_t nullFunc(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_ads8332(char *data, char *result) 
-{   
+uint8_t get_ads8332(char *data, char *result) {   
     static uint8_t canal;
     uint8_t retval, error;
     uint16_t value;
-
     value = 0;
     error = 1;
-
-    if (((data[0] >= '0') && (data[0] <= '7'))&&(data[1]=='\0')) 
-    {
+    if (((data[0] >= '0') && (data[0] <= '7'))&&(data[1]=='\0')) {
         error = 0;
         canal = (uint8_t)(data[0] - '0');
         value = adc_getvalue(&canal);
     }
-
-    if (error == 0) 
-    {
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
         myStrCpyUint(result,value,'\0');
-    } 
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-    
     return FUNC_CMD_OK;
 }
 
@@ -781,17 +763,14 @@ uint8_t get_ads8332(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_pic_version(char *data, char *result) 
-{
+uint8_t get_pic_version(char *data, char *result) {
     uint8_t retval;
-
     retval = FUNC_EXEC_OK;
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
     // TODO : change the date 
     myStrCpyChar2(result,"11,06,2026,NewCalibration",'\0');
-
     return FUNC_CMD_OK;
 }
 
@@ -801,40 +780,34 @@ uint8_t get_pic_version(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_leak_current(char *data, char *result) 
-{
+uint8_t get_leak_current(char *data, char *result) {
     uint8_t retval, error;
     uint16_t lc;
     char tel, module;
-
     error = 1;
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1]==',')
-            if ((data[2]=='1')||(data[2]=='2'))
-                if (data[3]=='\0')
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1]==',') {
+            if ((data[2]=='1')||(data[2]=='2')) {
+                if (data[3]=='\0') {
                     error = 0;
-
-    if (error == 0)
-    {
+                }
+            }
+        }
+    }
+    if (error == 0) {
         tel = data[0];
         module = data[2];
-
-        if (HvStatus[(uint8_t) (module - '1') + 2 * (uint8_t) (tel - 'A')] == 1)
+        if (HvStatus[(uint8_t) (module - '1') + 2 * (uint8_t) (tel - 'A')] == 1) {
             error=getCurrent(tel, module, &lc);
-
-        if (error == 0) 
-        {
+        }
+        if (error == 0) {
             retval = FUNC_EXEC_OK;
-
-            if (HvStatus[(uint8_t) (module - '1') + 2 * (uint8_t) (tel - 'A')] == 1)
-            {
+            if (HvStatus[(uint8_t) (module - '1') + 2 * (uint8_t) (tel - 'A')] == 1) {
                 result[0]='0'+(char)retval;
                 result[1]='|';
                 result[2]='\0';
                 myStrCpyUint(result,lc,'\0'); //expressed in nA
-            }
-            else
-            {
+            } else {
                 result[0]='0'+(char)retval;
                 result[1]='|';
                 result[2]='N';
@@ -843,9 +816,7 @@ uint8_t get_leak_current(char *data, char *result)
             }
         }
     }
-
-    if (error == 1) 
-    {
+    if (error == 1) {
         retval = FUNC_EXEC_BAD_ARGS_VALUE;
         result[0]='0'+(char)retval;
         result[1]='|';
@@ -860,81 +831,63 @@ uint8_t get_leak_current(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t set_pulse_parameters(char *data, char *result) 
-{
+uint8_t set_pulse_parameters(char *data, char *result) {
     uint8_t retval, error, comp, dep;
     char charDataValue[10];
     char charDataPeriod[10];
     char charDataHighTime[10];
     uint16_t value, period, high_time;
     uint32_t value2;
-
     error = 1;
     comp = 0;
-    while ((data[comp]!='\0')&&(data[comp]!=','))
-    {
+    while ((data[comp]!='\0')&&(data[comp]!=',')) {
         charDataValue[comp]=data[comp];
         comp++;
     }
     charDataValue[comp]='\0';
-    
-    if ((data[comp]==',')&&(comp!=0))
-    {
+    if ((data[comp]==',')&&(comp!=0)) {
         comp++;
         dep=comp;
-        while ((data[comp]!='\0')&&(data[comp]!=','))
-        {
+        while ((data[comp]!='\0')&&(data[comp]!=',')) {
             charDataPeriod[comp-dep]=data[comp];
             comp++;
         }
         charDataPeriod[comp-dep]='\0';
-        
-        if ((data[comp]==',')&&(comp!=dep))
-        {
+        if ((data[comp]==',')&&(comp!=dep)) {
             comp++;
             dep=comp;
-            while ((data[comp]!='\0')&&(data[comp]!=','))
-            {
+            while ((data[comp]!='\0')&&(data[comp]!=',')) {
                 charDataHighTime[comp-dep]=data[comp];
                 comp++;
             }
             charDataHighTime[comp-dep]='\0';
-            
-            if ((data[comp]=='\0')&&(comp!=dep))
+            if ((data[comp]=='\0')&&(comp!=dep)) {
                 error = 0;
+            }
         }
     }
-
-    if (error == 0) 
-    {
+    if (error == 0) {
         error = analyze_string(charDataValue, &value);
-
-        if ((error == 0) && (value <= 2000))
+        if ((error == 0) && (value <= 2000)) {
             value2 = (33294 * ((uint32_t)value)+1000) / 2000;
-        else
+        } else {
             error = 1;
-
+        }
         error = error + analyze_string(charDataPeriod, &period);
         error = error + analyze_string(charDataHighTime, &high_time);
-
-        if ((error == 0) && ((period > high_time) || (period == 0))) 
-        {
+        if ((error == 0) && ((period > high_time) || (period == 0))) {
             GeneDacVoltage = value;
             pulser((uint16_t) value2, period, high_time);
-        } 
-        else
+        } else {
             error = 1;
+        }
     }
-
-    if (error == 0) 
-    {
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
-    } 
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_VALUE;
         result[0]='0'+(char)retval;
         result[1]='|';
@@ -949,104 +902,84 @@ uint8_t set_pulse_parameters(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t set_voltage_preamplifier(char *data, char *result) 
-{
+uint8_t set_voltage_preamplifier(char *data, char *result) {
     uint8_t retval, error, comp;
     char charDataValue[10];
     uint16_t value;
-    
     error = 1;
-    
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1] == ',')
-            if (((data[2]=='1')||(data[2]=='2'))||(data[2]=='3'))
-                if (data[3]==',')
-                {
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1] == ',') {
+            if (((data[2]=='1')||(data[2]=='2'))||(data[2]=='3')) {
+                if (data[3]==',') {
                     comp=4;
-                    while ((data[comp]!='\0')&&(data[comp]!=','))
-                    {
+                    while ((data[comp]!='\0')&&(data[comp]!=',')) {
                         charDataValue[comp-4]=data[comp];
                         comp++;
                     }
                     charDataValue[comp-4]='\0';
-                    
-                    if ((data[comp]=='\0')&&(comp!=4))
+                    if ((data[comp]=='\0')&&(comp!=4)) {
                         error = 0;
+                    }
                 }
-
-    if (error == 0) 
-    {
-        if (data[2] == '1') 
-        {
-            if (data[0] == 'A') 
-            {
+            }
+        }
+    }
+    if (error == 0) {
+        if (data[2] == '1') {
+            if (data[0] == 'A') {
                 error = analyze_string(charDataValue, &value);
-
-                if (error == 0)
+                if (error == 0) {
                     set_off_V_preamp3a(value);
-
+                }
             }
-
-            if (data[0] == 'B') 
-            {
+            if (data[0] == 'B') {
                 error = analyze_string(charDataValue, &value);
-                if (error == 0)
+                if (error == 0) {
                     set_off_V_preamp3b(value);
+                }
             }
         }
-
-        if (data[2] == '2') 
-        {
-            if (data[0] == 'A') 
-            {
+        if (data[2] == '2') {
+            if (data[0] == 'A') {
                 error = analyze_string(charDataValue, &value);
-                if (error == 0)
+                if (error == 0) {
                     set_off_V_preamp2a(value);
+                }
             }
-
-            if (data[0] == 'B') 
-            {
+            if (data[0] == 'B') {
                 error = analyze_string(charDataValue, &value);
-                if (error == 0)
+                if (error == 0) {
                     set_off_V_preamp2b(value);
+                }
             }
         }
-
-        if (data[2] == '3') 
-        {
-            if (data[0] == 'A') 
-            {
+        if (data[2] == '3') {
+            if (data[0] == 'A') {
                 error = analyze_string(charDataValue, &value);
-                if (error == 0)
+                if (error == 0) {
                     set_off_V_preamp1a(value);
+                }
             }
-
-            if (data[0] == 'B') 
-            {
+            if (data[0] == 'B') {
                 error = analyze_string(charDataValue, &value);
-                if (error == 0)
+                if (error == 0) {
                     set_off_V_preamp1b(value);
+                }
             }
         }
-    } 
-    else
+    } else {
         error = 1;
-
-    if (error == 0) 
-    {
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
-    } 
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_VALUE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-    
     return FUNC_CMD_OK;
 }
 
@@ -1056,51 +989,44 @@ uint8_t set_voltage_preamplifier(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t incdecHV(char *data, char *result) 
-{
+uint8_t incdecHV(char *data, char *result) {
     uint8_t retval, error, comp;
     char module, tel, sens;
     char charDataStep[10];
     uint16_t step;
-    
     error = 1;
     retval = FUNC_EXEC_BAD_ARGS_TYPE;
     
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1]==',')
-            if ((data[2]=='1')||(data[2]=='2'))
-                if (data[3]==',')
-                    if ((data[4]=='+')||(data[4]=='-'))
-                        if (data[5]==',')
-                        {
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1]==',') {
+            if ((data[2]=='1')||(data[2]=='2')) {
+                if (data[3]==',') {
+                    if ((data[4]=='+')||(data[4]=='-')) {
+                        if (data[5]==',') {
                             comp = 6;
-                            while ((data[comp]!='\0')&&(data[comp]!=','))
-                            {
+                            while ((data[comp]!='\0')&&(data[comp]!=',')) {
                                 charDataStep[comp-6]=data[comp];
                                 comp++;
                             }
                             charDataStep[comp-6]='\0';
-                            
-                            if ((data[comp]=='\0')&&(comp!=6))
+                            if ((data[comp]=='\0')&&(comp!=6)) {
                                 error = 0;
+                            }
                         }
-                        
-
-    if (error == 0) 
-    {
+                    }
+                }
+            }
+        }
+    }
+    if (error == 0) {
         tel = data[0];
         module = data[2];
         sens = data[4];
         error = 1;
-
         error = analyze_string(charDataStep, &step);
-
-        if (((tel == 'A') && (module == '1'))&&(error == 0)) 
-        {
-            if (HvStatus[0] == 1) 
-            {
-                if (sens == '+') 
-                {
+        if (((tel == 'A') && (module == '1'))&&(error == 0)) {
+            if (HvStatus[0] == 1) {
+                if (sens == '+') {
                     HvValueTab[0][1] += step;
                     HvValueTab[0][0] = HvValueTab[0][1];
                     dac_sequence(0, HvValueTab[0][1]);
@@ -1110,9 +1036,7 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[0][1],'\0');
                 }
-
-                if (sens == '-') 
-                {
+                if (sens == '-') {
                     HvValueTab[0][1] -= step;
                     HvValueTab[0][0] = HvValueTab[0][1];
                     dac_sequence(0, HvValueTab[0][1]);
@@ -1122,24 +1046,17 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[0][1],'\0');
                 }
-            } 
-            else 
-            {
+            } else {
                 retval = FUNC_EXEC_OK;
                 result[0]='0'+(char)retval;
                 result[1]='|';
                 result[2]='N';
                 result[3]='\0';
             }
-
         }
-
-        if (((tel == 'A') && (module == '2'))&&(error == 0)) 
-        {
-            if (HvStatus[1] == 1) 
-            {
-                if (sens == '+') 
-                {
+        if (((tel == 'A') && (module == '2'))&&(error == 0)) {
+            if (HvStatus[1] == 1) {
+                if (sens == '+') {
                     HvValueTab[1][1] += step;
                     HvValueTab[1][0] = HvValueTab[1][1];
                     dac_sequence(16, HvValueTab[1][1]);
@@ -1149,7 +1066,6 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[1][1],'\0');
                 }
-
                 if (sens == '-') {
                     HvValueTab[1][1] -= step;
                     HvValueTab[1][0] = HvValueTab[1][1];
@@ -1160,24 +1076,17 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[1][1],'\0');
                 }
-            } 
-            else 
-            {
+            } else {
                 retval = FUNC_EXEC_OK;
                 result[0]='0'+(char)retval;
                 result[1]='|';
                 result[2]='N';
                 result[3]='\0';
             }
-
         }
-
-        if (((tel == 'B') && (module == '1'))&&(error == 0)) 
-        {
-            if (HvStatus[2] == 1) 
-            {
-                if (sens == '+') 
-                {
+        if (((tel == 'B') && (module == '1'))&&(error == 0)) {
+            if (HvStatus[2] == 1) {
+                if (sens == '+') {
                     HvValueTab[2][1] += step;
                     HvValueTab[2][0] = HvValueTab[2][1];
                     dac_sequence(32, HvValueTab[2][1]);
@@ -1187,9 +1096,7 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[2][1],'\0');
                 }
-
-                if (sens == '-') 
-                {
+                if (sens == '-') {
                     HvValueTab[2][1] -= step;
                     HvValueTab[2][0] = HvValueTab[2][1];
                     dac_sequence(32, HvValueTab[2][1]);
@@ -1199,9 +1106,7 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[2][1],'\0');
                 }
-            } 
-            else 
-            {
+            } else {
                 retval = FUNC_EXEC_OK;
                 result[0]='0'+(char)retval;
                 result[1]='|';
@@ -1209,13 +1114,9 @@ uint8_t incdecHV(char *data, char *result)
                 result[3]='\0';
             }
         }
-
-        if (((tel == 'B') && (module == '2'))&&(error == 0)) 
-        {
-            if (HvStatus[3] == 1) 
-            {
-                if (sens == '+') 
-                {
+        if (((tel == 'B') && (module == '2'))&&(error == 0)) {
+            if (HvStatus[3] == 1) {
+                if (sens == '+') {
                     HvValueTab[3][1] += step;
                     HvValueTab[3][0] = HvValueTab[3][1];
                     dac_sequence(48, HvValueTab[3][1]);
@@ -1225,9 +1126,7 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[3][1],'\0');
                 }
-
-                if (sens == '-') 
-                {
+                if (sens == '-') {
                     HvValueTab[3][1] -= step;
                     HvValueTab[3][0] = HvValueTab[3][1];
                     dac_sequence(48, HvValueTab[3][1]);
@@ -1237,9 +1136,7 @@ uint8_t incdecHV(char *data, char *result)
                     result[2]='\0';
                     myStrCpyUint(result,HvValueTab[3][1],'\0');
                 }
-            } 
-            else 
-            {
+            } else {
                 retval = FUNC_EXEC_OK;
                 result[0]='0'+(char)retval;
                 result[1]='|';
@@ -1247,9 +1144,7 @@ uint8_t incdecHV(char *data, char *result)
                 result[3]='\0';
             }
         }
-    } 
-    else 
-    {
+    } else {
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='N';
@@ -1257,7 +1152,6 @@ uint8_t incdecHV(char *data, char *result)
         result[4]='K';
         result[5]='\0';
     }
-    
     return FUNC_CMD_OK;
 }
 
@@ -1267,22 +1161,17 @@ uint8_t incdecHV(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t getInspecTime(char *data, char *result)
-{
+uint8_t getInspecTime(char *data, char *result) {
     uint8_t retval;
     uint16_t sTime,lTime;
-
     sTime = (uint16_t)(shortInspecTime/15000);
     lTime = (uint16_t)(longInspecTime/15000);
-
     retval = FUNC_EXEC_OK;
-    
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
     myStrCpyUint(result,sTime,',');
     myStrCpyUint(result,lTime,'\0');
-
     return FUNC_CMD_OK;
 }
 
@@ -1292,17 +1181,14 @@ uint8_t getInspecTime(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t getSoftStack(char *data, char *result)
-{
+uint8_t getSoftStack(char *data, char *result) {
     uint8_t retval;
-
     retval = FUNC_EXEC_OK;
     
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
     myStrCpyUint(result,max,'\0');
-
     return FUNC_CMD_OK;
 }
 
@@ -1312,8 +1198,7 @@ uint8_t getSoftStack(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t setInspecTime(char *data, char *result)
-{
+uint8_t setInspecTime(char *data, char *result) {
     uint8_t retval, error, comp, dep;
     char charDataStime[10];
     char charDataLtime[10];
@@ -1321,59 +1206,44 @@ uint8_t setInspecTime(char *data, char *result)
     
     error = 1;
     comp = 0;
-    while ((data[comp]!='\0')&&(data[comp]!=','))
-    {
+    while ((data[comp]!='\0')&&(data[comp]!=',')) {
         charDataStime[comp]=data[comp];
         comp++;
     }
     charDataStime[comp]='\0';
-    
-    if ((data[comp]==',')&&(comp!=0))
-    {
+    if ((data[comp]==',')&&(comp!=0)) {
         comp++;
         dep=comp;
-        while ((data[comp]!='\0')&&(data[comp]!=','))
-        {
+        while ((data[comp]!='\0')&&(data[comp]!=',')) {
             charDataLtime[comp-dep]=data[comp];
             comp++;
         }
         charDataLtime[comp-dep]='\0';
-        
-        if ((data[comp]=='\0')&&(comp!=dep))
+        if ((data[comp]=='\0')&&(comp!=dep)) {
             error = 0;
+        }
     }
-
-    if (error == 0)
-    {
-
+    if (error == 0) {
         error = analyze_string(charDataStime, &sTime);
         error += analyze_string(charDataLtime, &lTime);
-
-        if (error == 0)
-        {
-            if ((sTime<lTime)&&(sTime!=0)&&(lTime!=0))
-            {
+        if (error == 0) {
+            if ((sTime<lTime)&&(sTime!=0)&&(lTime!=0)) {
                 shortInspecTime = 15000*((uint32_t)sTime);
                 longInspecTime = 15000*((uint32_t)lTime);
-
                 EEWrite(EEPROM_HV_SHORT_INSPEC_TIME + 1, (uint8_t) ((sTime& 0xFF00) >> 8));
                 EEWrite(EEPROM_HV_SHORT_INSPEC_TIME, (uint8_t) ((sTime&0xFF)));
-
                 EEWrite(EEPROM_HV_LONG_INSPEC_TIME + 1, (uint8_t) ((lTime& 0xFF00) >> 8));
                 EEWrite(EEPROM_HV_LONG_INSPEC_TIME, (uint8_t) ((lTime&0xFF)));
-
                 retval = FUNC_EXEC_OK;
             }
         }
     }
-    
-    if (error != 0)
+    if (error != 0) {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
-    
+    }
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
-
     return FUNC_CMD_OK;
 }
 
@@ -1383,117 +1253,90 @@ uint8_t setInspecTime(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t set_vhv(char *data, char *result)
-{
+uint8_t set_vhv(char *data, char *result) {
     uint8_t retval, tel, module, error, comp, dep, nb_param;
     uint16_t tension, intslopeVS;
     char charDataVoltage[10];
     char charDataInc[10];
     uint32_t slopeVS;
-    
     error = 1;
     retval = FUNC_EXEC_BAD_ARGS_TYPE;
-    
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1]==',')
-            if ((data[2]=='1')||(data[2]=='2'))
-                if (data[3]==',')
-                {
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1]==',') {
+            if ((data[2]=='1')||(data[2]=='2')) {
+                if (data[3]==',') {
                     dep = 4;
                     comp = 4;
-                    
-                    while ((data[comp]!='\0')&&(data[comp]!=','))
-                    {
+                    while ((data[comp]!='\0')&&(data[comp]!=',')) {
                         charDataVoltage[comp-dep]=data[comp];
                         comp++;
                     }
                     charDataVoltage[comp-dep]='\0';
-                    
-                    if ((data[comp]=='\0')&&(comp!=dep))
-                    {
+                    if ((data[comp]=='\0')&&(comp!=dep)) {
                         nb_param = 3;
                         error = 0;
                     }
-                    
-                    if ((data[comp]==',')&&(comp!=dep))
-                    {
+                    if ((data[comp]==',')&&(comp!=dep)) {
                         comp++;
                         dep = comp;
-                        
-                        while ((data[comp]!='\0')&&(data[comp]!=','))
-                        {
+                        while ((data[comp]!='\0')&&(data[comp]!=',')) {
                             charDataInc[comp-dep]=data[comp];
                             comp++;
                         }
                         charDataInc[comp-dep]='\0';
-                        
-                        if ((data[comp]=='\0')&&(comp!=dep))
-                        {
+                        if ((data[comp]=='\0')&&(comp!=dep)) {
                             nb_param = 4;
                             error = 0;
                         }
                     }
                 }
-
-    if (error == 0) 
-    {
+            }
+        }
+    }
+    if (error == 0) {
         tel = data[0];
         module = (uint8_t) (data[2] - '0');
-
         error = analyze_string(charDataVoltage, &tension);
-
-        if (nb_param == 4)
-        {
+        if (nb_param == 4) {
             error = error + analyze_string(charDataInc, &intslopeVS);
-
-            if (error == 0)
+            if (error == 0) {
                 slopeVS = (uint32_t) intslopeVS;
-        } else
+        } else {
             slopeVS = 10;
-
-
-        if (error == 0) 
-        {
-            error = 1;
-            if (((tel == 'A') && (module == 1)) && (tension <= HV_borne_sup_A1))
-                error = 0;
-
-            if (((tel == 'A') && (module == 2)) && (tension <= HV_borne_sup_A2))
-                error = 0;
-
-            if (((tel == 'B') && (module == 1)) && (tension <= HV_borne_sup_B1))
-                error = 0;
-
-            if (((tel == 'B') && (module == 2)) && (tension <= HV_borne_sup_B2))
-                error = 0;
         }
-
-        if (error == 0) 
-        {
-            if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0)
+        if (error == 0) {
+            error = 1;
+            if (((tel == 'A') && (module == 1)) && (tension <= HV_borne_sup_A1)) {
+                error = 0;
+            }
+            if (((tel == 'A') && (module == 2)) && (tension <= HV_borne_sup_A2)) {
+                error = 0;
+            }
+            if (((tel == 'B') && (module == 1)) && (tension <= HV_borne_sup_B1)) {
+                error = 0;
+            }
+            if (((tel == 'B') && (module == 2)) && (tension <= HV_borne_sup_B2)) {
+                error = 0;
+            }
+        }
+        if (error == 0) {
+            if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0) {
             retval = FUNC_EXEC_INPROGRESS;
-        
-            if ((tel=='A')&&((valeur_portD & 0x01) == 0))
-            {
+            if ((tel=='A')&&((valeur_portD & 0x01) == 0)) {
                 valeur_portD = valeur_portD | 0x01;
                 PORTD=valeur_portD;
             }
-        
-            if ((tel=='B')&&((valeur_portD & 0x02) == 0))
-            {
+            if ((tel=='B')&&((valeur_portD & 0x02) == 0)) {
                 valeur_portD = valeur_portD | 0x02;
                 PORTD=valeur_portD;
             }
-            
-            if (retval != FUNC_EXEC_INPROGRESS)
-            {
+            if (retval != FUNC_EXEC_INPROGRESS) {
                 retval = slop_vhv(tel, module, tension, slopeVS);
                 HvPhysTarget[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
                 HvPhysCorrect[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
             } 
         }
     }
-
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
@@ -1506,12 +1349,9 @@ uint8_t set_vhv(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_temp(char *data, char *result) 
-{
-
+uint8_t get_temp(char *data, char *result) {
     uint8_t retval;
     int temperature_array[nbcapteurs + 2];
-
     PIE1bits.TMR2IE=0;
     INTCONbits.GIEH = 0;
     INTCONbits.GIEL = 0;
@@ -1520,7 +1360,6 @@ uint8_t get_temp(char *data, char *result)
     INTCONbits.GIEH = 1;
     INTCONbits.GIEL = 1;
     PIE1bits.TMR2IE=1;
-
     retval = FUNC_EXEC_OK;
     result[0]='0'+(char)retval;
     result[1]='|';
@@ -1541,51 +1380,45 @@ uint8_t get_temp(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_hvmax(char *data, char *result) 
-{
+uint8_t get_hvmax(char *data, char *result) {
     uint8_t retval, tel, module, error;
     uint16_t valeur;
-
     error = 1;
-    
-    if ((data[0]=='A')||(data[0]=='B'))
-        if (data[1]==',')
-            if ((data[2]=='1')||(data[2]=='2'))
-                if (data[3]=='\0')
+    if ((data[0]=='A')||(data[0]=='B')) {
+        if (data[1]==',') {
+            if ((data[2]=='1')||(data[2]=='2')) {
+                if (data[3]=='\0') {
                     error = 0;
-    
-    if (error == 0) 
-    {
+                }
+            }
+        }
+    }
+    if (error == 0) {
         tel = data[0];
         module = (uint8_t) (data[2] - '0');
-
-        
-        if ((tel == 'A') && (module == 1))
+        if ((tel == 'A') && (module == 1)) {
             valeur = HV_borne_sup_A1;
-
-        if ((tel == 'A') && (module == 2))
+        }
+        if ((tel == 'A') && (module == 2)) {
             valeur = HV_borne_sup_A2;
-
-        if ((tel == 'B') && (module == 1))
+        }
+        if ((tel == 'B') && (module == 1)) {
             valeur = HV_borne_sup_B1;
-
-        if ((tel == 'B') && (module == 2))
+        }
+        if ((tel == 'B') && (module == 2)) {
             valeur = HV_borne_sup_B2;
-
+        }
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
         myStrCpyUint(result,valeur,'\0');
-    }
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-
     return FUNC_CMD_OK;
 }
 
@@ -1596,51 +1429,45 @@ uint8_t get_hvmax(char *data, char *result)
  * @param tension_max Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t apply_hvmax(char tel, char module, uint16_t tension_max) 
-{
+uint8_t apply_hvmax(char tel, char module, uint16_t tension_max) {
     uint8_t error;
-
     error = 0;
-
-    if ((tel == 'A') && (module == '1')) 
-    {
-        if (tension_max < HVSi1Max + 1) 
-        {
+    if ((tel == 'A') && (module == '1')) {
+        if (tension_max < HVSi1Max + 1) {
             HV_borne_sup_A1 = tension_max;
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 1, (uint8_t) ((HV_borne_sup_A1 & 0xFF00) >> 8));
             EEWrite(EEPROM_HV_BORNE_SUP_A1, (uint8_t) ((HV_borne_sup_A1 & 0xFF)));
-        } 
-        else
+        } else {
             error = 1;
+        }
     }
-
     if ((tel == 'A') && (module == '2')) {
         if (tension_max < HVSi2Max + 1) {
             HV_borne_sup_A2 = tension_max;
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 3, (uint8_t) ((HV_borne_sup_A2 & 0xFF00) >> 8));
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 2, (uint8_t) ((HV_borne_sup_A2 & 0xFF)));
-        } else
+        } else {
             error = 1;
+        }
     }
-
     if ((tel == 'B') && (module == '1')) {
         if (tension_max < HVSi1Max + 1) {
             HV_borne_sup_B1 = tension_max;
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 5, (uint8_t) ((HV_borne_sup_B1 & 0xFF00) >> 8));
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 4, (uint8_t) ((HV_borne_sup_B1 & 0xFF)));
-        } else
+        } else {
             error = 1;
+        }
     }
-
     if ((tel == 'B') && (module == '2')) {
         if (tension_max < HVSi2Max + 1) {
             HV_borne_sup_B2 = tension_max;
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 7, (uint8_t) ((HV_borne_sup_B2 & 0xFF00) >> 8));
             EEWrite(EEPROM_HV_BORNE_SUP_A1 + 6, (uint8_t) ((HV_borne_sup_B2 & 0xFF)));
-        } else
+        } else {
             error = 1;
+        }
     }
-
     return error;
 }
 
@@ -1650,37 +1477,28 @@ uint8_t apply_hvmax(char tel, char module, uint16_t tension_max)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t enableDisableHVMeas(char *data, char *result) 
-{
+uint8_t enableDisableHVMeas(char *data, char *result) {
     uint8_t retval,error;
-
     error = 1;
-    
-    if ((data[0]=='1')&&(data[1]=='\0'))
-    {
+    if ((data[0]=='1')&&(data[1]=='\0')) {
         error = 0;
-        if (enableHVMeas != keyWordC)
-        {
+        if (enableHVMeas != keyWordC) {
             enableHVMeas = keyWordC;
             EEWrite(49, keyWordC);
             timing_inspection = shortInspecTime;
             time_lc_prec = time_scheduling;
         }
     }
-    
-    if ((data[0]=='0')&&(data[1]=='\0'))
-    {
+    if ((data[0]=='0')&&(data[1]=='\0')) {
         error = 0;
         enableHVMeas = 0xFF;
         EEWrite(49, 0xFF);
     }
-
-    if (error == 0) 
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
-    else 
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
-    
-
+    }
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
@@ -1693,45 +1511,38 @@ uint8_t enableDisableHVMeas(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t set_hvmax(char *data, char *result) 
-{
+uint8_t set_hvmax(char *data, char *result) {
     uint8_t retval,error,comp, dep;
     char charDataVoltage[10], tel, module;
     uint16_t tension_max;
-
     error = 1;
-    
-    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]==','))
-    {
+    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]==',')) {
         tel = data[0];
-        if (((data[2]=='1')||(data[2]=='2'))&&(data[3]==','))
-        {
+        if (((data[2]=='1')||(data[2]=='2'))&&(data[3]==',')) {
             dep = 4;
             comp = dep;
-            while ((data[comp]!='\0')&&(data[comp]!=','))
-            {
+            while ((data[comp]!='\0')&&(data[comp]!=',')) {
                 charDataVoltage[comp-dep]=data[comp];
                 comp++;
             }
             charDataVoltage[comp-dep]='\0';
             
-            if ((data[comp]=='\0')&&((comp-dep)!=0))
-            {
+            if ((data[comp]=='\0')&&((comp-dep)!=0)) {
                 error = analyze_string(charDataVoltage, &tension_max);
                 tel = data[0];
                 module = data[2];
                 
-                if (error == 0) 
+                if (error == 0) {
                     error = apply_hvmax(tel, module, tension_max);
+                }
             }
         }
     }    
-
-    if (error == 0) 
+    if (error == 0) { 
         retval = FUNC_EXEC_OK;
-    else 
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
-
+    }
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
@@ -1744,17 +1555,14 @@ uint8_t set_hvmax(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t uart_ask_hv_calibration(char *data, char *result) 
-{
+uint8_t uart_ask_hv_calibration(char *data, char *result) {
     char myresult[14];
-
     ask_hv_calibration(myresult);
-
     result[0]='0';
     result[1]='|';
     result[2]='\0';
     myStrCpyChar(result,myresult,'\0');
-
+    
     return FUNC_CMD_OK;
 }
 
@@ -1764,13 +1572,12 @@ uint8_t uart_ask_hv_calibration(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t store_param(char *data, char *result) 
-{
+uint8_t store_param(char *data, char *result) {
     storeparam();
     result[0]='0';
     result[1]='|';
     result[2]='\0';
-
+    
     return FUNC_CMD_OK;
 }
 
@@ -1780,46 +1587,36 @@ uint8_t store_param(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t set_data_eeprom_address(char *data, char *result) 
-{
+uint8_t set_data_eeprom_address(char *data, char *result) {
     uint8_t retval, error,dep, comp;
     char charDataAdr[10],charDataValue[10];
     uint16_t data_adr, data_value;
-
     error = 1;
-    
     comp = 0;
-    while ((data[comp]!='\0')&&(data[comp]!=','))
-    {
+    while ((data[comp]!='\0')&&(data[comp]!=',')) {
         charDataAdr[comp] = data[comp];
         comp++;
     }
     charDataAdr[comp]='\0';
-    
-    if ((data[comp] == ',')&&(comp!=0))
-    {
+    if ((data[comp] == ',')&&(comp!=0)) {
         comp++;
         dep = comp;
-        while ((data[comp]!='\0')&&(data[comp]!=','))
-        {
+        while ((data[comp]!='\0')&&(data[comp]!=',')) {
             charDataValue[comp-dep] = data[comp];
             comp++;
         }
         charDataValue[comp-dep]='\0';
-        
-        if ((data[comp] == '\0')&&((comp-dep)!=0))
-        {
+        if ((data[comp] == '\0')&&((comp-dep)!=0)) {
             error = analyze_string(charDataAdr, &data_adr);
             error += analyze_string(charDataValue, &data_value);
             EEWrite(data_adr, (uint8_t)data_value);
         }
     }
-
-    if (error == 0) 
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
-    else 
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_VALUE;
-
+    }
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';
@@ -1832,46 +1629,36 @@ uint8_t set_data_eeprom_address(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t get_data_eeprom_address(char *data, char *result) 
-{
+uint8_t get_data_eeprom_address(char *data, char *result) {
     uint8_t retval, error;
     char charDataAdr[10];
     uint16_t data_adr;
     uint8_t data_value,comp;
-
     error = 1;
     
     comp = 0;
-    while ((data[comp]!='\0')&&(data[comp]!=','))
-    {
+    while ((data[comp]!='\0')&&(data[comp]!=',')) {
         charDataAdr[comp] = data[comp];
         comp++;
     }
     charDataAdr[comp]='\0';
-    
-    if ((data[comp]=='\0')&&(comp!=0))
-    {
+    if ((data[comp]=='\0')&&(comp!=0)) {
         error = analyze_string(charDataAdr, &data_adr);
         data_value = EERead(data_adr);
     }
-
-    if (error == 0) 
-    {
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
         myStrCpyUint(result,data_value,'\0');
         //dispchartobin(data_value);        
-    } 
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_VALUE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-    
     return FUNC_CMD_OK;
 }
 
@@ -1886,43 +1673,33 @@ uint8_t spi_get_regvalue(char *data, char *result)
     uint8_t retval,error,comp,dep;
     char charDataAdr[10];
     uint16_t data_adr, data_value;
-    
     error = 1;
     
-    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]==','))
-    {
+    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]==',')) {
         dep = 2;
         comp = dep;
-        while ((data[comp]!=',')&&(data[comp]!='\0'))
-        {
+        while ((data[comp]!=',')&&(data[comp]!='\0')) {
             charDataAdr[comp-dep]=data[comp];
             comp++;
         }
         charDataAdr[comp-dep]='\0';
-        
-        if ((data[comp]=='\0')&&(comp!=dep))
-        {
+        if ((data[comp]=='\0')&&(comp!=dep)) {
             error = analyze_string(charDataAdr, &data_adr);
             data_value = rdspi(data[0] - 'A' + 1, data_adr);
         }
     }
-
-    if (error == 0) 
-    {
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
         myStrCpyUint(result,data_value,'\0');
-    } 
-    else 
-    {
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
         result[0]='0'+(char)retval;
         result[1]='|';
         result[2]='\0';
     }
-
     return FUNC_CMD_OK;
 }
 
@@ -1932,55 +1709,45 @@ uint8_t spi_get_regvalue(char *data, char *result)
  * @param result Pointer to input/output buffer containing command data..
  * @return uint8_t status or result code.
  */
-uint8_t spi_set_regvalue(char *data, char *result) 
-{
+uint8_t spi_set_regvalue(char *data, char *result) {
     uint8_t retval,error,comp,dep;
     char charDataAdr[10];
     char charDataValue[10];
     uint16_t data_adr,data_value;
     char nb_fpga;
-    
     error = 1;
     
-    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]==','))
-    {
+    if (((data[0]=='A')||(data[0]=='B'))&&(data[1]==',')) {
         nb_fpga = data[0] - 'A' + 1;
-        
         dep = 2;
         comp = dep;
-        while ((data[comp]!=',')&&(data[comp]!='\0'))
-        {
+        while ((data[comp]!=',')&&(data[comp]!='\0')) {
             charDataAdr[comp-dep]=data[comp];
             comp++;
         }
         charDataAdr[comp-dep]='\0';
-        
-        if ((data[comp]==',')&&(comp!=dep))
-        {
+        if ((data[comp]==',')&&(comp!=dep)) {
             comp++;
             dep=comp;
-            while ((data[comp]!=',')&&(data[comp]!='\0'))
-            {
+            while ((data[comp]!=',')&&(data[comp]!='\0')) {
                 charDataValue[comp-dep]=data[comp];
                 comp++;
             }
             charDataValue[comp-dep]='\0';
-            
-            if ((data[comp]=='\0')&&((comp-dep)!=0))
-            {
+            if ((data[comp]=='\0')&&((comp-dep)!=0)) {
                 error = analyze_string(charDataAdr, &data_adr);
                 error = error + analyze_string(charDataValue, &data_value);
-                if (error == 0)
+                if (error == 0) {
                     wrspi(nb_fpga, data_adr, data_value);
+                }
             }
         }
     }
-
-    if (error == 0) 
+    if (error == 0) {
         retval = FUNC_EXEC_OK;
-    else 
+    } else {
         retval = FUNC_EXEC_BAD_ARGS_TYPE;
-    
+    }
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='\0';

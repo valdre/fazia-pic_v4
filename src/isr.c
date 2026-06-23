@@ -11,16 +11,12 @@
 
 
 extern uint32_t time_scheduling;
-
 // UART ISR vars
 static unsigned char ch;
-
 // TIMER0 ISR vars
 extern const bool both_fpga_ok;
 extern const bool check;
-
 extern uint16_t max;
-
 extern CBuffer_large _Uart[2];
 extern CBuffer_large *Uart;
 //extern CBuffer_small _hpUart[2];
@@ -37,46 +33,36 @@ extern CBuffer_large *Uart;
 /**
  * @brief Interrupt service routine for hardware events.
  */
-void isr(void) 
-{   
+void isr(void) {   
     uint16_t test;
-    
     test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
-    if (test>max)
+    if (test>max) {
         max = test;
-    
-    if (PIR1bits.TMR2IF) 
-    {
+    }
+    if (PIR1bits.TMR2IF) {
         time_scheduling++;
         PIR1bits.TMR2IF = 0;
     }
-    
-    if (PIR1bits.RCIF) 
-    {
+    if (PIR1bits.RCIF) {
         test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
-        if (test>max)
+        if (test>max) {
             max = test;
-        
-        while (DataRdyUSART())
-        {
-            if (RCSTAbits.OERR || RCSTAbits.FERR)
-            {
+        }
+        while (DataRdyUSART()) {
+            if (RCSTAbits.OERR || RCSTAbits.FERR) {
                 RCSTAbits.CREN = 0; // Clearing CREN clears any Overrun (OERR) errors
                 Nop();
                 RCSTAbits.CREN = 1; // Re-enable continuous USART receive
                 RCSTAbits.SPEN = 0;
                 RCSTAbits.SPEN = 1;
             }
-
             ch = ReadUSART();
-
             Uart[SLAVE_RX].data[Uart[SLAVE_RX].wrp] = ch;
             Uart[SLAVE_RX].wrp = (Uart[SLAVE_RX].wrp + 1) % Uart[SLAVE_RX].size;
-
-            if (Uart[SLAVE_RX].wrp == Uart[SLAVE_RX].rdp)
+            if (Uart[SLAVE_RX].wrp == Uart[SLAVE_RX].rdp) {
                 Uart[SLAVE_RX].rdp = (Uart[SLAVE_RX].rdp + 1) % Uart[SLAVE_RX].size; // full, overwrite
+            }
         }
-
         PIR1bits.RCIF = 0; // reset interrupt
     }
 }

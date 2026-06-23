@@ -490,10 +490,11 @@ void pa_offset_settings(void) {
                 regfpga = REG_FPGA_Q3;
                 regfpga2 = REG_FPGA_PA_CSI;
             }
-            if (i < 3)
+            if (i < 3) {
                 id = 1;
-            else
+            } else {
                 id = 2;
+            }
             do {
                 value += 5;
                 wrspi(id, regfpga2, value);
@@ -509,6 +510,7 @@ void pa_offset_settings(void) {
                     if (co < 20)
                         co = 0;
                 } while (co != 20);
+                
                 if ((regAdc1 >= borne_lim_inf) && (regAdc1 < borne_lim_sup)) {
                     state = 1;
                     p = ((uint16_t *) & pa) + 5 - i;
@@ -517,11 +519,11 @@ void pa_offset_settings(void) {
                 }
                 cp++;
             } while ((cp < 25) && (value < 1024));
+            
             if (value > 1024) {
                 state = 1;
             }
             break;
-
         default:
             state = 0;
             break;
@@ -622,14 +624,15 @@ uint32_t current_leak_inspection(void) {
 
                     if (HvPhysCorrect[compteur] != hvInt) {
                         if (hvInt != 0) {
-                            if (((module == 1) && (hvInt < HVSi1Max + 1)) || ((module == 2) && (hvInt < HVSi2Max + 1)))
+                            if (((module == 1) && (hvInt < HVSi1Max + 1)) || ((module == 2) && (hvInt < HVSi2Max + 1))) {
                                 slop_vhv(tel, module, hvInt, 5);
-                            
-                            if ((module == 1) && (hvInt > HVSi1Max))
+                            }
+                            if ((module == 1) && (hvInt > HVSi1Max)) {
                                 slop_vhv(tel, module, HVSi1Max, 5);
-                            
-                            if ((module == 2) && (hvInt > HVSi2Max))
+                            }
+                            if ((module == 2) && (hvInt > HVSi2Max)) {
                                 slop_vhv(tel, module, HVSi2Max, 5);
+                            }
                         }
                         HvPhysCorrect[compteur] = hvInt;
                         flag = 1;
@@ -638,118 +641,10 @@ uint32_t current_leak_inspection(void) {
             }
         }
     }
-    if (flag == 1)
+    if (flag == 1) {
         timing = shortInspecTime;
-    else
+    } else {
         timing = longInspecTime;
+    }
     return timing;
 }
-
-///////////////////UARTFUNC FUNCTION//////////////////////////////
-
-//uint8_t uartfunc(void) {
-//    static uint16_t i;
-//    static char kw;
-//    static uint16_t idb;
-//    static enum slaveid ids;
-//    static uint8_t cmd;
-//    static uint8_t cmdres, funcres;
-//    static uint8_t seq;
-//    static uint16_t crc, docrc;
-//    static uint16_t flen, foffset;
-//    static uint16_t ferr;
-//    static char myC[2];
-//
-//    ferr = cbuffer_large_getframe_length(&Uart[SLAVE_RX], &flen, &foffset);
-//
-//    if (ferr == ERR_FRAME_NONE) {
-//        uartbuf_getframe(SLAVE_RX, fIn, flen, foffset);
-//
-//        if (flen < 9) // incorrect length
-//            return 0;
-//
-//        kw = frame_getkw(fIn);
-//        idb = frame_getidb(fIn);
-//        ids = frame_getids(fIn);
-//        cmd = frame_getcmd(fIn);
-//        seq = frame_getseq(fIn);
-//        frame_getdata(fIn, data);
-//        crc = frame_getcrc(fIn);
-//
-//        if ((ids == '0' + getid())) {
-//            fpre[0] = '\0';
-//            if (seq) {
-//                myStrCpyHex(fpre, idb, 3, '\0');
-//                myStrCpy1Char(fpre, ids, '\0');
-//                myStrCpy1Char(fpre, cmd, '\0');
-//                myStrCpy1Char(fpre, seq, '\0');
-//                myStrCpy1Char(fpre, SEQNUM_DELIMITER, '\0');
-//            } else {
-//                myStrCpyHex(fpre, idb, 3, '\0');
-//                myStrCpy1Char(fpre, ids, '\0');
-//                myStrCpy1Char(fpre, cmd, '\0');
-//            }
-//
-//            docrc = 0;
-//            for (i = 0; fIn[i] != KW_END; i++)
-//                docrc = docrc ^ fIn[i];
-//
-//            if ((docrc != crc) || (kw != KW_STX)) { // CRC fail
-//                fIn[0] = '\0';
-//                myStrCpy1Char((char *) fIn, KW_ERR, '\0');
-//                myStrCpyChar((char *) fIn, fpre, '\0');
-//                myStrCpyChar((char *) fIn, data, '\0');
-//                myStrCpy1Char((char *) fIn, KW_END, '\0');
-//                crc = frame_docrc(fIn);
-//                fOut[0] = '\0';
-//                myStrCpyChar((char *) fOut, (char *) fIn, '\0');
-//                myStrCpyHex((char *) fOut, crc, -1, '\0');
-//                uartbuf_putframe(SLAVE_TX, fOut);
-//                uartbuf_flush(SLAVE_TX);
-//                return 0;
-//            }
-//
-//            cmdres = func_invoke(cmd, data, result);
-//            fIn[0] = '\0';
-//
-//            if (cmdres == FUNC_CMD_OK) {
-//                myC[0] = result[0];
-//                myC[1] = '\0';
-//                funcres = atoi(myC);
-//
-//                if (funcres == FUNC_EXEC_OK) {
-//                    myStrCpy1Char((char *) fIn, KW_ACK, '\0');
-//                    myStrCpyChar((char *) fIn, fpre, '\0');
-//                    myStrCpyChar((char *) fIn, result, '\0');
-//                    myStrCpy1Char((char *) fIn, KW_END, '\0');
-//                } else {
-//                    myStrCpy1Char((char *) fIn, KW_NAK, '\0');
-//                    myStrCpyChar((char *) fIn, fpre, '\0');
-//                    myStrCpyChar((char *) fIn, result, '\0');
-//                    myStrCpy1Char((char *) fIn, KW_END, '\0');
-//                }
-//            }
-//            else {
-//                myStrCpy1Char((char *) fIn, KW_ERR, '\0');
-//                myStrCpyChar((char *) fIn, fpre, '\0');
-//                myStrCpyChar((char *) fIn, data, '\0');
-//                myStrCpy1Char((char *) fIn, KW_END, '\0');
-//            }
-//
-//            // compute new CRC and append to output frame
-//            crc = frame_docrc(fIn);
-//            fOut[0] = '\0';
-//            myStrCpyChar((char *) fOut, (char *) fIn, '\0');
-//            myStrCpyHex((char *) fOut, crc, -1, '\0');
-//
-//            uartbuf_putframe(SLAVE_TX, fOut);
-//            uartbuf_flush(SLAVE_TX);
-//        }
-//    } // end if(ferr)
-//
-//    //uartbuf_flush(SLAVE_HPTX);
-//    //uartbuf_flush(SLAVE_TX);
-//    return 0;
-//}
-
-// EOF

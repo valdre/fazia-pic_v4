@@ -9,15 +9,12 @@
  * @return unsigned int status or result code.
  */
 unsigned int htoi(const char *ptr) {
-
    unsigned int value = 0;
    char ch = *ptr;
-
-   while (ch == ' ' || ch == '\t')
+   while (ch == ' ' || ch == '\t') {
       ch = *(++ptr);
-
-   for (;;) {
-
+   }
+   while(1) {
       if (ch >= '0' && ch <= '9')
          value = (value << 4) + (ch - '0');
       else if (ch >= 'A' && ch <= 'F')
