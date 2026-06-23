@@ -1,6 +1,7 @@
 #include "functions.h"
-#include <spi.h>
-#include <p18cxxx.h>
+// #include <spi.h>
+// #include <p18cxxx.h>
+#include <xc.h>
 
 
 extern uint8_t valeur_portC;
@@ -13,7 +14,7 @@ extern struct parametres pa;
  * @param adr 16-bit register address
  * @return unsigned int status or result code.
  */
-unsigned int rdspi(char id_fpga,unsigned int adr)
+uint16_t rdspi(char id_fpga,unsigned int adr)
 {
     unsigned char adr_msb;
     unsigned char adr_lsb;

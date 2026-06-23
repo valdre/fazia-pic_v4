@@ -1,6 +1,6 @@
-#include <usart.h>
-#include <timers.h>
-#include <spi.h>
+// #include <usart.h>
+// #include <timers.h>
+// #include <spi.h>
 
 #include "setup.h"
 #include "Generic.h"
@@ -51,30 +51,30 @@ extern uint32_t coefB_B2;
 extern uint8_t cal_preampli_offset;
 extern uint8_t marge_pa_offset;
 
-extern ram uint16_t tsensor_1_min;
-extern ram uint16_t tsensor_1_max;
-extern ram uint16_t tsensor_limit;
-extern ram uint8_t time_reset;
-extern ram uint8_t time_start;
-extern ram uint8_t time_bit0;
-extern ram uint8_t time_bit1;
-extern ram uint8_t time_wait;
+extern const uint16_t tsensor_1_min;
+extern const uint16_t tsensor_1_max;
+extern const uint16_t tsensor_limit;
+extern const uint8_t time_reset;
+extern const uint8_t time_start;
+extern const uint8_t time_bit0;
+extern const uint8_t time_bit1;
+extern const uint8_t time_wait;
 
-extern ram uint8_t CSI_relay;
+extern const uint8_t CSI_relay;
 
-extern ram uint32_t time_scheduling;
-extern ram uint32_t shortInspecTime;
-extern ram uint32_t longInspecTime;
+extern const uint32_t time_scheduling;
+extern const uint32_t shortInspecTime;
+extern const uint32_t longInspecTime;
 
-extern ram long int HV_read_coefA[4];
-extern ram long int HV_read_coefB[4];
+extern const long int HV_read_coefA[4];
+extern const long int HV_read_coefB[4];
 
-extern ram uint16_t lcA1;
-extern ram uint16_t lcA2;
-extern ram uint16_t lcB1;
-extern ram uint16_t lcB2;
+extern const uint16_t lcA1;
+extern const uint16_t lcA2;
+extern const uint16_t lcB1;
+extern const uint16_t lcB2;
 
-extern ram uint16_t GeneDacVoltage;
+extern const uint16_t GeneDacVoltage;
 
 /**
  * @brief Initialize the microcontroller peripherals and I/O ports.

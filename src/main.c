@@ -2,14 +2,15 @@
 //********************** STEP_3 PIC PROJECT ***************************
 //*********************************************************************
 
-#include <p18cxxx.h>
+// #include <p18cxxx.h>
+#include <xc.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <usart.h>
+// #include <usart.h>
 #include <string.h>
-#include <timers.h>
-#include <delays.h>
-#include <spi.h>
+// #include <timers.h>
+// #include <delays.h>
+// #include <spi.h>
 
 #pragma config FOSC = HSPLL     // HS oscillator
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
@@ -98,31 +99,31 @@ uint32_t coefB_A2; // coefficient required to determine the leakage current
 uint32_t coefB_B1; // coefficient required to determine the leakage current
 uint32_t coefB_B2; // coefficient required to determine the leakage current
 
-ram uint16_t tsensor_1_min;
-ram uint16_t tsensor_1_max;
-ram uint16_t tsensor_limit;
-ram uint8_t time_reset;
-ram uint8_t time_start;
-ram uint8_t time_bit0;
-ram uint8_t time_bit1;
-ram uint8_t time_wait;
-ram uint8_t CSI_relay;
-ram uint32_t time_scheduling;
-ram uint32_t time_scheduling_copy;
-ram bool both_fpga_ok = FALSE;
-ram bool check = TRUE;
-ram long int HV_read_coefA[4];
-ram long int HV_read_coefB[4];
-ram uint16_t lcA1;
-ram uint16_t lcA2;
-ram uint16_t lcB1;
-ram uint16_t lcB2;
-ram uint32_t timing_inspection;
-ram uint32_t time_lc_prec;
-ram uint32_t shortInspecTime;
-ram uint32_t longInspecTime;
-ram uint16_t GeneDacVoltage;
-ram uint16_t max;
+const uint16_t tsensor_1_min;
+const uint16_t tsensor_1_max;
+const uint16_t tsensor_limit;
+const uint8_t time_reset;
+const uint8_t time_start;
+const uint8_t time_bit0;
+const uint8_t time_bit1;
+const uint8_t time_wait;
+const uint8_t CSI_relay;
+uint32_t time_scheduling;
+const uint32_t time_scheduling_copy;
+bool both_fpga_ok = FALSE;
+bool check = TRUE;
+const long int HV_read_coefA[4];
+const long int HV_read_coefB[4];
+const uint16_t lcA1;
+const uint16_t lcA2;
+const uint16_t lcB1;
+const uint16_t lcB2;
+const uint32_t timing_inspection;
+const uint32_t time_lc_prec;
+const uint32_t shortInspecTime;
+const uint32_t longInspecTime;
+const uint16_t GeneDacVoltage;
+uint16_t max;
 struct parametres pa;
 #pragma udata
 char tel_table[4] = {'A', 'A', 'B', 'B'};

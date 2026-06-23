@@ -2,14 +2,14 @@
 
 extern uint8_t valeur_portB;
 extern uint8_t valeur_trisB;
-extern ram uint16_t tsensor_1_min;
-extern ram uint16_t tsensor_1_max;
-extern ram uint16_t tsensor_limit;
-extern ram uint8_t time_reset;
-extern ram uint8_t time_start;
-extern ram uint8_t time_bit0;
-extern ram uint8_t time_bit1;
-extern ram uint8_t time_wait;
+extern const uint16_t tsensor_1_min;
+extern const uint16_t tsensor_1_max;
+extern const uint16_t tsensor_limit;
+extern const uint8_t time_reset;
+extern const uint8_t time_start;
+extern const uint8_t time_bit0;
+extern const uint8_t time_bit1;
+extern const uint8_t time_wait;
 
 
 

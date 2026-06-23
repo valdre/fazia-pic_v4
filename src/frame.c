@@ -1,6 +1,5 @@
 #include "frame.h"
 #include "utils.h"
-
 #include <stdio.h>      // for sprintf
 #include <string.h>     // for memset, strncpy
 
@@ -18,13 +17,11 @@ void frame_init(unsigned char *f) {
  * @return uint16_t status or result code.
  */
 uint16_t frame_docrc(unsigned char *f) {
-
    int i;
    uint16_t crc = 0;
-
-   for (i = 0; f[i] != KW_END; i++)
+   for (i = 0; f[i] != KW_END; i++) {
       crc ^= f[i];
-
+   }
    return crc;
 }
 
@@ -49,12 +46,12 @@ uint16_t frame_getidb(unsigned char *f) {
  * @param f Frame buffer
  * @return unsigned char status or result code.
  */
-unsigned char frame_getseq(unsigned char *f)
-{
-   if ((f[7] == SEQNUM_DELIMITER) && (f[6] >= 0x21) && (f[6] <= 0x7E))
+unsigned char frame_getseq(unsigned char *f) {
+   if ((f[7] == SEQNUM_DELIMITER) && (f[6] >= 0x21) && (f[6] <= 0x7E)) {
       return (f[6]);
-   else
+   } else {
       return (0);
+   }
 }
 
 /**
@@ -62,17 +59,12 @@ unsigned char frame_getseq(unsigned char *f)
  * @param f Frame buffer
  * @param d Output data buffer
  */
-void frame_getdata(unsigned char *f, char *d)
-{
+void frame_getdata(unsigned char *f, char *d) {
    uint16_t fsize = strlen((char *)f);
-
    if ((f[7] == SEQNUM_DELIMITER) && (f[6] >= 0x21) && (f[6] <= 0x7E)) {
-
       strncpy(d, (const char *) f + 8, fsize - 11);
       d[fsize - 11] = '\0';
-
    } else {
-
       strncpy(d, (const char *) f + 6, fsize - 9);
       d[fsize - 9] = '\0';
    }
@@ -87,7 +79,6 @@ uint16_t frame_getcrc(unsigned char *f) {
    char crc[3];
    uint16_t CRC = 0;
    uint16_t fsize = strlen((char *)f);
-
    crc[0] = f[fsize - 2];
    crc[1] = f[fsize - 1];
    crc[2] = '\0';

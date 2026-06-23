@@ -19,9 +19,9 @@
  * @brief Large circular buffer representation.
  */
 typedef struct {
-    UINT16 size;
-    UINT16 rdp; // READ pointer
-    UINT16 wrp; // WRITE pointer
+    uint16_t size;
+    uint16_t rdp; // READ pointer
+    uint16_t wrp; // WRITE pointer
     unsigned char data[LARGE_BUFFER_SIZE]; // vector of elements
 } CBuffer_large;
 

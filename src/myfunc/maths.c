@@ -77,69 +77,41 @@ uint8_t analyze_string(char *pr,uint16_t *converted_value)
 {
     uint8_t co,error;
     
-    if ((pr[0]=='0')&&((pr[1]=='x')||(pr[1]=='X')))
-    {
+    if ((pr[0]=='0')&&((pr[1]=='x')||(pr[1]=='X'))) {
         co=2;
-        do
-        {
+        do {
             error=1;
-            
             if ((pr[co] >='0')&&(pr[co]<='9'))
-                error=0;
-            
+                error=0;            
             if ((pr[co]>='A')&&(pr[co]<='F'))
                 error=0;
-            
             if ((pr[co]>='a')&&(pr[co]<='f'))
                 error=0;
             co++;
-        }
-        while((pr[co]!='\0')&&(error==0));
-
-//        putrsUSART((const far rom char *)"error:");
-//        while(BusyUSART());
-//        putcUSART(error+'0');
-//        while(BusyUSART());
-//        putcUSART('\n');
-//        while(BusyUSART());
-//        putcUSART('\r');
-//        while(BusyUSART());
-
-
-        if ((co<7)&&(error==0))
-        {
-//            putrsUSART((const far rom char *)"conversion:");
-//            while(BusyUSART());
+        } while((pr[co]!='\0')&&(error==0));
+        
+        if ((co<7)&&(error==0)) {
             *converted_value=charhextoi(pr);
-//            dispinttobin(*converted_value);
-//            putcUSART('\n');
-//            while(BusyUSART());
-//            putcUSART('\r');
-//            while(BusyUSART());
-        }
-        else
+        } else {
             error=1;
-
-    }
-    else
-    {
+        }
+    } else {
         co=0;
         error=0;
-        while((pr[co]!='\0')&&(error==0))
-        {
-            if ((pr[co] >='0')&&(pr[co]<='9'))
+        while((pr[co]!='\0')&&(error==0)) {
+            if ((pr[co] >='0')&&(pr[co]<='9')) {
                 error=0;
-            else
+            } else {
                 error=1;
+            }
             co++;
         }
-
-        if ((co<6)&&(error==0))
+        if ((co<6)&&(error==0)) {
             *converted_value=chardectoi(pr);
-        else
+        } else {
             error=1;
+        }
     }
-
     return error;
 }
 

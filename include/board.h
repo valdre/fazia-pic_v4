@@ -1,7 +1,7 @@
 #ifndef _BOARD_H
 #define _BOARD_H
 
-#include <delays.h>
+// #include <delays.h>
 
 #define FCY         16000000LL
 #define FOSC        FCY*4

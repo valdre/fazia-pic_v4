@@ -1,0 +1,647 @@
+
+CLEAN SUCCESSFUL (total time: 51ms)
+make -f nbproject/Makefile-default.mk SUBPROJECTS= .build-conf
+make  -f nbproject/Makefile-default.mk dist/default/production/fazia-pic_ModernXC8.X.production.hex
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/frame.p1 src/frame.c 
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/uartbuf.p1 src/uartbuf.c 
+src/uartbuf.c:25:23: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+   25 |    cbuffer_large_init(&Uart[0]);
+      |                       ^~~~~~~~
+include/cbuffer.h:32:40: note: passing argument to parameter 'cb' here
+   32 | void cbuffer_large_init(CBuffer_large *cb);
+      |                                        ^
+src/uartbuf.c:26:23: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+   26 |    cbuffer_large_init(&Uart[1]);
+      |                       ^~~~~~~~
+include/cbuffer.h:32:40: note: passing argument to parameter 'cb' here
+   32 | void cbuffer_large_init(CBuffer_large *cb);
+      |                                        ^
+src/uartbuf.c:38:38: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+   38 |       return (cbuffer_large_dumpdata(&Uart[channel]));
+      |                                      ^~~~~~~~~~~~~~
+include/cbuffer.h:67:54: note: passing argument to parameter 'cb' here
+   67 | unsigned char *cbuffer_large_dumpdata(CBuffer_large *cb);
+      |                                                      ^
+src/uartbuf.c:41:1: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+   41 | }
+      | ^
+src/uartbuf.c:55:29: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+   55 |          cbuffer_large_read(&Uart[channel], &ch);
+      |                             ^~~~~~~~~~~~~~
+include/cbuffer.h:51:43: note: passing argument to parameter 'cb' here
+   51 | uint8_t cbuffer_large_read(CBuffer_large *cb, unsigned char *ch);
+      |                                           ^
+src/uartbuf.c:59:17: error: call to undeclared function 'BusyUSART'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   59 |          while (BusyUSART());
+      |                 ^
+src/uartbuf.c:60:10: error: call to undeclared function 'putcUSART'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   60 |          putcUSART(ch);
+      |          ^
+src/uartbuf.c:96:29: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+   96 |          cbuffer_large_read(&Uart[channel], &ch);
+      |                             ^~~~~~~~~~~~~~
+include/cbuffer.h:51:43: note: passing argument to parameter 'cb' here
+   51 | uint8_t cbuffer_large_read(CBuffer_large *cb, unsigned char *ch);
+      |                                           ^
+src/uartbuf.c:102:29: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  102 |          cbuffer_large_read(&Uart[channel], &ch);
+      |                             ^~~~~~~~~~~~~~
+include/cbuffer.h:51:43: note: passing argument to parameter 'cb' here
+   51 | uint8_t cbuffer_large_read(CBuffer_large *cb, unsigned char *ch);
+      |                                           ^
+src/uartbuf.c:139:30: warning: passing 'volatile CBuffer_large *' to parameter of type 'CBuffer_large *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  139 |          cbuffer_large_write(&Uart[channel], f[i]);
+      |                              ^~~~~~~~~~~~~~
+include/cbuffer.h:43:44: note: passing argument to parameter 'cb' here
+   43 | uint8_t cbuffer_large_write(CBuffer_large *cb, unsigned char ch);
+      |                                            ^
+8 warnings and 2 errors generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/utils.p1 src/utils.c 
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/cbuffer.p1 src/cbuffer.c 
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: *** [nbproject/Makefile-default.mk:336: build/default/production/src/uartbuf.p1] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[2]: *** [nbproject/Makefile-default.mk:232: build/default/production/src/myfunc/Tsensor.p1] Error 1
+make[2]: *** [nbproject/Makefile-default.mk:240: build/default/production/src/myfunc/wr_eeprom.p1] Error 1
+make[2]: *** [nbproject/Makefile-default.mk:320: build/default/production/src/main.p1] Error 1
+make[2]: *** [nbproject/Makefile-default.mk:304: build/default/production/src/functions.p1] Error 1
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/Tsensor.p1 src/myfunc/Tsensor.c 
+In file included from src/myfunc/Tsensor.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/Tsensor.c:25:110: warning: implicit conversion changes signedness: 'int' to 'char' [-Wsign-conversion]
+   25 |         char BitTab[] = { 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, -1 };
+      |                         ~                                                                                           ^~
+src/myfunc/Tsensor.c:29:111: warning: implicit conversion changes signedness: 'int' to 'char' [-Wsign-conversion]
+   29 |         char BitTab2[] = { 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, -1 };
+      |                          ~                                                                                           ^~
+src/myfunc/Tsensor.c:77:20: warning: result of comparison of constant -1 with expression of type 'char' is always true [-Wtautological-constant-out-of-range-compare]
+   77 |                 while (BitTab[co]!=-1)
+      |                        ~~~~~~~~~~^ ~~
+src/myfunc/Tsensor.c:90:21: warning: result of comparison of constant -1 with expression of type 'char' is always true [-Wtautological-constant-out-of-range-compare]
+   90 |                 while (BitTab2[co]!=-1)
+      |                        ~~~~~~~~~~~^ ~~
+src/myfunc/Tsensor.c:114:114: warning: implicit conversion changes signedness: 'int' to 'char' [-Wsign-conversion]
+  114 |     char BitTab3[] = { 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 };
+      |                      ~                                                                                           ^~
+src/myfunc/Tsensor.c:158:4: error: call to undeclared function 'WriteTimer1'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  158 |                         WriteTimer1(0); /*r�initialise le timer 1*/
+      |                         ^
+src/myfunc/Tsensor.c:162:12: error: call to undeclared function 'ReadTimer1'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  162 |                                 timer1=ReadTimer1();
+      |                                        ^
+src/myfunc/Tsensor.c:162:12: warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+  162 |                                 timer1=ReadTimer1();
+      |                                       ~^~~~~~~~~~~~
+src/myfunc/Tsensor.c:144:20: warning: result of comparison of constant -1 with expression of type 'char' is always true [-Wtautological-constant-out-of-range-compare]
+  144 |         while (BitTab3[co]!=-1)
+      |                ~~~~~~~~~~~^ ~~
+8 warnings and 2 errors generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/wr_eeprom.p1 src/myfunc/wr_eeprom.c 
+In file included from src/myfunc/wr_eeprom.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/wr_eeprom.c:104:9: error: conflicting types for 'EERead'
+  104 | uint8_t EERead(uint16_t ad)
+      |         ^
+include/functions.h:461:9: note: previous declaration is here
+  461 | uint8_t EERead(unsigned int ad);
+      |         ^
+1 warning and 1 error generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/main.p1 src/main.c 
+In file included from src/main.c:34:
+include/board.h:10:9: warning: '__delay_ms' macro redefined [-Wmacro-redefined]
+   10 | #define __delay_ms(ms)      Delay10KTCYx((((INSTR_FREQ/10000)*ms)/1000))
+      |         ^
+/opt/microchip/xc8/v3.10/pic/include/builtins.h:30:9: note: previous definition is here
+   30 | #define __delay_ms(x) _delay((unsigned long)((x)*(_XTAL_FREQ/4000.0)))
+      |         ^
+In file included from src/main.c:34:
+include/board.h:11:9: warning: '__delay_us' macro redefined [-Wmacro-redefined]
+   11 | #define __delay_us(us)      Delay10TCYx((((INSTR_FREQ/10)*us)/1000))
+      |         ^
+/opt/microchip/xc8/v3.10/pic/include/builtins.h:29:9: note: previous definition is here
+   29 | #define __delay_us(x) _delay((unsigned long)((x)*(_XTAL_FREQ/4000000.0)))
+      |         ^
+In file included from src/main.c:37:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/main.c:219:5: error: call to undeclared function 'OpenTimer2'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  219 |     OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+      |     ^
+src/main.c:219:16: error: use of undeclared identifier 'TIMER_INT_ON'
+  219 |     OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+      |                ^
+src/main.c:219:31: error: use of undeclared identifier 'T2_PS_1_16'
+  219 |     OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+      |                               ^
+src/main.c:219:44: error: use of undeclared identifier 'T2_POST_1_16'
+  219 |     OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+      |                                            ^
+src/main.c:221:23: error: cannot assign to variable 'timing_inspection' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  221 |     timing_inspection = shortInspecTime; //short delay first between each inspection
+      |     ~~~~~~~~~~~~~~~~~ ^
+src/main.c:121:16: note: variable 'timing_inspection' declared const here
+  121 | const uint32_t timing_inspection;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+src/main.c:222:18: error: cannot assign to variable 'time_lc_prec' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  222 |     time_lc_prec = 0;
+      |     ~~~~~~~~~~~~ ^
+src/main.c:122:16: note: variable 'time_lc_prec' declared const here
+  122 | const uint32_t time_lc_prec;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~
+src/main.c:235:22: warning: equality comparison with extraneous parentheses [-Wparentheses-equality]
+  235 |             if ((ids == '0' + getid())) {
+      |                  ~~~~^~~~~~~~~~~~~~~~
+src/main.c:235:22: note: remove extraneous parentheses around the comparison to silence this warning
+  235 |             if ((ids == '0' + getid())) {
+      |                 ~    ^               ~
+src/main.c:235:22: note: use '=' to turn this equality comparison into an assignment
+  235 |             if ((ids == '0' + getid())) {
+      |                      ^~
+      |                      =
+src/main.c:239:41: warning: implicit conversion loses integer precision: 'enum slaveid' to 'char' [-Wimplicit-int-conversion]
+  239 |                     myStrCpy1Char(fpre, ids, '\0');
+      |                     ~~~~~~~~~~~~~       ^~~
+src/main.c:245:41: warning: implicit conversion loses integer precision: 'enum slaveid' to 'char' [-Wimplicit-int-conversion]
+  245 |                     myStrCpy1Char(fpre, ids, '\0');
+      |                     ~~~~~~~~~~~~~       ^~~
+src/main.c:271:35: warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+  271 |                         funcres = atoi(myC);
+      |                                 ~ ^~~~~~~~~
+src/main.c:327:30: error: cannot assign to variable 'time_scheduling_copy' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  327 |         time_scheduling_copy = time_scheduling;
+      |         ~~~~~~~~~~~~~~~~~~~~ ^
+src/main.c:112:16: note: variable 'time_scheduling_copy' declared const here
+  112 | const uint32_t time_scheduling_copy;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+src/main.c:341:39: error: cannot assign to variable 'timing_inspection' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  341 |                     timing_inspection = shortInspecTime;
+      |                     ~~~~~~~~~~~~~~~~~ ^
+src/main.c:121:16: note: variable 'timing_inspection' declared const here
+  121 | const uint32_t timing_inspection;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+src/main.c:342:34: error: cannot assign to variable 'time_lc_prec' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  342 |                     time_lc_prec = time_scheduling_copy;
+      |                     ~~~~~~~~~~~~ ^
+src/main.c:122:16: note: variable 'time_lc_prec' declared const here
+  122 | const uint32_t time_lc_prec;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~
+src/main.c:346:39: error: cannot assign to variable 'timing_inspection' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  346 |                     timing_inspection = shortInspecTime;
+      |                     ~~~~~~~~~~~~~~~~~ ^
+src/main.c:121:16: note: variable 'timing_inspection' declared const here
+  121 | const uint32_t timing_inspection;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+src/main.c:347:34: error: cannot assign to variable 'time_lc_prec' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  347 |                     time_lc_prec = time_scheduling_copy;
+      |                     ~~~~~~~~~~~~ ^
+src/main.c:122:16: note: variable 'time_lc_prec' declared const here
+  122 | const uint32_t time_lc_prec;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~
+src/main.c:351:39: error: cannot assign to variable 'timing_inspection' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  351 |                     timing_inspection = shortInspecTime;
+      |                     ~~~~~~~~~~~~~~~~~ ^
+src/main.c:121:16: note: variable 'timing_inspection' declared const here
+  121 | const uint32_t timing_inspection;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+src/main.c:352:34: error: cannot assign to variable 'time_lc_prec' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  352 |                     time_lc_prec = time_scheduling_copy;
+      |                     ~~~~~~~~~~~~ ^
+src/main.c:122:16: note: variable 'time_lc_prec' declared const here
+  122 | const uint32_t time_lc_prec;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~
+src/main.c:356:39: error: cannot assign to variable 'timing_inspection' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  356 |                     timing_inspection = shortInspecTime;
+      |                     ~~~~~~~~~~~~~~~~~ ^
+src/main.c:121:16: note: variable 'timing_inspection' declared const here
+  121 | const uint32_t timing_inspection;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+src/main.c:357:34: error: cannot assign to variable 'time_lc_prec' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  357 |                     time_lc_prec = time_scheduling_copy;
+      |                     ~~~~~~~~~~~~ ^
+src/main.c:122:16: note: variable 'time_lc_prec' declared const here
+  122 | const uint32_t time_lc_prec;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~
+src/main.c:364:30: error: cannot assign to variable 'time_scheduling_copy' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  364 |         time_scheduling_copy = time_scheduling;
+      |         ~~~~~~~~~~~~~~~~~~~~ ^
+src/main.c:112:16: note: variable 'time_scheduling_copy' declared const here
+  112 | const uint32_t time_scheduling_copy;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+src/main.c:372:30: error: cannot assign to variable 'time_scheduling_copy' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  372 |         time_scheduling_copy = time_scheduling;
+      |         ~~~~~~~~~~~~~~~~~~~~ ^
+src/main.c:112:16: note: variable 'time_scheduling_copy' declared const here
+  112 | const uint32_t time_scheduling_copy;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+src/main.c:383:30: error: cannot assign to variable 'time_scheduling_copy' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  383 |         time_scheduling_copy = time_scheduling;
+      |         ~~~~~~~~~~~~~~~~~~~~ ^
+src/main.c:112:16: note: variable 'time_scheduling_copy' declared const here
+  112 | const uint32_t time_scheduling_copy;
+      | ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+src/main.c:387:26: error: cannot assign to variable 'lcA1' with const-qualified type 'const uint16_t' (aka 'const unsigned short')
+  387 |                     lcA1 = leak_current('A', '1', lcAdcReadA1);
+      |                     ~~~~ ^
+src/main.c:117:16: note: variable 'lcA1' declared const here
+  117 | const uint16_t lcA1;
+      | ~~~~~~~~~~~~~~~^~~~
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+7 warnings and 20 errors generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/maths.p1 src/myfunc/maths.c 
+In file included from src/myfunc/maths.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/maths.c:191:40: warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+  191 |                                 accumulateur = (accumulateur << 4)|(int)nbre;
+      |                                                                   ~^~~~~~~~~
+src/myfunc/maths.c:202:10: warning: implicit conversion changes signedness: 'int' to 'uint16_t' (aka 'unsigned short') [-Wsign-conversion]
+  202 |                 return erreur;
+      |                 ~~~~~~ ^~~~~~
+3 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/ads8332.p1 src/myfunc/ads8332.c 
+In file included from src/myfunc/ads8332.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/ads8332.c:83:44: warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned long') to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+   83 |             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+      |                              ~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~
+src/myfunc/ads8332.c:90:44: warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned long') to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+   90 |             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+      |                              ~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~
+src/myfunc/ads8332.c:100:44: warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned long') to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+  100 |             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+      |                              ~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~
+src/myfunc/ads8332.c:107:44: warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned long') to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+  107 |             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+      |                              ~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~
+src/myfunc/ads8332.c:164:27: warning: implicit conversion loses integer precision: 'int' to 'unsigned char' [-Wimplicit-int-conversion]
+  164 |     sequence[0] = (*canal)<<4;
+      |                 ~ ~~~~~~~~^~~
+6 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/isr.p1 src/isr.c 
+In file included from src/isr.c:9:
+include/board.h:10:9: warning: '__delay_ms' macro redefined [-Wmacro-redefined]
+   10 | #define __delay_ms(ms)      Delay10KTCYx((((INSTR_FREQ/10000)*ms)/1000))
+      |         ^
+/opt/microchip/xc8/v3.10/pic/include/builtins.h:30:9: note: previous definition is here
+   30 | #define __delay_ms(x) _delay((unsigned long)((x)*(_XTAL_FREQ/4000.0)))
+      |         ^
+In file included from src/isr.c:9:
+include/board.h:11:9: warning: '__delay_us' macro redefined [-Wmacro-redefined]
+   11 | #define __delay_us(us)      Delay10TCYx((((INSTR_FREQ/10)*us)/1000))
+      |         ^
+/opt/microchip/xc8/v3.10/pic/include/builtins.h:29:9: note: previous definition is here
+   29 | #define __delay_us(x) _delay((unsigned long)((x)*(_XTAL_FREQ/4000000.0)))
+      |         ^
+In file included from src/isr.c:10:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+3 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/dac8568.p1 src/myfunc/dac8568.c 
+In file included from src/myfunc/dac8568.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/dac8568.c:95:1: warning: non-void function does not return a value [-Wreturn-type]
+   95 | }
+      | ^
+src/myfunc/dac8568.c:164:16: warning: implicit conversion from 'long' to 'uint16_t' (aka 'unsigned short') changes value from 141100 to 10028 [-Wconstant-conversion]
+  164 |         coef = coefHV_M200;
+      |              ~ ^~~~~~~~~~~
+include/functions.h:71:21: note: expanded from macro 'coefHV_M200'
+   71 | #define coefHV_M200 141100
+      |                     ^~~~~~
+src/myfunc/dac8568.c:170:16: warning: implicit conversion from 'long' to 'uint16_t' (aka 'unsigned short') changes value from 141100 to 10028 [-Wconstant-conversion]
+  170 |         coef = coefHV_M200;
+      |              ~ ^~~~~~~~~~~
+include/functions.h:71:21: note: expanded from macro 'coefHV_M200'
+   71 | #define coefHV_M200 141100
+      |                     ^~~~~~
+src/myfunc/dac8568.c:176:16: warning: implicit conversion from 'long' to 'uint16_t' (aka 'unsigned short') changes value from 87400 to 21864 [-Wconstant-conversion]
+  176 |         coef = coefHV_M400;
+      |              ~ ^~~~~~~~~~~
+include/functions.h:72:21: note: expanded from macro 'coefHV_M400'
+   72 | #define coefHV_M400 87400
+      |                     ^~~~~
+src/myfunc/dac8568.c:182:16: warning: implicit conversion from 'long' to 'uint16_t' (aka 'unsigned short') changes value from 87400 to 21864 [-Wconstant-conversion]
+  182 |         coef = coefHV_M400;
+      |              ~ ^~~~~~~~~~~
+include/functions.h:72:21: note: expanded from macro 'coefHV_M400'
+   72 | #define coefHV_M400 87400
+      |                     ^~~~~
+6 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/functions.p1 src/functions.c 
+In file included from src/functions.c:2:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+include/functions.h:785:10: error: conflicting types for 'htoi'
+  785 | uint16_t htoi(const char *pr);
+      |          ^
+include/utils.h:14:14: note: previous declaration is here
+   14 | unsigned int htoi(const char *ptr);
+      |              ^
+src/functions.c:25:8: error: unknown type name 'ram'
+   25 | extern ram uint8_t CSI_relay;
+      |        ^
+src/functions.c:25:19: error: expected ';' after top level declarator
+   25 | extern ram uint8_t CSI_relay;
+      |                   ^
+      |                   ;
+src/functions.c:26:8: error: unknown type name 'ram'
+   26 | extern ram uint32_t time_scheduling;
+      |        ^
+src/functions.c:26:20: error: expected ';' after top level declarator
+   26 | extern ram uint32_t time_scheduling;
+      |                    ^
+      |                    ;
+src/functions.c:27:8: error: unknown type name 'ram'
+   27 | extern ram uint32_t time_lc_prec;
+      |        ^
+src/functions.c:27:20: error: expected ';' after top level declarator
+   27 | extern ram uint32_t time_lc_prec;
+      |                    ^
+      |                    ;
+src/functions.c:29:8: error: unknown type name 'ram'
+   29 | extern ram long int HV_read_coefA[4];
+      |        ^
+src/functions.c:30:8: error: unknown type name 'ram'
+   30 | extern ram long int HV_read_coefB[4];
+      |        ^
+src/functions.c:31:8: error: unknown type name 'ram'
+   31 | extern ram uint16_t lcA1;
+      |        ^
+src/functions.c:31:20: error: expected ';' after top level declarator
+   31 | extern ram uint16_t lcA1;
+      |                    ^
+      |                    ;
+src/functions.c:32:8: error: unknown type name 'ram'
+   32 | extern ram uint16_t lcA2;
+      |        ^
+src/functions.c:32:20: error: expected ';' after top level declarator
+   32 | extern ram uint16_t lcA2;
+      |                    ^
+      |                    ;
+src/functions.c:33:8: error: unknown type name 'ram'
+   33 | extern ram uint16_t lcB1;
+      |        ^
+src/functions.c:33:20: error: expected ';' after top level declarator
+   33 | extern ram uint16_t lcB1;
+      |                    ^
+      |                    ;
+src/functions.c:34:8: error: unknown type name 'ram'
+   34 | extern ram uint16_t lcB2;
+      |        ^
+src/functions.c:34:20: error: expected ';' after top level declarator
+   34 | extern ram uint16_t lcB2;
+      |                    ^
+      |                    ;
+src/functions.c:35:8: error: unknown type name 'ram'
+   35 | extern ram uint16_t GeneDacVoltage;
+      |        ^
+src/functions.c:35:20: error: expected ';' after top level declarator
+   35 | extern ram uint16_t GeneDacVoltage;
+      |                    ^
+      |                    ;
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+1 warning and 20 errors generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/analog.p1 src/myfunc/analog.c 
+In file included from src/myfunc/analog.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/analog.c:41:25: warning: incompatible pointer types passing 'uint16_t[3]' (aka 'unsigned short[3]') to parameter of type 'unsigned int *' [-Wincompatible-pointer-types]
+   41 |     get_PIC_AD_voltages(voltages);
+      |                         ^~~~~~~~
+src/myfunc/analog.c:5:40: note: passing argument to parameter 'ADvoltages' here
+    5 | void get_PIC_AD_voltages(unsigned int *ADvoltages) {
+      |                                        ^
+src/myfunc/analog.c:159:18: warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+  159 |         din = os + (co<<4);
+      |             ~ ~~~^~~~~~~~~
+src/myfunc/analog.c:149:28: warning: while loop has empty body [-Wempty-body]
+  149 |     while (!PIR1bits.SSPIF); //SPI transmission and reception at the same time
+      |                            ^
+src/myfunc/analog.c:149:28: note: put the semicolon on a separate line to silence this warning
+src/myfunc/analog.c:173:28: warning: while loop has empty body [-Wempty-body]
+  173 |     while (!PIR1bits.SSPIF);
+      |                            ^
+src/myfunc/analog.c:173:28: note: put the semicolon on a separate line to silence this warning
+src/myfunc/analog.c:184:1: warning: non-void function does not return a value [-Wreturn-type]
+  184 | }
+      | ^
+6 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/spi.p1 src/myfunc/spi.c 
+In file included from src/myfunc/spi.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/spi.c:132:1: warning: non-void function does not return a value [-Wreturn-type]
+  132 | }
+      | ^
+src/myfunc/spi.c:139:1: warning: non-void function does not return a value [-Wreturn-type]
+  139 | }
+      | ^
+src/myfunc/spi.c:146:1: warning: non-void function does not return a value [-Wreturn-type]
+  146 | }
+      | ^
+src/myfunc/spi.c:153:1: warning: non-void function does not return a value [-Wreturn-type]
+  153 | }
+      | ^
+src/myfunc/spi.c:160:1: warning: non-void function does not return a value [-Wreturn-type]
+  160 | }
+      | ^
+src/myfunc/spi.c:167:1: warning: non-void function does not return a value [-Wreturn-type]
+  167 | }
+      | ^
+7 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/setup.p1 src/setup.c 
+In file included from src/setup.c:8:
+In file included from include/functions.h:13:
+In file included from /opt/microchip/xc8/v3.10/pic/include/xc.h:33:
+In file included from /home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8/pic/include/pic18.h:5:
+In file included from /home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8/pic/include/pic18_chip_select.h:210:
+/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8/pic/include/proc/pic18f46k20.h:7348:18: error: expected member name or ';' after declaration specifiers
+ 7348 |         unsigned FOSC                   :4;
+      |         ~~~~~~~~ ^
+include/board.h:7:21: note: expanded from macro 'FOSC'
+    7 | #define FOSC        FCY*4
+      |                     ^
+include/board.h:6:21: note: expanded from macro 'FCY'
+    6 | #define FCY         16000000LL
+      |                     ^
+In file included from src/setup.c:8:
+In file included from include/functions.h:13:
+In file included from /opt/microchip/xc8/v3.10/pic/include/xc.h:33:
+In file included from /home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8/pic/include/pic18.h:5:
+In file included from /home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8/pic/include/pic18_chip_select.h:210:
+/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8/pic/include/proc/pic18f46k20.h:7348:17: error: expected ';' at end of declaration list
+ 7348 |         unsigned FOSC                   :4;
+      |                 ^
+In file included from src/setup.c:8:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/setup.c:130:20: error: cannot assign to variable 'time_scheduling' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  130 |     time_scheduling=0;
+      |     ~~~~~~~~~~~~~~~^
+src/setup.c:65:23: note: variable 'time_scheduling' declared const here
+   65 | extern const uint32_t time_scheduling;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+src/setup.c:132:14: error: cannot assign to variable 'time_bit0' with const-qualified type 'const uint8_t' (aka 'const unsigned char')
+  132 |     time_bit0=22;
+      |     ~~~~~~~~~^
+src/setup.c:59:22: note: variable 'time_bit0' declared const here
+   59 | extern const uint8_t time_bit0;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+src/setup.c:133:14: error: cannot assign to variable 'time_bit1' with const-qualified type 'const uint8_t' (aka 'const unsigned char')
+  133 |     time_bit1=63;
+      |     ~~~~~~~~~^
+src/setup.c:60:22: note: variable 'time_bit1' declared const here
+   60 | extern const uint8_t time_bit1;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+src/setup.c:134:15: error: cannot assign to variable 'time_reset' with const-qualified type 'const uint8_t' (aka 'const unsigned char')
+  134 |     time_reset=64;
+      |     ~~~~~~~~~~^
+src/setup.c:57:22: note: variable 'time_reset' declared const here
+   57 | extern const uint8_t time_reset;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+src/setup.c:135:15: error: cannot assign to variable 'time_start' with const-qualified type 'const uint8_t' (aka 'const unsigned char')
+  135 |     time_start=144;
+      |     ~~~~~~~~~~^
+src/setup.c:58:22: note: variable 'time_start' declared const here
+   58 | extern const uint8_t time_start;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+src/setup.c:136:14: error: cannot assign to variable 'time_wait' with const-qualified type 'const uint8_t' (aka 'const unsigned char')
+  136 |     time_wait=64;
+      |     ~~~~~~~~~^
+src/setup.c:61:22: note: variable 'time_wait' declared const here
+   61 | extern const uint8_t time_wait;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+src/setup.c:137:18: error: cannot assign to variable 'tsensor_1_min' with const-qualified type 'const uint16_t' (aka 'const unsigned short')
+  137 |     tsensor_1_min=(uint16_t)(6);
+      |     ~~~~~~~~~~~~~^
+src/setup.c:54:23: note: variable 'tsensor_1_min' declared const here
+   54 | extern const uint16_t tsensor_1_min;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+src/setup.c:138:18: error: cannot assign to variable 'tsensor_1_max' with const-qualified type 'const uint16_t' (aka 'const unsigned short')
+  138 |     tsensor_1_max=(uint16_t)(800);
+      |     ~~~~~~~~~~~~~^
+src/setup.c:55:23: note: variable 'tsensor_1_max' declared const here
+   55 | extern const uint16_t tsensor_1_max;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+src/setup.c:139:18: error: cannot assign to variable 'tsensor_limit' with const-qualified type 'const uint16_t' (aka 'const unsigned short')
+  139 |     tsensor_limit=(uint16_t)(800);
+      |     ~~~~~~~~~~~~~^
+src/setup.c:56:23: note: variable 'tsensor_limit' declared const here
+   56 | extern const uint16_t tsensor_limit;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+src/setup.c:168:25: error: cannot assign to variable 'shortInspecTime' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  168 |         shortInspecTime = shortInspecDelay;
+      |         ~~~~~~~~~~~~~~~ ^
+src/setup.c:66:23: note: variable 'shortInspecTime' declared const here
+   66 | extern const uint32_t shortInspecTime;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+src/setup.c:169:24: error: cannot assign to variable 'longInspecTime' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  169 |         longInspecTime = normalInspecDelay;
+      |         ~~~~~~~~~~~~~~ ^
+src/setup.c:67:23: note: variable 'longInspecTime' declared const here
+   67 | extern const uint32_t longInspecTime;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+src/setup.c:178:25: error: cannot assign to variable 'shortInspecTime' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  178 |         shortInspecTime = 15000*((uint32_t)sTime);
+      |         ~~~~~~~~~~~~~~~ ^
+src/setup.c:66:23: note: variable 'shortInspecTime' declared const here
+   66 | extern const uint32_t shortInspecTime;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+src/setup.c:179:24: error: cannot assign to variable 'longInspecTime' with const-qualified type 'const uint32_t' (aka 'const unsigned long')
+  179 |         longInspecTime = 15000*((uint32_t)lTime);
+      |         ~~~~~~~~~~~~~~ ^
+src/setup.c:67:23: note: variable 'longInspecTime' declared const here
+   67 | extern const uint32_t longInspecTime;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+src/setup.c:218:19: error: cannot assign to variable 'GeneDacVoltage' with const-qualified type 'const uint16_t' (aka 'const unsigned short')
+  218 |     GeneDacVoltage=0;
+      |     ~~~~~~~~~~~~~~^
+src/setup.c:77:23: note: variable 'GeneDacVoltage' declared const here
+   77 | extern const uint16_t GeneDacVoltage;
+      | ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+src/setup.c:227:14: warning: operator '>>' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+  227 |     SPBRGH = _SPBRG >> 8; // For 16-bit baud rate generation
+      |              ^~~~~~ ~~
+src/setup.c:11:36: note: expanded from macro '_SPBRG'
+   11 | #define _SPBRG ((FOSC/BAUDRATE)/16)-1
+      |                ~~~~~~~~~~~~~~~~~~~~^~
+src/setup.c:227:14: note: place parentheses around the '-' expression to silence this warning
+  227 |     SPBRGH = _SPBRG >> 8; // For 16-bit baud rate generation
+      |              ^~~~~~
+src/setup.c:11:36: note: expanded from macro '_SPBRG'
+   11 | #define _SPBRG ((FOSC/BAUDRATE)/16)-1
+      |                ~~~~~~~~~~~~~~~~~~~~^~
+src/setup.c:268:5: error: call to undeclared function 'OpenTimer1'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  268 |     OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
+      |     ^
+src/setup.c:268:16: error: use of undeclared identifier 'TIMER_INT_OFF'
+  268 |     OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
+      |                ^
+src/setup.c:268:32: error: use of undeclared identifier 'T1_16BIT_RW'
+  268 |     OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
+      |                                ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+2 warnings and 20 errors generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: Entering directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+"/opt/microchip/xc8/v3.10/bin/xc8-cc"  -mcpu=18F46K20 -c   -mdfp="/home/baptiste/.mchp_packs/Microchip/PIC18F-K_DFP/1.16.308/xc8"  -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"include" -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits   -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o build/default/production/src/myfunc/display.p1 src/myfunc/display.c 
+In file included from src/myfunc/display.c:1:
+include/functions.h:133:1: warning: 'const' ignored on this declaration [-Wmissing-declarations]
+  133 | const struct parametres {
+      | ^
+src/myfunc/display.c:53:25: warning: implicit conversion loses integer precision: 'uint16_t' (aka 'unsigned short') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+   53 |         s[co]=asciiconv((uint16_t)((value&(mask>>(4*co)))>>((3-co)*4)));
+      |               ~~~~~~~~~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/myfunc/display.c:322:22: warning: implicit conversion loses integer precision: 'unsigned int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+  322 |             for (co=4-comptInt;co<format;co++)
+      |                    ~~^~~~~~~~~
+3 warnings generated.
+make[2]: Leaving directory '/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X'
+make[2]: *** [nbproject/Makefile-default.mk:328: build/default/production/src/setup.p1] Error 1
+make[1]: *** [nbproject/Makefile-default.mk:85: .build-conf] Error 2
+make: *** [nbproject/Makefile-impl.mk:39: .build-impl] Error 2
+
+BUILD FAILED (exit value 2, total time: 210ms)

@@ -1,8 +1,7 @@
-// #include <p18cxxx.h>
-#include <xc.h>
+#include <p18cxxx.h>
 #include <stdio.h>
-// #include <usart.h>
-// #include <timers.h>
+#include <usart.h>
+#include <timers.h>
 #include "uartbuf.h"
 #include "setup.h"
 #include "frame.h"
@@ -10,16 +9,16 @@
 #include "functions.h"
 
 
-extern uint32_t time_scheduling;
+extern ram UINT32 time_scheduling;
 
 // UART ISR vars
 static unsigned char ch;
 
 // TIMER0 ISR vars
-extern const bool both_fpga_ok;
-extern const bool check;
+extern ram BOOL both_fpga_ok;
+extern ram BOOL check;
 
-extern uint16_t max;
+extern ram UINT max;
 
 extern CBuffer_large _Uart[2];
 extern CBuffer_large *Uart;
@@ -29,19 +28,11 @@ extern CBuffer_large *Uart;
 #pragma code isr=0x08
 #pragma interrupt isr
 
-/**
- * @brief Central interrupt service routine for UART receive and timer scheduling.
- * @details Handles UART RX, clears UART errors, stores received bytes, and increments the scheduling timer.
- * @warning Must be efficient and non-blocking.
- */
-/**
- * @brief Interrupt service routine for hardware events.
- */
 void isr(void) 
 {   
-    uint16_t test;
+    UINT test;
     
-    test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
+    test = (UINT)FSR1L+(UINT)(FSR1H<<8);
     if (test>max)
         max = test;
     
@@ -53,7 +44,7 @@ void isr(void)
     
     if (PIR1bits.RCIF) 
     {
-        test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
+        test = (UINT)FSR1L+(UINT)(FSR1H<<8);
         if (test>max)
             max = test;
         

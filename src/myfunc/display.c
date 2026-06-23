@@ -214,9 +214,9 @@ void myStrCpyByte(char *container,uint8_t a,char cend)
 }
 
 /**
- * @brief Append a RAM string to the output buffer with optional terminator.
+ * @brief Append a const string to the output buffer with optional terminator.
  * @param container Output buffer
- * @param chaine RAM string to append
+ * @param chaine const string to append
  * @param cend Terminator character
  */
 void myStrCpyChar(char *container,char *chaine,char cend)
@@ -245,7 +245,7 @@ void myStrCpyChar(char *container,char *chaine,char cend)
  * @param chaine ROM string to append
  * @param cend Terminator character
  */
-void myStrCpyChar2(char *container,const rom char *chaine,char cend)
+void myStrCpyChar2(char *container,const char *chaine,char cend)
 {
     uint16_t comptChain,compt;
     

@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #ifndef _GENERIC_H_
 #define _GENERIC_H_
 
@@ -11,16 +13,6 @@
 #define PUBLIC
 #define PROTECTED
 #define PRIVATE                 static
-
-typedef unsigned char       uint8_t;               // 8-bit
-typedef unsigned short int  WORD;               // 16-bit
-typedef unsigned long       DWORD;              // 32-bit
-
-typedef unsigned int        uint16_t;
-typedef unsigned char       UINT8;              // other name for 8-bit integer
-typedef unsigned short      UINT16;             // other name for 16-bit integer
-typedef unsigned long       uint32_t;             // other name for 32-bit integer
-
 
 typedef enum _BOOL { FALSE = 0, TRUE } bool;
 
@@ -38,22 +30,22 @@ typedef struct
 }BYTE_BITS;
 typedef struct
 {
-    WORD    b0:     1;
-    WORD    b1:     1;
-    WORD    b2:     1;
-    WORD    b3:     1;
-    WORD    b4:     1;
-    WORD    b5:     1;
-    WORD    b6:     1;
-    WORD    b7:     1;
-    WORD    b8:     1;
-    WORD    b9:     1;
-    WORD    b10:    1;
-    WORD    b11:    1;
-    WORD    b12:    1;
-    WORD    b13:    1;
-    WORD    b14:    1;
-    WORD    b15:    1;
+    unsigned int    b0:     1;
+    unsigned int    b1:     1;
+    unsigned int    b2:     1;
+    unsigned int    b3:     1;
+    unsigned int    b4:     1;
+    unsigned int    b5:     1;
+    unsigned int    b6:     1;
+    unsigned int    b7:     1;
+    unsigned int    b8:     1;
+    unsigned int    b9:     1;
+    unsigned int    b10:    1;
+    unsigned int    b11:    1;
+    unsigned int    b12:    1;
+    unsigned int    b13:    1;
+    unsigned int    b14:    1;
+    unsigned int    b15:    1;
 }WORD_BITS;
 
 typedef union _BYTE_VAL
@@ -65,13 +57,13 @@ typedef union _BYTE_VAL
 
 typedef union _WORD_VAL
 {
-    WORD Val;
+    uint16_t Val;
     WORD_BITS   bits;
     struct
     {
         uint8_t LB;
         uint8_t HB;
-    } byte;
+    } uint8_t;
     struct
     {
         BYTE_VAL    low;
@@ -83,19 +75,19 @@ typedef union _WORD_VAL
 
 typedef union _DWORD_VAL
 {
-    DWORD Val;
+    uint32_t Val;
     struct
     {
         uint8_t LB;
         uint8_t HB;
         uint8_t UB;
         uint8_t MB;
-    } byte;
+    } uint8_t;
     struct
     {
-        WORD LW;
-        WORD HW;
-    } word;
+        uint16_t LW;
+        uint16_t HW;
+    } uint32_t;
     struct
     {
         WORD_VAL    low;
@@ -109,7 +101,7 @@ typedef union _DWORD_VAL
         BYTE_VAL    highMSB;
     }byteUnion;
     uint8_t v[4];
-    WORD w[2];
+    uint16_t w[2];
 } DWORD_VAL;
 
 #define LSB(a)          ((a).v[0])

@@ -41,7 +41,6 @@
       <itemPath>src/functions.c</itemPath>
       <itemPath>src/isr.c</itemPath>
       <itemPath>src/main.c</itemPath>
-      <itemPath>src/main_old.c</itemPath>
       <itemPath>src/setup.c</itemPath>
       <itemPath>src/uartbuf.c</itemPath>
       <itemPath>src/utils.c</itemPath>
@@ -102,7 +101,7 @@
         <property key="default-char-type" value="true"/>
         <property key="define-macros" value=""/>
         <property key="disable-optimizations" value="true"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="include"/>
         <property key="favor-optimization-for" value="-speed,+space"/>
         <property key="garbage-collect-data" value="true"/>
         <property key="garbage-collect-functions" value="true"/>

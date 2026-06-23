@@ -9,13 +9,45 @@
  */
 
 #include "Generic.h"
-#include <p18cxxx.h>
+// #include <p18cxxx.h>
+#include <xc.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <timers.h>
-#include <delays.h>
-#include <spi.h>
-#include <usart.h>
+// #include <timers.h>
+// #include <delays.h>
+// #include <spi.h>
+// #include <usart.h>
+
+#ifndef XC8_STUBS_H
+#define XC8_STUBS_H
+
+#include <xc.h>
+
+// Emulation des Delays C18 vers les fonctions natives XC8 
+// XC8 a besoin que _XTAL_FREQ soit d√©fini (ex: #define _XTAL_FREQ 16000000)
+#define Delay10TCYx(x)   __delay_us((x) * 2)  // Ajustement temporaire
+#define Delay100TCYx(x)  __delay_us((x) * 20)
+#define Delay10KTCYx(x)  __delay_ms((x) * 2)
+
+// Emulation des anciennes fonctions SPI (Stubs temporaires) ---
+#define SPI_FOSC_16 0
+#define MODE_00     0
+#define MODE_10     0
+#define SMPEND      0
+#define SMPMID      0
+#define _XTAL_FREQ  99999 // TODO c'est une valeur au pif la faut changer ‡ la vrai valeur
+void OpenSPI(char m, char edge, char smp);
+void CloseSPI(void);
+void putcSPI(unsigned char data);
+uint8_t getcSPI(void);
+
+// Emulation des anciennes fonctions USART (Stubs temporaires) ---
+char DataRdyUSART(void);
+char ReadUSART(void);
+void putcUSART(char data);
+char BusyUSART(void);
+
+#endif
 
 #define MAX_FUNC_NUM 36
 //#define MAX_HPFUNC_NUM   3
@@ -98,7 +130,7 @@
 #define EEPROM_CAL_ADC_B1_LINEAR_CONST 712
 #define EEPROM_CAL_ADC_B2_LINEAR_COEFF 716
 #define EEPROM_CAL_ADC_B2_LINEAR_CONST 720
-ram struct parametres {
+const struct parametres {
     uint16_t voltage_preamp1b;
     uint16_t voltage_preamp2b;
     uint16_t voltage_preamp3b;
@@ -426,7 +458,7 @@ void EEWrite(unsigned int ad, unsigned char data);
  * @param ad EEPROM address.
  * @return Value stored at the given EEPROM address.
  */
-unsigned char EERead(unsigned int ad);
+uint8_t EERead(uint16_t ad);
 
 /**
  * @brief Parse an ASCII string and convert it into an unsigned integer.
@@ -566,7 +598,7 @@ void myStrCpyChar(char *container,char *chaine,char cend);
  * @param chaine ROM source string.
  * @param cend Terminator character appended to the result.
  */
-void myStrCpyChar2(char *container,const rom char *chaine,char cend);
+void myStrCpyChar2(char *container,const char *chaine,char cend);
 
 /**
  * @brief Append a single character to a destination buffer.

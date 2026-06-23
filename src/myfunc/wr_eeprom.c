@@ -3,7 +3,7 @@
 extern struct parametres pa;
 
 /**
- * @brief Load calibration parameters from EEPROM into RAM structures.
+ * @brief Load calibration parameters from EEPROM into const structures.
  */
 void setparam(void)
 {
@@ -45,7 +45,7 @@ void setparam(void)
 }
 
 /**
- * @brief Write calibration parameters from RAM into EEPROM storage.
+ * @brief Write calibration parameters from const into EEPROM storage.
  * @return char status or result code.
  */
 char storeparam(void)

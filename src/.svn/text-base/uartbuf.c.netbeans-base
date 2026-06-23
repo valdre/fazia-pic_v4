@@ -1,9 +1,8 @@
 #include "uartbuf.h"
 #include "frame.h"
 #include "Generic.h"
-#include "functions.h"
 
-// #include <usart.h>
+#include <usart.h>
 #include <string.h>     // for strlen
 
 #ifdef DEBUG_FRAME
@@ -18,9 +17,6 @@ volatile CBuffer_large *Uart = _Uart;
 //volatile CBuffer_small *hpUart = _hpUart;
 #pragma udata
 
-/**
- * @brief Initialize both UART receive and transmit circular buffers.
- */
 void uartbuf_init(void) {
 
    cbuffer_large_init(&Uart[0]);
@@ -29,23 +25,14 @@ void uartbuf_init(void) {
    //cbuffer_small_init(&hpUart[1]);
 }
 
-/**
- * @brief Return a pointer to the raw buffer data for a UART channel.
- * @param channel UART channel identifier
- * @return unsigned char status or result code.
- */
-unsigned char *uartbuf_dump(uint16_t channel) {
+unsigned char *uartbuf_dump(UINT channel) {
    if ((channel == SLAVE_RX) || (channel == SLAVE_TX))
       return (cbuffer_large_dumpdata(&Uart[channel]));
    /*if (channel == SLAVE_HPTX)
       return (cbuffer_small_dumpdata(&hpUart[channel - 2]));*/
 }
 
-/**
- * @brief Transmit all buffered data from the TX buffer via UART.
- * @param channel UART channel identifier
- */
-void uartbuf_flush(uint16_t channel) {
+void uartbuf_flush(UINT channel) {
 
    unsigned char ch;
 
@@ -78,16 +65,9 @@ void uartbuf_flush(uint16_t channel) {
    }*/
 }
 
-/**
- * @brief Extract a complete frame from the RX buffer.
- * @param channel UART channel
- * @param f Output frame buffer
- * @param f Output frame buffer
- * @param f Output frame buffer
- */
-void uartbuf_getframe(uint16_t channel, unsigned char *f, uint16_t flen, uint16_t foffset) {
+void uartbuf_getframe(UINT channel, unsigned char *f, UINT flen, UINT foffset) {
 
-   uint16_t i;
+   UINT i;
    unsigned char ch;
 
    if ((channel == SLAVE_TX) || (channel == SLAVE_RX)) {
@@ -124,15 +104,10 @@ void uartbuf_getframe(uint16_t channel, unsigned char *f, uint16_t flen, uint16_
    }*/
 }
 
-/**
- * @brief Append a frame to the TX buffer for transmission.
- * @param channel UART channel
- * @param f Frame buffer to transmit
- */
-void uartbuf_putframe(uint16_t channel, unsigned char *f) {
+void uartbuf_putframe(UINT channel, unsigned char *f) {
 
-   uint16_t i;
-   uint16_t fsize = strlen((char *)f);
+   UINT i;
+   UINT fsize = strlen((char *)f);
 
    if ((channel == SLAVE_TX) || (channel == SLAVE_RX)) {
 

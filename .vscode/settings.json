@@ -1,3 +1,5 @@
 {
-    "cmake.sourceDirectory": "/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/c18_cmake/fazia-pic_ModernXC8/default"
+    "cmake.sourceDirectory": "/home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/c18_cmake/fazia-pic_ModernXC8/default",
+    "mplab.clangd.compileCommandsDir": "${workspaceFolder}/_build/fazia-pic_ModernXC8/default",
+    "mplab.clangd.path": "/opt/microchip/xc8/v3.10/bin/xc8-clangd"
 }
