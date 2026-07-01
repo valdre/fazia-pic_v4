@@ -30,9 +30,10 @@ void uartbuf_init(void) {
  * @param channel UART channel identifier
  * @return unsigned char status or result code.
  */
-unsigned char *uartbuf_dump(uint16_t channel) {
+unsigned char * uartbuf_dump(uint16_t channel) {
    if ((channel == SLAVE_RX) || (channel == SLAVE_TX))
       return (cbuffer_large_dumpdata(&Uart[channel]));
+   return NULL;
 }
 
 /**

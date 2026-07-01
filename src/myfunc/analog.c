@@ -2,7 +2,7 @@
 extern uint8_t valeur_portD;
 
 /******************* PIC A/D converter******************/
-void get_PIC_AD_voltages(unsigned int *ADvoltages) {
+void get_PIC_AD_voltages(uint16_t *ADvoltages) {
     //VP5REFAM or AN5 measurement
     ADCON0 = 0b00010111;
     while (!PIR1bits.ADIF);
@@ -134,8 +134,9 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages) {
     PORTD = elt_ET;    //Port D returns low
     PIR1bits.SSPIF=0;
     putcSPI(os);
-    while (!PIR1bits.SSPIF); //SPI transmission and reception at the same time
-        mot=((uint16_t)SSPBUF)<<4;
+    while (!PIR1bits.SSPIF) {
+    }
+    mot=((uint16_t)SSPBUF)<<4;
     getcSPI();
     
     for (co=1;co<8;co++) {
@@ -143,9 +144,10 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages) {
         Delay10TCYx(3); //je suis � 2�s pile poil
         PORTD = elt_ET; //Port D returns low
         PIR1bits.SSPIF=0;
-        din = os + (co<<4);
+        din = (uint8_t)(os + ((uint8_t)co << 4));
         putcSPI(din);
-        while (!PIR1bits.SSPIF);
+        while (!PIR1bits.SSPIF) {
+        }
         mot=(((uint16_t)SSPBUF)<<4)&65520;
         mot2=(uint16_t)(getcSPI());
         mot+=((mot2>>4)&15);
@@ -157,8 +159,9 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages) {
     PORTD = elt_ET; //Port D returns low
     PIR1bits.SSPIF=0;
     putcSPI(os);
-    while (!PIR1bits.SSPIF);
-        mot=((((uint16_t)SSPBUF)<<4)&65520);
+    while (!PIR1bits.SSPIF) {
+    }
+    mot=((((uint16_t)SSPBUF)<<4)&65520);
     mot2=(uint16_t)(getcSPI());
     mot+=((mot2>>4)&15);
     ADvoltages[7]=mot;
@@ -166,5 +169,6 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages) {
     
     CloseSPI();
     OpenSPI(SPI_FOSC_16, MODE_10,SMPMID);
+    return FUNC_EXEC_OK;
 }
 

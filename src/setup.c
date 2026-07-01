@@ -8,7 +8,7 @@
 #include "functions.h"
 
 #define BAUDRATE  115200
-#define _SPBRG ((BOARD_FOSC / BAUDRATE) / 16) - 1
+#define _SPBRG (((BOARD_FOSC / BAUDRATE) / 16) - 1)
 
 extern uint8_t valeur_portA;
 extern uint8_t valeur_trisA;

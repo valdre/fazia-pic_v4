@@ -22,7 +22,7 @@ uint8_t getid(void) {
 uint8_t asciiconv(uint8_t c) {
     uint8_t asciivalue;
     asciivalue=0;
-    if ((c>=0)&&(c<=9)) {
+    if (c<=9) {
         asciivalue='0'+c;
     }
     if (c>9) {
@@ -41,7 +41,7 @@ void uinttoa(uint16_t value, uint8_t *s) {
     uint16_t mask;
     mask=0xF000;
     for(co=0;co<4;co++) {
-        s[co]=asciiconv((uint16_t)((value&(mask>>(4*co)))>>((3-co)*4)));
+        s[co]=asciiconv((uint8_t)((value&(mask>>(4*co)))>>((3-co)*4)));
     }
 }
 
@@ -66,7 +66,7 @@ char dispuinttochar(uint16_t value) {
  * @return char status or result code.
  */
 char dispuint32tochar(uint32_t value) {
-    char co;
+    int8_t co;
     for (co=31;co>=0;co--) {
         putcUSART('0'+(char)((value>>co)&1));
     }
@@ -132,7 +132,7 @@ void myStrCpyUint(char *container,uint16_t a,char cend) {
     }
     if (comptInt<5) {
         while (comptInt<5) {
-            if ((u[comptInt]>=0)&&(u[comptInt]<=9))
+            if (u[comptInt]<=9)
                 container[compt++]='0'+(char)u[comptInt];
             comptInt++;
         }
@@ -172,7 +172,7 @@ void myStrCpyByte(char *container,uint8_t a,char cend) {
     }
     if (comptInt<3) {
         while (comptInt<3) {
-            if ((b[comptInt]>=0)&&(b[comptInt]<=9))
+            if (b[comptInt]<=9)
                 container[compt++]='0'+(char)b[comptInt];
             comptInt++;
         }
@@ -267,7 +267,7 @@ void myStrCpy1Char(char *container,char c,char cend) {
  */
 void myStrCpyHex(char *container,uint16_t a,int format,char cend) {
     uint16_t compt,comptInt;
-    uint8_t co;
+    int co;
     char b[4];
     
     comptInt=0;
@@ -285,12 +285,12 @@ void myStrCpyHex(char *container,uint16_t a,int format,char cend) {
     }
     if (comptInt<4) {
         if ((format!=-1)&&(format>4-comptInt)) {
-            for (co=4-comptInt;co<format;co++) {
+            for (co=(int)(4-comptInt);co<format;co++) {
                 container[compt++]='0';
             }
         }
         while (comptInt<4) {
-            if ((b[comptInt]>=0)&&(b[comptInt]<=9)) {
+            if (b[comptInt]<=9) {
                 container[compt++]='0'+b[comptInt];
             }
             if (b[comptInt]>9) {

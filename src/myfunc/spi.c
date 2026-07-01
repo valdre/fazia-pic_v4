@@ -112,34 +112,40 @@ uint8_t set_off_V_preamp3a(uint16_t value) { //Si1A
     pa.voltage_preamp3a=value;
     wrspi(1,REG_FPGA_PA_SI1,value);
     Delay10KTCYx(100);
+    return FUNC_EXEC_OK;
 }
 
 uint8_t set_off_V_preamp3b(uint16_t value) { //Si1B
     pa.voltage_preamp3b=value;
     wrspi(2,REG_FPGA_PA_SI1,value);
     Delay10KTCYx(100);
+    return FUNC_EXEC_OK;
 }
 
 uint8_t set_off_V_preamp2a(uint16_t value) { //Si2A
     pa.voltage_preamp2a=value;
     wrspi(1,REG_FPGA_PA_SI2,value);
     Delay10KTCYx(100);
+    return FUNC_EXEC_OK;
 }
 
 uint8_t set_off_V_preamp2b(uint16_t value) { //Si2B
     pa.voltage_preamp2b=value;
     wrspi(2,REG_FPGA_PA_SI2,value);
     Delay10KTCYx(100);
+    return FUNC_EXEC_OK;
 }
 
 uint8_t set_off_V_preamp1a(uint16_t value) { //CSIA
     pa.voltage_preamp1a=value;
     wrspi(1,REG_FPGA_PA_CSI,value);
     Delay10KTCYx(100);
+    return FUNC_EXEC_OK;
 }
 
 uint8_t set_off_V_preamp1b(uint16_t value) { //CSIB
     pa.voltage_preamp1b=value;
     wrspi(2,REG_FPGA_PA_CSI,value);
     Delay10KTCYx(100);
+    return FUNC_EXEC_OK;
 }

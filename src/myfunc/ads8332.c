@@ -161,7 +161,7 @@ uint16_t adc_getvalue(unsigned char *canal)
 
     Delay10TCYx(1);
 
-    sequence[0] = (*canal)<<4;
+    sequence[0] = (unsigned char)((*canal) << 4);
     sequence[1] = 0;
 
     /*le Chip select de l'ADC est mis a 0*/

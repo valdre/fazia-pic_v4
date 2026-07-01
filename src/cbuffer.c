@@ -114,7 +114,7 @@ uint16_t cbuffer_large_getframe_length(CBuffer_large *cb, uint16_t *flen, uint16
  * @param cb Input or output parameter.
  * @return unsigned char status or result code.
  */
-unsigned char *cbuffer_large_dumpdata(CBuffer_large *cb) {
+unsigned char * cbuffer_large_dumpdata(CBuffer_large *cb) {
     return (cb -> data);
 }
 // EOF

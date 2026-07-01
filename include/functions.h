@@ -155,7 +155,7 @@ unsigned int ReadTimer1(void);
 #define EEPROM_CAL_ADC_B1_LINEAR_CONST 712
 #define EEPROM_CAL_ADC_B2_LINEAR_COEFF 716
 #define EEPROM_CAL_ADC_B2_LINEAR_CONST 720
-const struct parametres {
+struct parametres {
     uint16_t voltage_preamp1b;
     uint16_t voltage_preamp2b;
     uint16_t voltage_preamp3b;
@@ -779,7 +779,7 @@ void ask_hv_calibration(char *str);
  * @param eeprom_adr_const EEPROM address for the DAC calibration linear constant
  * @return value uint32_t DAC code corresponding to the target voltage
  */
-uint32_t get_value_dec(uint16_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const);
+uint32_t get_value_dec(uint32_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.
@@ -813,7 +813,7 @@ unsigned int htoi(const char *pr);
  * @brief Acquire PIC ADC channel voltages into the provided buffer.
  * @param voltages Output array receiving ADC measurements.
  */
-void get_PIC_AD_voltages(unsigned int *voltages);
+void get_PIC_AD_voltages(uint16_t *voltages);
 
 /**
  * @brief Read and format analog voltage measurements for UART output.

@@ -378,7 +378,8 @@ uint8_t preamplifier_test(uint8_t preamp) { // TODO : to rewrite
     uint16_t tab[2], *p,value;
     uint8_t co, i,valeur;
     char id;
-    int essais, regAdc[2], regfpga[3];
+    int essais, regAdc[2];
+    unsigned int regfpga[3];
     tab[0] = 0;
     tab[1] = 512;
     regfpga[0] = REG_FPGA_Q3;

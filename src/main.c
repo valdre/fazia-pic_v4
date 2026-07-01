@@ -127,7 +127,7 @@ uint16_t max;
 struct parametres pa;
 #pragma udata
 char tel_table[4] = {'A', 'A', 'B', 'B'};
-int module_table[4] = {1, 2, 1, 2};
+uint8_t module_table[4] = {1, 2, 1, 2};
 
 
 extern CBuffer_large *Uart;
@@ -226,17 +226,17 @@ void main(void) {
             seq = frame_getseq(fIn);
             frame_getdata(fIn, data);
             crc = frame_getcrc(fIn);
-            if ((ids == '0' + getid())) {
+            if (ids == (enum slaveid)('0' + getid())) {
                 fpre[0] = '\0';
                 if (seq) {
                     myStrCpyHex(fpre, idb, 3, '\0');
-                    myStrCpy1Char(fpre, ids, '\0');
+                    myStrCpy1Char(fpre, (char)ids, '\0');
                     myStrCpy1Char(fpre, cmd, '\0');
                     myStrCpy1Char(fpre, seq, '\0');
                     myStrCpy1Char(fpre, SEQNUM_DELIMITER, '\0');
                 } else  {
                     myStrCpyHex(fpre, idb, 3, '\0');
-                    myStrCpy1Char(fpre, ids, '\0');
+                    myStrCpy1Char(fpre, (char)ids, '\0');
                     myStrCpy1Char(fpre, cmd, '\0');
                 }
                 docrc = 0;
@@ -262,7 +262,7 @@ void main(void) {
                     if (cmdres == FUNC_CMD_OK) {
                         myC[0] = result[0];
                         myC[1] = '\0';
-                        funcres = atoi(myC);
+                        funcres = (uint8_t)atoi(myC);
 
                         if (funcres == FUNC_EXEC_OK) {
                             myStrCpy1Char((char *) fIn, KW_ACK, '\0');
@@ -427,7 +427,7 @@ uint32_t diffLcTime(uint32_t t1, uint32_t t2, uint32_t t3) {
  */
 void pa_offset_settings(void) {
     static uint8_t state = 0;
-    static char i;
+    static int8_t i;
     static long borne_lim_inf;
     static long borne_lim_sup;
     static uint16_t value;
@@ -451,7 +451,7 @@ void pa_offset_settings(void) {
                 }
             }
             borne_lim_sup = borne_lim_inf + 100;
-            i = -1;
+            i = (int8_t)-1;
             state = 1;
             break;
         

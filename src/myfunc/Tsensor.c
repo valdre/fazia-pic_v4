@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <stdint.h>
 
 extern uint8_t valeur_portB;
 extern uint8_t valeur_trisB;
@@ -25,10 +26,10 @@ static void delay_runtime_ticks(uint16_t ticks) {
 uint8_t temp_init(void) {
 	/*En ecriture pour le registre A : mettre a 1 le bit n1 relatif a l'Enable Sensor*/
 	/*****************C3 C2 C1 N5 N4 N3 N2 N1 N0 RW D15 D14 D13 D12 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 EP ACK Sentinelle*/
-	char BitTab[] = { 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, -1 };
+	int8_t BitTab[] = { 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, -1 };
 	/*En ecriture pour le registre 5 : mettre a 1 le bit n4 relatif a l'Enable function*/
 	/*****************C3 C2 C1 N5 N4 N3 N2 N1 N0 RW D15 D14 D13 D12 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 EP ACK Sentinelle*/
-	char BitTab2[] = { 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, -1 };
+	int8_t BitTab2[] = { 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, -1 };
 	char j,co,t;
 	
 	for (j=0;j<nbcapteurs;j++) {
@@ -63,8 +64,8 @@ uint8_t temp_init(void) {
 		
 		co=0;
 		while (BitTab[co]!=-1) {
-			write_bit(BitTab[co]);
-			attente_bit1(BitTab[co]);
+			write_bit((char)BitTab[co]);
+			attente_bit1((char)BitTab[co]);
 			co++;
 		}
 		co=0;
@@ -73,8 +74,8 @@ uint8_t temp_init(void) {
 		attente_bit1(0);
 		
 		while (BitTab2[co]!=-1) {
-			write_bit(BitTab2[co]);
-			attente_bit1(BitTab2[co]);
+			write_bit((char)BitTab2[co]);
+			attente_bit1((char)BitTab2[co]);
 			co++;		
 		}
 	}
@@ -91,7 +92,7 @@ uint8_t temp_init(void) {
 uint8_t temp(int *temperature) {
     /*En lecture pour le registre 9*/
     /*****************C3 C2 C1 N5 N4 N3 N2 N1 N0 RW D15 D14 D13 D12 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 EP ACK Sentinelle*/
-    char BitTab3[] = { 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 };
+	int8_t BitTab3[] = { 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1 };
     uint8_t erreur;
     char co, parity;
     char *s,j;
@@ -113,15 +114,15 @@ uint8_t temp(int *temperature) {
 		attente_bit1(0);
 		while (BitTab3[co]!=-1) {
 			if (co<10) {
-				write_bit(BitTab3[co]);
-				attente_bit1(BitTab3[co]);
+				write_bit((char)BitTab3[co]);
+				attente_bit1((char)BitTab3[co]);
 				if (BitTab3[co]==1) {
 					parity++;
 				}
 			}
 			if ((co>9)&&(co<27)) {
 				timer1=0;
-				write_bit(BitTab3[co]);
+				write_bit((char)BitTab3[co]);
 				valeur_trisB |= mask_capteur; 
 				WriteTimer1(0); /*r�initialise le timer 1*/
 				TRISB = valeur_trisB;

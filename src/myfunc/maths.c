@@ -161,8 +161,8 @@ uint16_t charhextoi(char *pr) {
             } else {
 				erreur=-1;
 			}
-			if (erreur==0) {
-				accumulateur = (accumulateur << 4)|(int)nbre;
+            if (erreur==0) {
+                accumulateur = (accumulateur << 4) | (unsigned int)nbre;
 				co++;
 			}
 		}
@@ -172,7 +172,7 @@ uint16_t charhextoi(char *pr) {
 	if (erreur==0) {
 		return accumulateur;
 	} else {
-		return erreur;
+        return (uint16_t)erreur;
 	}
 }
 

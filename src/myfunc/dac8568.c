@@ -92,6 +92,7 @@ char pulser(uint16_t data, uint16_t period, uint16_t high_time) {
     dac_sequence(0x40, data);
     wrspi(2, 0x100, period);
     wrspi(2, 0x101, high_time);
+    return 0;
 }
 
 /**
@@ -133,7 +134,7 @@ static uint32_t read_eeprom_u32(uint16_t addr) {
  * @return value uint32_t DAC code corresponding to the target voltage
  */
 
-uint32_t get_value_dec(uint16_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
+uint32_t get_value_dec(uint32_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
     uint32_t dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
     uint32_t dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
     /* Integer-only arithmetic for PIC18. */
@@ -154,7 +155,7 @@ uint8_t slop_vhv(char tel, uint8_t module, uint16_t tension, uint32_t slopeVS) {
     uint32_t inc              = 0;
     uint32_t default_value    = 0;
     uint32_t max_dac          = 0;
-    uint16_t coef               = 0;
+    uint32_t coef               = 0;
     uint16_t calibration_addr_coeff = 0;
     uint16_t calibration_addr_const = 0;
     uint8_t use_linear         = 0;
