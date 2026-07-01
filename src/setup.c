@@ -8,7 +8,7 @@
 #include "functions.h"
 
 #define BAUDRATE  115200
-#define _SPBRG ((FOSC/BAUDRATE)/16)-1
+#define _SPBRG ((BOARD_FOSC / BAUDRATE) / 16) - 1
 
 extern uint8_t valeur_portA;
 extern uint8_t valeur_trisA;
@@ -51,30 +51,30 @@ extern uint32_t coefB_B2;
 extern uint8_t cal_preampli_offset;
 extern uint8_t marge_pa_offset;
 
-extern const uint16_t tsensor_1_min;
-extern const uint16_t tsensor_1_max;
-extern const uint16_t tsensor_limit;
-extern const uint8_t time_reset;
-extern const uint8_t time_start;
-extern const uint8_t time_bit0;
-extern const uint8_t time_bit1;
-extern const uint8_t time_wait;
+extern uint16_t tsensor_1_min;
+extern uint16_t tsensor_1_max;
+extern uint16_t tsensor_limit;
+extern uint8_t time_reset;
+extern uint8_t time_start;
+extern uint8_t time_bit0;
+extern uint8_t time_bit1;
+extern uint8_t time_wait;
 
-extern const uint8_t CSI_relay;
+extern uint8_t CSI_relay;
 
-extern const uint32_t time_scheduling;
-extern const uint32_t shortInspecTime;
-extern const uint32_t longInspecTime;
+extern uint32_t time_scheduling;
+extern uint32_t shortInspecTime;
+extern uint32_t longInspecTime;
 
-extern const long int HV_read_coefA[4];
-extern const long int HV_read_coefB[4];
+extern long int HV_read_coefA[4];
+extern long int HV_read_coefB[4];
 
-extern const uint16_t lcA1;
-extern const uint16_t lcA2;
-extern const uint16_t lcB1;
-extern const uint16_t lcB2;
+extern uint16_t lcA1;
+extern uint16_t lcA2;
+extern uint16_t lcB1;
+extern uint16_t lcB2;
 
-extern const uint16_t GeneDacVoltage;
+extern uint16_t GeneDacVoltage;
 
 /**
  * @brief Initialize the microcontroller peripherals and I/O ports.

@@ -12,8 +12,8 @@
 #endif
 
 #pragma udata large_udata
-volatile CBuffer_large _Uart[2];
-volatile CBuffer_large *Uart = _Uart;
+CBuffer_large _Uart[2];
+CBuffer_large *Uart = _Uart;
 #pragma udata
 
 /**

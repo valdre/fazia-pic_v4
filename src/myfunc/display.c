@@ -6,14 +6,11 @@
  * @brief Return the hardware board identifier.
  * @return uint8_t status or result code.
  */
-uint8_t getid(void)
-{
+uint8_t getid(void) {
 	uint8_t id=0;
-
 	id |= GEOA0;
 	id |= GEOA1<<1;
 	id |= GEOA2<<2;
-
 	return id;
 }
 
@@ -22,18 +19,15 @@ uint8_t getid(void)
  * @param c Nibble value (0-15)
  * @return uint8_t status or result code.
  */
-uint8_t asciiconv(uint8_t c)
-{
+uint8_t asciiconv(uint8_t c) {
     uint8_t asciivalue;
-
     asciivalue=0;
-
-    if ((c>=0)&&(c<=9))
+    if ((c>=0)&&(c<=9)) {
         asciivalue='0'+c;
-
-    if (c>9)
+    }
+    if (c>9) {
         asciivalue='A'+(c-10);
-
+    }
     return asciivalue;
 }
 
@@ -42,15 +36,13 @@ uint8_t asciiconv(uint8_t c)
  * @param value 16-bit integer to convert
  * @param s Output buffer (4 chars)
  */
-void uinttoa(uint16_t value, uint8_t *s)
-{
+void uinttoa(uint16_t value, uint8_t *s) {
     uint8_t co;
     uint16_t mask;
-
     mask=0xF000;
-
-    for(co=0;co<4;co++)
+    for(co=0;co<4;co++) {
         s[co]=asciiconv((uint16_t)((value&(mask>>(4*co)))>>((3-co)*4)));
+    }
 }
 
 /**
@@ -58,15 +50,13 @@ void uinttoa(uint16_t value, uint8_t *s)
  * @param value 16-bit integer to transmit
  * @return char status or result code.
  */
-char dispuinttochar(uint16_t value)
-{
+char dispuinttochar(uint16_t value) {
     uint8_t co;
     uint8_t s[4];
-
     uinttoa(value,s);
-    for (co=0;co<4;co++)
+    for (co=0;co<4;co++) {
         putcUSART(s[co]);
-
+    }
     return 0;
 }
 
@@ -75,15 +65,11 @@ char dispuinttochar(uint16_t value)
  * @param value 32-bit integer to transmit as binary
  * @return char status or result code.
  */
-char dispuint32tochar(uint32_t value)
-{
+char dispuint32tochar(uint32_t value) {
     char co;
-
-    for (co=31;co>=0;co--)
-    {
+    for (co=31;co>=0;co--) {
         putcUSART('0'+(char)((value>>co)&1));
     }
-
     return 0;
 }
 
@@ -93,12 +79,9 @@ char dispuint32tochar(uint32_t value)
  * @param a 16-bit value to transmit as binary
  * @return char status or result code.
  */
-char dispinttobin(uint16_t a)
-{
+char dispinttobin(uint16_t a) {
     int co;
-
-    for (co=0;co<16;co++)
-    {
+    for (co=0;co<16;co++) {
         putcUSART('0'+((a>>(16-1-co))&0b00000001));
         while (BusyUSART());
     }
@@ -110,12 +93,9 @@ char dispinttobin(uint16_t a)
  * @param c 8-bit byte to transmit as binary
  * @return char status or result code.
  */
-char dispchartobin(uint8_t c)
-{
+char dispchartobin(uint8_t c) {
     int co;
-
-    for(co=0;co<8;co++)
-    {
+    for(co=0;co<8;co++) {
         putcUSART('0'+((c>>(8-1-co))&0b00000001));
         while (BusyUSART());
     }
@@ -128,8 +108,7 @@ char dispchartobin(uint8_t c)
  * @param a Integer value
  * @param cend Terminator character
  */
-void myStrCpyUint(char *container,uint16_t a,char cend)
-{
+void myStrCpyUint(char *container,uint16_t a,char cend) {
     uint16_t u[5];
     uint16_t compt,comptInt;
     
@@ -145,29 +124,27 @@ void myStrCpyUint(char *container,uint16_t a,char cend)
     compt=0;
     comptInt=0;
     
-    while (container[compt]!='\0')
+    while (container[compt]!='\0') {
         compt++;
-    
-    while ((u[comptInt]==0)&&(comptInt<5))
+    }
+    while ((u[comptInt]==0)&&(comptInt<5)) {
         comptInt++;
-    
-    if (comptInt<5)
-        while (comptInt<5)
-        {
+    }
+    if (comptInt<5) {
+        while (comptInt<5) {
             if ((u[comptInt]>=0)&&(u[comptInt]<=9))
                 container[compt++]='0'+(char)u[comptInt];
             comptInt++;
         }
-    else
+    } else {
         container[compt++]='0';
-    
-    if (cend!='\0')
-    {
+    }
+    if (cend!='\0') {
         container[compt++]=cend;
         container[compt]='\0';
-    }
-    else
+    } else {
         container[compt]='\0';
+    }
 }
 
 /**
@@ -176,8 +153,7 @@ void myStrCpyUint(char *container,uint16_t a,char cend)
  * @param a Byte value
  * @param cend Terminator character
  */
-void myStrCpyByte(char *container,uint8_t a,char cend)
-{
+void myStrCpyByte(char *container,uint8_t a,char cend) {
     uint8_t b[3];
     uint16_t compt,comptInt;
     
@@ -188,29 +164,27 @@ void myStrCpyByte(char *container,uint8_t a,char cend)
     
     compt=0;
     comptInt=0;
-    while (container[compt]!='\0')
+    while (container[compt]!='\0') {
         compt++;
-    
-    while ((b[comptInt]==0)&&(comptInt<3))
+    }
+    while ((b[comptInt]==0)&&(comptInt<3)) {
         comptInt++;
-    
-    if (comptInt<3)
-        while (comptInt<3)
-        {
+    }
+    if (comptInt<3) {
+        while (comptInt<3) {
             if ((b[comptInt]>=0)&&(b[comptInt]<=9))
                 container[compt++]='0'+(char)b[comptInt];
             comptInt++;
         }
-    else
+    } else {
         container[compt++]='0';
-    
-    if (cend!='\0')
-    {
+    }
+    if (cend!='\0') {
         container[compt++]=cend;
         container[compt]='\0';
-    }
-    else
+    } else {
         container[compt]='\0';
+    }
 }
 
 /**
@@ -219,24 +193,23 @@ void myStrCpyByte(char *container,uint8_t a,char cend)
  * @param chaine const string to append
  * @param cend Terminator character
  */
-void myStrCpyChar(char *container,char *chaine,char cend)
-{
+void myStrCpyChar(char *container,char *chaine,char cend) {
     uint16_t comptChain,compt;
     
     comptChain=0;
     compt=0;
-    while (container[compt]!='\0')
+    while (container[compt]!='\0') {
         compt++;
-    while (chaine[comptChain]!='\0')
+    }
+    while (chaine[comptChain]!='\0') {
         container[compt++]=chaine[comptChain++];
-    
-    if (cend!='\0')
-    {
+    }
+    if (cend!='\0') {
         container[compt++]=cend;
         container[compt]='\0';
-    }
-    else
+    } else {
         container[compt]='\0';
+    }
 }
 
 /**
@@ -245,24 +218,22 @@ void myStrCpyChar(char *container,char *chaine,char cend)
  * @param chaine ROM string to append
  * @param cend Terminator character
  */
-void myStrCpyChar2(char *container,const char *chaine,char cend)
-{
+void myStrCpyChar2(char *container,const char *chaine,char cend) {
     uint16_t comptChain,compt;
-    
     comptChain=0;
     compt=0;
-    while (container[compt]!='\0')
+    while (container[compt]!='\0') {
         compt++;
-    while (chaine[comptChain]!='\0')
+    }
+    while (chaine[comptChain]!='\0') {
         container[compt++]=chaine[comptChain++];
-    
-    if (cend!='\0')
-    {
+    }
+    if (cend!='\0') {
         container[compt++]=cend;
         container[compt]='\0';
-    }
-    else
+    } else {
         container[compt]='\0';
+    }
 }
 
 /**
@@ -271,23 +242,20 @@ void myStrCpyChar2(char *container,const char *chaine,char cend)
  * @param c Character to append
  * @param c Character to append
  */
-void myStrCpy1Char(char *container,char c,char cend)
-{
+void myStrCpy1Char(char *container,char c,char cend) {
     uint16_t compt;
-    
     compt=0;
-    while (container[compt]!='\0')
+    while (container[compt]!='\0') {
         compt++;
-    
+    }
     container[compt++]=c;
     
-    if (cend!='\0')
-    {
+    if (cend!='\0') {
         container[compt++]=cend;
         container[compt]='\0';
-    }
-    else
+    } else {
         container[compt]='\0';
+    }
 }
 
 /**
@@ -297,55 +265,51 @@ void myStrCpy1Char(char *container,char c,char cend)
  * @param format Hex format (8 or 16 bit)
  * @param cend Terminator character
  */
-void myStrCpyHex(char *container,uint16_t a,int format,char cend)
-{
+void myStrCpyHex(char *container,uint16_t a,int format,char cend) {
     uint16_t compt,comptInt;
     uint8_t co;
     char b[4];
     
     comptInt=0;
     compt=0;
-    while (container[compt]!='\0')
+    while (container[compt]!='\0') {
         compt++;
-    
+    }
     b[0] = (char)((a&0xF000)>>12);
     b[1] = (char)((a&0x0F00)>>8);
     b[2] = (char)((a&0x00F0)>>4);
     b[3] = (char)((a&0x000F));
     
-    while ((b[comptInt]==0)&&(comptInt<4))
+    while ((b[comptInt]==0)&&(comptInt<4)) {
         comptInt++;
-    
-    if (comptInt<4)
-    {
-        if ((format!=-1)&&(format>4-comptInt))
-            for (co=4-comptInt;co<format;co++)
-               container[compt++]='0';
-        
-        
-        while (comptInt<4)
-        {
-            if ((b[comptInt]>=0)&&(b[comptInt]<=9))
+    }
+    if (comptInt<4) {
+        if ((format!=-1)&&(format>4-comptInt)) {
+            for (co=4-comptInt;co<format;co++) {
+                container[compt++]='0';
+            }
+        }
+        while (comptInt<4) {
+            if ((b[comptInt]>=0)&&(b[comptInt]<=9)) {
                 container[compt++]='0'+b[comptInt];
-            
-            if (b[comptInt]>9)
+            }
+            if (b[comptInt]>9) {
                 container[compt++]='A'+b[comptInt]-10;
             comptInt++;
+            }
+        }
+    } else {
+        if ((format!=-1)&&(format<4)) {
+            for(co=0;co<format;co++) {
+                container[compt++]='0';
+            }
         }
     }
-    else
-    {
-        if ((format!=-1)&&(format<4))
-            for(co=0;co<format;co++)
-                container[compt++]='0';
-    }
-    
-    if (cend!='\0')
-    {
+    if (cend!='\0') {
         container[compt++]=cend;
         container[compt]='\0';
-    }
-    else
+    } else {
         container[compt]='\0';
+    }   
 }
 

@@ -5,23 +5,16 @@
  * @param c Exponent (power of 10)
  * @return uint32_t status or result code.
  */
-uint32_t power10_32(uint8_t c)
-{
-    uint32_t value;
-    uint8_t k;
-
-    value=1;
-    k=0;
-
-    if ((c>0)&&(c<10))
-    {
-        while (k<c)
-        {
+uint32_t power10_32(uint8_t c) {
+    uint32_t value = 1;
+    uint8_t k = 0;
+    
+    if ((c>0)&&(c<10)) {
+        while (k<c) {
             k++;
             value*=10;
         }
     }
-
     return value;
 }
 
@@ -31,39 +24,29 @@ uint32_t power10_32(uint8_t c)
  * @param converted_value Output parsed value
  * @return uint8_t status or result code.
  */
-uint8_t analyze_string32(char *pr,uint32_t *converted_value)
-{
-    uint8_t co,cp,error;
-    
-    co=0;
-    error=0;
-    cp=0;
+uint8_t analyze_string32(char *pr,uint32_t *converted_value) {
+    uint8_t co = 0;
+    uint8_t cp = 0;
+    uint8_t error = 0;
     *converted_value=0;
     
-    do
-    {
+    do {
         co++;
-    }
-    while (pr[co]!='\0');
+    } while (pr[co]!='\0');
     
     //co is the length of the string
-    
-    if (co<11)
-    {
-        while ((cp<co)&&(error==0))
-        {
-            if ((pr[cp]>='0')&&(pr[cp]<='9'))
-            {
+    if (co<11) {
+        while ((cp<co)&&(error==0)) {
+            if ((pr[cp]>='0')&&(pr[cp]<='9')) {
                 *converted_value=*converted_value+(((uint32_t)(pr[cp]-'0'))*power10_32(co-cp-1));
                 cp++;
-            }
-            else
+            } else {
                 error=1;
-        }        
-    }
-    else
+            }        
+        }
+    } else {
         error=1;
-    
+    }
     return error;
 }
 
@@ -73,20 +56,23 @@ uint8_t analyze_string32(char *pr,uint32_t *converted_value)
  * @param converted_value Output parsed value
  * @return uint8_t status or result code.
  */
-uint8_t analyze_string(char *pr,uint16_t *converted_value)
-{
-    uint8_t co,error;
+uint8_t analyze_string(char *pr,uint16_t *converted_value) {
+    uint8_t co;
+    uint8_t error;
     
     if ((pr[0]=='0')&&((pr[1]=='x')||(pr[1]=='X'))) {
         co=2;
         do {
             error=1;
-            if ((pr[co] >='0')&&(pr[co]<='9'))
+            if ((pr[co] >='0')&&(pr[co]<='9')) {
                 error=0;            
-            if ((pr[co]>='A')&&(pr[co]<='F'))
+            }
+            if ((pr[co]>='A')&&(pr[co]<='F')) {
                 error=0;
-            if ((pr[co]>='a')&&(pr[co]<='f'))
+            }
+            if ((pr[co]>='a')&&(pr[co]<='f')) {
                 error=0;
+            }
             co++;
         } while((pr[co]!='\0')&&(error==0));
         
@@ -123,43 +109,33 @@ uint8_t analyze_string(char *pr,uint16_t *converted_value)
  */
 uint16_t chardectoi(char *pr)
 {
-    uint8_t co,max;
-    uint32_t result;
+    uint8_t co = 0;
+    uint8_t max;
+    uint32_t result = 0;
 
-    co=0;
-    result=0;
-
-    while (pr[co]!='\0')
+    while (pr[co]!='\0') {
         co++;
-
+    }
     max=co-1;
     co=0;
-
-    if (max<5)
-    {
-        do
-        {
-            if ((pr[co] >='0')&&(pr[co]<='9'))
-            {
+    if (max<5) {
+        do {
+            if ((pr[co] >='0')&&(pr[co]<='9')) {
                 result+=(uint32_t)((pr[co]-'0')*power10(max-co));
                 co++;
-            }
-            else
-            {
+            } else {
                 co=0;
                 result=0;
             }
         }
         while(pr[co]!='\0');
+    } else {
+        result=0;
     }
-    else
+    if (result>65535){
         result=0;
-
-    if (result>65535)
-        result=0;
-
+    }
     return (uint16_t)result;
-
 }
 
 /**
@@ -167,39 +143,37 @@ uint16_t chardectoi(char *pr)
  * @param pr Hexadecimal ASCII string with 0x prefix
  * @return uint16_t status or result code.
  */
-uint16_t charhextoi(char *pr)
-{
+uint16_t charhextoi(char *pr) {
 	int co;
-	int erreur=0;
-	unsigned int accumulateur=0;
-        unsigned char nbre;
-
-	if ((pr[0]=='0')&&((pr[1]=='x')||(pr[1]=='X'))) 
-	{
+	int erreur = 0;
+	unsigned int accumulateur = 0;
+    unsigned char nbre;
+    
+	if ((pr[0]=='0')&&((pr[1]=='x')||(pr[1]=='X'))) {
 		co = 2;
-		while ((pr[co] != '\0')&&(!erreur)) 
-		{
-			if ((pr[co] >='0')&&(pr[co]<='9')) nbre = pr[co]-'0';
-			else if ((pr[co]>='A')&&(pr[co]<='F')) nbre = pr[co]-'A'+10;
-			else if ((pr[co]>='a')&&(pr[co]<='f')) nbre = pr[co]-'a'+10;
-			else 
-			{
+		while ((pr[co] != '\0')&&(!erreur)) {
+			if ((pr[co] >='0')&&(pr[co]<='9')) {
+                nbre = pr[co]-'0';
+			} else if ((pr[co]>='A')&&(pr[co]<='F')) {
+                nbre = pr[co]-'A'+10;
+            } else if ((pr[co]>='a')&&(pr[co]<='f')) {
+                nbre = pr[co]-'a'+10;
+            } else {
 				erreur=-1;
 			}
-			if (erreur==0)
-			{
+			if (erreur==0) {
 				accumulateur = (accumulateur << 4)|(int)nbre;
 				co++;
 			}
 		}
-	} 
-	else
+	} else {
 		erreur = 0;
-
-	if (erreur==0)
+    }
+	if (erreur==0) {
 		return accumulateur;
-	else
+	} else {
 		return erreur;
+	}
 }
 
 /**
@@ -207,23 +181,15 @@ uint16_t charhextoi(char *pr)
  * @param c Exponent (power of 10)
  * @return uint16_t status or result code.
  */
-uint16_t power10(uint8_t c)
-{
-    unsigned int value;
-    unsigned char k;
-
-    value=1;
-    k=0;
-
-    if ((c>0)&&(c<5))
-    {
-        while (k<c)
-        {
+uint16_t power10(uint8_t c) {
+    unsigned int value = 1;
+    unsigned char k = 0;
+    
+    if ((c>0)&&(c<5)) {
+        while (k<c) {
             k++;
             value*=10;
         }
     }
-
     return value;
 }
-

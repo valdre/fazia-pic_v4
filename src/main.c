@@ -99,30 +99,30 @@ uint32_t coefB_A2; // coefficient required to determine the leakage current
 uint32_t coefB_B1; // coefficient required to determine the leakage current
 uint32_t coefB_B2; // coefficient required to determine the leakage current
 
-const uint16_t tsensor_1_min;
-const uint16_t tsensor_1_max;
-const uint16_t tsensor_limit;
-const uint8_t time_reset;
-const uint8_t time_start;
-const uint8_t time_bit0;
-const uint8_t time_bit1;
-const uint8_t time_wait;
-const uint8_t CSI_relay;
+uint16_t tsensor_1_min;
+uint16_t tsensor_1_max;
+uint16_t tsensor_limit;
+uint8_t time_reset;
+uint8_t time_start;
+uint8_t time_bit0;
+uint8_t time_bit1;
+uint8_t time_wait;
+uint8_t CSI_relay;
 uint32_t time_scheduling;
-const uint32_t time_scheduling_copy;
+uint32_t time_scheduling_copy;
 bool both_fpga_ok = FALSE;
 bool check = TRUE;
-const long int HV_read_coefA[4];
-const long int HV_read_coefB[4];
-const uint16_t lcA1;
-const uint16_t lcA2;
-const uint16_t lcB1;
-const uint16_t lcB2;
-const uint32_t timing_inspection;
-const uint32_t time_lc_prec;
-const uint32_t shortInspecTime;
-const uint32_t longInspecTime;
-const uint16_t GeneDacVoltage;
+long int HV_read_coefA[4];
+long int HV_read_coefB[4];
+uint16_t lcA1;
+uint16_t lcA2;
+uint16_t lcB1;
+uint16_t lcB2;
+uint32_t timing_inspection;
+uint32_t time_lc_prec;
+uint32_t shortInspecTime;
+uint32_t longInspecTime;
+uint16_t GeneDacVoltage;
 uint16_t max;
 struct parametres pa;
 #pragma udata
@@ -135,9 +135,6 @@ extern CBuffer_large *Uart;
 /**
  * @brief Main application entry point for the PIC_V4 firmware.
  * @details Initializes hardware, verifies FPGA communications, loads configuration parameters, and enters the UART command processing loop.
- */
-/**
- * @brief Main firmware entry point and primary execution loop.
  */
 void main(void) {
     static uint8_t canal;
@@ -183,8 +180,6 @@ void main(void) {
         if (check)
             setparam();
     } while (!check);
-
-
     //�valuation d'une tension r�siduelle au d�marrage apr�s reset
     if (enableHVMeas == 0x38) {
         for (co = 0; co < 4; co++) {
@@ -192,7 +187,6 @@ void main(void) {
             canal = co + 4;
             HVmeas = getHvValue(&canal);
             HVmeas /= 10;
-
             if (HVmeas > 3) {
                 if ((co == 0) || (co == 2)) {
                     HVmeas_bin = ((uint32_t) HVmeas * coefHV_M200) / 1000;
@@ -303,32 +297,30 @@ void main(void) {
         if (HvStatus[0] == 1) {
             canal = 0;
             lcAdcReadA1 = ((uint32_t) adc_getvalue(&canal));
-        } else
+        } else {
             lcAdcReadA1 = 0;
-
+        }
         if (HvStatus[1] == 1) {
             canal = 1;
             lcAdcReadA2 = ((uint32_t) adc_getvalue(&canal));
-        } else
+        } else {
             lcAdcReadA2 = 0;
-
+        }
         if (HvStatus[2] == 1) {
             canal = 2;
             lcAdcReadB1 = ((uint32_t) adc_getvalue(&canal));
-        } else
+        } else {
             lcAdcReadB1 = 0;
-
+        }
         if (HvStatus[3] == 1) {
             canal = 3;
             lcAdcReadB2 = ((uint32_t) adc_getvalue(&canal));
-        } else
+        } else {
             lcAdcReadB2 = 0;
-
+        }
         time_scheduling_copy = time_scheduling;
-        if ((time_scheduling_copy % timing_HV) == 0) 
-        {
-            if (done3 == 0) 
-            {
+        if ((time_scheduling_copy % timing_HV) == 0) {
+            if (done3 == 0) {
                 HvStatusOld[0] = HvStatus[0];
                 HvStatusOld[1] = HvStatus[1];
                 HvStatusOld[2] = HvStatus[2];
@@ -336,8 +328,7 @@ void main(void) {
                 
                 HVfunc();
                 
-                if ((HvStatus[0] == 1) && (HvStatusOld[0] == 0)) 
-                {
+                if ((HvStatus[0] == 1) && (HvStatusOld[0] == 0)) {
                     timing_inspection = shortInspecTime;
                     time_lc_prec = time_scheduling_copy;
                     done_ins = 1;
@@ -359,16 +350,18 @@ void main(void) {
                 }
                 done3 = 1;
             }
-        } else
+        } else {
             done3 = 0;
+        }
         time_scheduling_copy = time_scheduling;
         if (((time_scheduling_copy % 205) == 0) && (cal_preampli_offset == 1)) {
             if (done6 == 0) {
                 pa_offset_settings();
                 done6 = 1;
             }
-        } else
+        } else {
             done6 = 0;
+        }
         time_scheduling_copy = time_scheduling;
         if ((time_scheduling_copy % 251) == 0) {
             if (RCSTAbits.OERR || RCSTAbits.FERR) {
@@ -379,7 +372,6 @@ void main(void) {
                 RCSTAbits.SPEN = 1;
             }
         }
-
         time_scheduling_copy = time_scheduling;
         if (time_scheduling_copy % 1000) {
             if (done7 == 0) {
@@ -407,11 +399,10 @@ void main(void) {
                 timing_inspection = current_leak_inspection();
                 done_ins = 1;
             }
-        } else
+        } else {
             done_ins = 0;
-
+        }
     } // end while
-
 }
 
 /**
@@ -423,12 +414,11 @@ void main(void) {
  */
 uint32_t diffLcTime(uint32_t t1, uint32_t t2, uint32_t t3) {
     uint32_t t4;
-
-    if (t2 < 4294967294 - t3)
+    if (t2 < 4294967294 - t3) {
         t4 = t1 - t2;
-    else
+    } else {
         t4 = 4294967294 - t2 + t1;
-
+    }
     return t4;
 }
 
@@ -438,15 +428,17 @@ uint32_t diffLcTime(uint32_t t1, uint32_t t2, uint32_t t3) {
 void pa_offset_settings(void) {
     static uint8_t state = 0;
     static char i;
-    static long borne_lim_inf, borne_lim_sup;
+    static long borne_lim_inf;
+    static long borne_lim_sup;
     static uint16_t value;
     int regAdc1;
-    uint16_t regfpga, regfpga2, *p;
-    uint8_t cp, co;
+    uint16_t regfpga;
+    uint16_t regfpga2;
+    uint16_t *p;
+    uint8_t cp = 0;
+    uint8_t co;
     char id;
-
-    cp = 0;
-
+    
     switch (state) {
         case 0: // compute the limits for the preamplifier offset calibration
             if (marge_pa_offset > 100) {
@@ -462,7 +454,7 @@ void pa_offset_settings(void) {
             i = -1;
             state = 1;
             break;
-
+        
         case 1: // perform the preamplifier offset calibration for each channel sequentially
             i++;
             if (i == 6) {
@@ -474,7 +466,7 @@ void pa_offset_settings(void) {
                 state = 2;
             }
             break;
-
+        
         case 2: // adjust the preamplifier offset for the current channel and check the 
         // ADC reading stability until the reading is stable for 20 consecutive checks 
         // or the value exceeds 1024
@@ -510,7 +502,6 @@ void pa_offset_settings(void) {
                     if (co < 20)
                         co = 0;
                 } while (co != 20);
-                
                 if ((regAdc1 >= borne_lim_inf) && (regAdc1 < borne_lim_sup)) {
                     state = 1;
                     p = ((uint16_t *) & pa) + 5 - i;
@@ -600,9 +591,13 @@ void HVfunc(void) {
  * @return uint32_t status or result code.
  */
 uint32_t current_leak_inspection(void) {
-    uint8_t compteur, module, flag;
-    float Rd, HV;
-    uint16_t leakCur, hvInt;
+    uint8_t compteur;
+    uint8_t module;
+    uint8_t flag;
+    float Rd;
+    float HV;
+    uint16_t leakCur;
+    uint16_t hvInt;
     uint32_t timing;
     char tel;
     uint16_t leak_current_table[4] = {lcA1, lcA2, lcB1, lcB2};
@@ -614,14 +609,14 @@ uint32_t current_leak_inspection(void) {
                 tel = tel_table[compteur];
                 module = module_table[compteur];
                 leakCur = leak_current_table[compteur];
-
+                
                 if (leakCur > getLowLcTrsh() && leakCur < getHighLcTrsh()) { // if the leak current is inbetween thersholds
                     Rd = ((float) HvPhysCorrect[compteur]*(float) (1000000000));
                     Rd = Rd / ((float) leakCur);
                     Rd = Rd - 10200000;
                     HV = ((float) HvPhysTarget[compteur])*(1 + 10200000 / Rd);
                     hvInt = (uint16_t) HV;
-
+                    
                     if (HvPhysCorrect[compteur] != hvInt) {
                         if (hvInt != 0) {
                             if (((module == 1) && (hvInt < HVSi1Max + 1)) || ((module == 2) && (hvInt < HVSi2Max + 1))) {

@@ -37,13 +37,10 @@ uint8_t getVoltages(char *data, char *result) {
     uint32_t prov;
     uint8_t co, retval;
     char tab[18];
-
     get_PIC_AD_voltages(voltages);
-
     retval = FUNC_EXEC_OK;
-
-    for (co = 0; co < 3; co++)
-    {
+    
+    for (co = 0; co < 3; co++) {
         intpart = voltages[co] / 310;
         prov = ((uint32_t) (voltages[co]-(intpart*310)))*3300;
         prov = prov / 1024;
@@ -55,28 +52,22 @@ uint8_t getVoltages(char *data, char *result) {
         tab[4+6*co] = '0' + (char) (decimaux)-((char) (decimaux / 10))*10;
         tab[5+6*co] = ' ';
     }
-
     tab[17]='\0';
-
     result[0]='0'+(char)retval;
     result[1]='|';
     result[2]='v';
     result[3]=':';
     result[4]='\0';
     myStrCpyChar(result,tab,'\0');
-
     return FUNC_CMD_OK;
 }
 
 /***********LTC2308 converter for switching regulators*************/
-uint8_t getLTCswVoltages(char * data, char *result)
-{
+uint8_t getLTCswVoltages(char * data, char *result) {
     uint8_t retval;
     uint16_t v[8];
-
     // Switching regulators
     getLTC2308Voltages(0b00100000,v);
-
     retval = FUNC_EXEC_OK;
     result[0]='0'+(char)retval;
     result[1]='|';
@@ -99,14 +90,12 @@ uint8_t getLTCswVoltages(char * data, char *result)
  * @param result Output buffer for linear regulator voltages
  * @return uint8_t status or result code.
  */
-uint8_t getLTClinVoltages(char * data, char *result)
-{
+uint8_t getLTClinVoltages(char * data, char *result) {
     uint8_t retval;
     uint16_t u[8];
-
     // Linear regulators
     getLTC2308Voltages(0b00010000,u);
-
+    
     retval = FUNC_EXEC_OK;
     result[0]='0'+(char)retval;
     result[1]='|';
@@ -130,28 +119,26 @@ uint8_t getLTClinVoltages(char * data, char *result)
  * @param ADvoltages Array to store ADC readings
  * @return uint8_t status or result code.
  */
-uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages)
-{
+uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages) {
     uint8_t din,co,os;
     uint8_t elt_ET,elt_OU;
     uint16_t mot,mot2;
-
+    
     CloseSPI();
     OpenSPI(SPI_FOSC_16, MODE_00,SMPEND); // Mode (CKP,/CKE) with CKP = 0 and CKE = 1
-
+    
     os=0b10001000;
     elt_ET = valeur_portD & (mask^255);
     elt_OU = valeur_portD | mask;
-
+    
     PORTD = elt_ET;    //Port D returns low
     PIR1bits.SSPIF=0;
     putcSPI(os);
     while (!PIR1bits.SSPIF); //SPI transmission and reception at the same time
         mot=((uint16_t)SSPBUF)<<4;
     getcSPI();
-
-    for (co=1;co<8;co++)
-    {
+    
+    for (co=1;co<8;co++) {
         PORTD = elt_OU; //Port D returns high
         Delay10TCYx(3); //je suis � 2�s pile poil
         PORTD = elt_ET; //Port D returns low
@@ -164,7 +151,7 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages)
         mot+=((mot2>>4)&15);
         ADvoltages[co-1]=mot;
     }
-
+    
     PORTD = elt_OU; //Port D returns high
     Delay10TCYx(3); //je suis � 2�s pil poil
     PORTD = elt_ET; //Port D returns low
@@ -174,11 +161,9 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages)
         mot=((((uint16_t)SSPBUF)<<4)&65520);
     mot2=(uint16_t)(getcSPI());
     mot+=((mot2>>4)&15);
-
     ADvoltages[7]=mot;
-
     PORTD = elt_OU; //Port D returns high
-
+    
     CloseSPI();
     OpenSPI(SPI_FOSC_16, MODE_10,SMPMID);
 }

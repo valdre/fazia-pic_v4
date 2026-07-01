@@ -6,10 +6,10 @@ extern uint8_t valeur_portD;
 //extern const unsigned int data_vhva2; // 400V high voltage module for A telescope
 //extern const unsigned int data_vhvb1; // 200V high voltage module for B telescope
 //extern const unsigned int data_vhvb2; // 400V high voltage module for B telescope
-extern const uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-extern const uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-extern const uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-extern const uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
 extern uint32_t coefA_A1;
 extern uint32_t coefA_A2;
 extern uint32_t coefA_B1;

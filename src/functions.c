@@ -10,10 +10,10 @@
 #include <stdlib.h>
 
 extern uint8_t valeur_portD;
-extern const uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-extern const uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-extern const uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-extern const uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
 extern uint16_t HvValueTab[4][2];
 extern uint16_t HvInc[4];
 extern uint16_t HvPhysTarget[4];
@@ -22,27 +22,117 @@ extern uint8_t HvStatus[4];
 extern uint8_t enableHVMeas;
 extern uint8_t cal_preampli_offset;
 extern uint8_t marge_pa_offset;
-extern ram uint8_t CSI_relay;
-extern ram uint32_t time_scheduling;
-extern ram uint32_t time_lc_prec;
+extern uint8_t CSI_relay;
+extern uint32_t time_scheduling;
+extern uint32_t time_lc_prec;
 extern struct parametres pa;
-extern ram long int HV_read_coefA[4];
-extern ram long int HV_read_coefB[4];
-extern ram uint16_t lcA1;
-extern ram uint16_t lcA2;
-extern ram uint16_t lcB1;
-extern ram uint16_t lcB2;
-extern ram uint16_t GeneDacVoltage;
-extern ram uint32_t timing_inspection;
-extern ram uint32_t shortInspecTime;
-extern ram uint32_t longInspecTime;
-extern ram uint16_t max;
+extern long int HV_read_coefA[4];
+extern long int HV_read_coefB[4];
+extern uint16_t lcA1;
+extern uint16_t lcA2;
+extern uint16_t lcB1;
+extern uint16_t lcB2;
+extern uint16_t GeneDacVoltage;
+extern uint32_t timing_inspection;
+extern uint32_t shortInspecTime;
+extern uint32_t longInspecTime;
+extern uint16_t max;
 
 typedef uint8_t(*func_p)(char *, char *);
-
-//func_p hpfunc[] = {&f_reset, &f_clear, &f_echo};
-
 func_p fplist[MAX_FUNC_NUM];
+
+void OpenSPI(char m, char edge, char smp) {
+    (void)m;
+    SSPCON1 = 0;
+    SSPSTAT = 0;
+    TRISCbits.TRISC5 = 0;
+    TRISCbits.TRISC4 = 1;
+    TRISCbits.TRISC3 = 0;
+    TRISAbits.TRISA5 = 1;
+    SSPSTATbits.CKE = (edge == MODE_10) ? 1 : 0;
+    SSPSTATbits.SMP = (smp == SMPEND) ? 0 : 1;
+    SSPCON1bits.CKP = (edge == MODE_10) ? 1 : 0;
+    SSPCON1bits.SSPM0 = 0;
+    SSPCON1bits.SSPM1 = 0;
+    SSPCON1bits.SSPM2 = 1;
+    SSPCON1bits.SSPM3 = 0;
+    SSPCON1bits.SSPEN = 1;
+}
+
+void CloseSPI(void) {
+    SSPCON1bits.SSPEN = 0;
+}
+
+void putcSPI(unsigned char data) {
+    PIR1bits.SSPIF = 0;
+    SSPBUF = data;
+    while (!PIR1bits.SSPIF) {
+        Nop();
+    }
+    PIR1bits.SSPIF = 0;
+}
+
+uint8_t getcSPI(void) {
+    PIR1bits.SSPIF = 0;
+    SSPBUF = 0x00;
+    while (!PIR1bits.SSPIF) {
+        Nop();
+    }
+    PIR1bits.SSPIF = 0;
+    return SSPBUF;
+}
+
+char DataRdyUSART(void) {
+    return (char)(PIR1bits.RCIF ? 1 : 0);
+}
+
+char ReadUSART(void) {
+    return (char)RCREG;
+}
+
+void putcUSART(char data) {
+    while (!PIR1bits.TXIF) {
+        Nop();
+    }
+    TXREG = data;
+}
+
+char BusyUSART(void) {
+    return (char)(!TXSTAbits.TRMT);
+}
+
+void OpenTimer1(unsigned int config) {
+    (void)config;
+    T1CON = 0x00;
+    TMR1H = 0;
+    TMR1L = 0;
+    T1CONbits.TMR1ON = 1;
+}
+
+void OpenTimer2(unsigned char config) {
+    (void)config;
+    T2CON = 0x04;
+    TMR2 = 0;
+    PR2 = 0xFF;
+    T2CONbits.TMR2ON = 1;
+}
+
+void OpenTimer3(unsigned int config) {
+    (void)config;
+    T3CON = 0x00;
+    TMR3H = 0;
+    TMR3L = 0;
+    T3CONbits.TMR3ON = 1;
+}
+
+void WriteTimer1(unsigned int timer) {
+    TMR1H = (unsigned char)((timer >> 8) & 0xFF);
+    TMR1L = (unsigned char)(timer & 0xFF);
+}
+
+unsigned int ReadTimer1(void) {
+    return (unsigned int)(((unsigned int)TMR1H << 8) | TMR1L);
+}
 
 /**
  * @brief Initialize the command handler lookup table.
@@ -75,16 +165,7 @@ void func_init(void) {
     fplist[24] = &getVoltages;              // 0x9B : get the voltage measurements from PIC ADC
     fplist[25] = &getLTClinVoltages;        // 0x9C : get the voltage measurements from LTC ADC for linear regulators
     fplist[26] = &getLTCswVoltages;         // 0x9D : get the voltage measurements from LTC ADC for switching regulators
-    fplist[27] = &enableDisableHVMe
-/**as;      // 0x9E : enable or disable HV meas (I and V)
-    fplist[28] = &resetPIC;                 // 0x9F : reset the PIC �C only
-    fplist[29] = &giveHvStatus;             // 0xA0 : give HV status
-    fplist[30] = &setInspecTime;            // 0xA1 : set times for automatic HV corrections
-    fplist[31] = &getInspecTime;            // 0xA2 : get times for automatic HV corrections
-    fplist[32] = &getSoftStack;             // 0xA3 : get software stack max
-    fplist[33] = &f_echo;                   // 0xA4 : echo function
-    fplist[34] = &setGetSN;                 // 0xA5 : setting or getting the serial number of the FEE card
-    fplist[35] = &enDesHVdev;               // 0xA6 : enable or disable the HV devices
+    fplist[27] = &enableDisableHVMeas;      // 0x9E : enable/disable HV measurement
 }
 
 /**
@@ -969,6 +1050,7 @@ uint8_t set_voltage_preamplifier(char *data, char *result) {
         }
     } else {
         error = 1;
+    }
     if (error == 0) {
         retval = FUNC_EXEC_OK;
         result[0]='0'+(char)retval;
@@ -1301,6 +1383,9 @@ uint8_t set_vhv(char *data, char *result) {
             error = error + analyze_string(charDataInc, &intslopeVS);
             if (error == 0) {
                 slopeVS = (uint32_t) intslopeVS;
+            } else {
+                slopeVS = 10;
+            }
         } else {
             slopeVS = 10;
         }
@@ -1321,20 +1406,21 @@ uint8_t set_vhv(char *data, char *result) {
         }
         if (error == 0) {
             if (HvStatus[module - 1 + 2 * ((uint8_t) (tel - 'A'))] == 0) {
-            retval = FUNC_EXEC_INPROGRESS;
-            if ((tel=='A')&&((valeur_portD & 0x01) == 0)) {
-                valeur_portD = valeur_portD | 0x01;
-                PORTD=valeur_portD;
+                retval = FUNC_EXEC_INPROGRESS;
+                if ((tel=='A')&&((valeur_portD & 0x01) == 0)) {
+                    valeur_portD = valeur_portD | 0x01;
+                    PORTD=valeur_portD;
+                }
+                if ((tel=='B')&&((valeur_portD & 0x02) == 0)) {
+                    valeur_portD = valeur_portD | 0x02;
+                    PORTD=valeur_portD;
+                }
+                if (retval != FUNC_EXEC_INPROGRESS) {
+                    retval = slop_vhv(tel, module, tension, slopeVS);
+                    HvPhysTarget[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
+                    HvPhysCorrect[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
+                }
             }
-            if ((tel=='B')&&((valeur_portD & 0x02) == 0)) {
-                valeur_portD = valeur_portD | 0x02;
-                PORTD=valeur_portD;
-            }
-            if (retval != FUNC_EXEC_INPROGRESS) {
-                retval = slop_vhv(tel, module, tension, slopeVS);
-                HvPhysTarget[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
-                HvPhysCorrect[module - 1 + 2 * ((uint8_t) (tel - 'A'))] = tension;
-            } 
         }
     }
     result[0]='0'+(char)retval;

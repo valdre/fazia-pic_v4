@@ -14,8 +14,8 @@ extern uint32_t time_scheduling;
 // UART ISR vars
 static unsigned char ch;
 // TIMER0 ISR vars
-extern const bool both_fpga_ok;
-extern const bool check;
+extern bool both_fpga_ok;
+extern bool check;
 extern uint16_t max;
 extern CBuffer_large _Uart[2];
 extern CBuffer_large *Uart;

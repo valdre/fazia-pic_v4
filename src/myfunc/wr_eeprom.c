@@ -1,70 +1,56 @@
 #include "functions.h"
-
 extern struct parametres pa;
 
 /**
  * @brief Load calibration parameters from EEPROM into const structures.
  */
-void setparam(void)
-{
+void setparam(void) {
 	unsigned int nb_bytes,co;
 	unsigned char *p=(unsigned char *)&pa;
-        unsigned char cflag;
-
-        cflag=EERead(0);
-
-        if (cflag==0x38)
-        {
-
-            nb_bytes=sizeof(pa);
-
-            for(co=1;co<nb_bytes+1;co++)
-            {
-                    *p=EERead(co);
-                    p++;
-            }
-
-            if (pa.voltage_preamp1b < 0x400)
-              set_off_V_preamp1b(pa.voltage_preamp1b);
-
-            if (pa.voltage_preamp2b < 0x400)
-              set_off_V_preamp2b(pa.voltage_preamp2b);
-
-            if (pa.voltage_preamp3b < 0x400)
-              set_off_V_preamp3b(pa.voltage_preamp3b);
-
-            if (pa.voltage_preamp1a < 0x400)
-              set_off_V_preamp1a(pa.voltage_preamp1a);
-
-            if (pa.voltage_preamp2a < 0x400)
-              set_off_V_preamp2a(pa.voltage_preamp2a);
-
-            if (pa.voltage_preamp3a < 0x400)
-              set_off_V_preamp3a(pa.voltage_preamp3a);
-        }
+  unsigned char cflag;
+  cflag=EERead(0);
+  if (cflag==0x38) {
+    nb_bytes=sizeof(pa);
+    for(co=1;co<nb_bytes+1;co++) {
+      *p=EERead(co);
+      p++;
+    }
+    if (pa.voltage_preamp1b < 0x400) {
+      set_off_V_preamp1b(pa.voltage_preamp1b);
+    }
+    if (pa.voltage_preamp2b < 0x400) {
+      set_off_V_preamp2b(pa.voltage_preamp2b);
+    }
+    if (pa.voltage_preamp3b < 0x400) {
+      set_off_V_preamp3b(pa.voltage_preamp3b);
+    }
+    if (pa.voltage_preamp1a < 0x400) {
+      set_off_V_preamp1a(pa.voltage_preamp1a);
+    }
+    if (pa.voltage_preamp2a < 0x400) {
+      set_off_V_preamp2a(pa.voltage_preamp2a);
+    }
+    if (pa.voltage_preamp3a < 0x400) {
+      set_off_V_preamp3a(pa.voltage_preamp3a);
+    }
+  }
 }
 
 /**
  * @brief Write calibration parameters from const into EEPROM storage.
  * @return char status or result code.
  */
-char storeparam(void)
-{
-    uint16_t nb_bytes;
-    uint16_t co;
-    uint8_t *p=(unsigned char *)&pa;
-
-    nb_bytes=sizeof(pa);
-
-    EEWrite(0,0x38); //it is a flag to prevent that some data have been stored in a previous session
-
-    for(co=1;co<nb_bytes+1;co++)
-    {
-        EEWrite(co,*p);
-        p++;
-    }
-
-    return 0;
+char storeparam(void) {
+  uint16_t nb_bytes;
+  uint16_t co;
+  uint8_t *p=(unsigned char *)&pa;
+  nb_bytes=sizeof(pa);
+  EEWrite(0,0x38); //it is a flag to prevent that some data have been stored in a previous session
+  for(co=1;co<nb_bytes+1;co++) {
+    EEWrite(co,*p);
+    p++;
+  }
+  return 0;
 }
 
 
@@ -73,14 +59,10 @@ char storeparam(void)
  * @param ad EEPROM address
  * @param data Byte value to write
  */
-void EEWrite(unsigned int ad, unsigned char data)
-{
-
+void EEWrite(unsigned int ad, unsigned char data) {
 	unsigned char ad_lsb,ad_msb;
-
 	ad_lsb=(unsigned char)(ad&255);
 	ad_msb=(unsigned char)((ad&768)>>8);
-
 	EEADRH=ad_msb;
 	EEADR=ad_lsb;
 	EEDATA=data;
@@ -101,14 +83,10 @@ void EEWrite(unsigned int ad, unsigned char data)
  * @param ad EEPROM address
  * @return uint8_t status or result code.
  */
-uint8_t EERead(uint16_t ad)
-{
-
+uint8_t EERead(unsigned int ad) {
 	uint8_t ad_lsb,ad_msb;
-
 	ad_lsb=(uint8_t)(ad&255);
 	ad_msb=(uint8_t)((ad&768)>>8);
-
 	EECON1bits.EEPGD = 0;
 	EECON1bits.CFGS = 0;
 	EEADRH=ad_msb;
@@ -116,4 +94,3 @@ uint8_t EERead(uint16_t ad)
 	EECON1bits.RD = 1;
 	return EEDATA;
 }
-

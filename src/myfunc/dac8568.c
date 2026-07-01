@@ -12,11 +12,11 @@ extern uint8_t valeur_portC;
 //extern const uint16_t data_vhvb2_2; //actual value for 400V high voltage module (telescope B) after the 20.2Mohm resistor
 
 
-extern const uint8_t hv_slop_inc_flag;
-extern const uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
-extern const uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
-extern const uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
-extern const uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
+extern uint8_t hv_slop_inc_flag;
+extern uint16_t HV_borne_sup_A1; //maximum value to reach for 200V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_A2; //maximum value to reach for 400V high voltage module (telescope A)
+extern uint16_t HV_borne_sup_B1; //maximum value to reach for 200V high voltage module (telescope B)
+extern uint16_t HV_borne_sup_B2; //maximum value to reach for 400V high voltage module (telescope B)
 
 
 //extern uint8_t HV_order;

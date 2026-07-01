@@ -23,29 +23,54 @@
 
 #include <xc.h>
 
-// Emulation des Delays C18 vers les fonctions natives XC8 
-// XC8 a besoin que _XTAL_FREQ soit défini (ex: #define _XTAL_FREQ 16000000)
-#define Delay10TCYx(x)   __delay_us((x) * 2)  // Ajustement temporaire
+#define KHz *1000UL
+#define MHz *1000000UL
+
+#ifndef _XTAL_FREQ
+#define _XTAL_FREQ ( 16 MHz ) // to verify : with or without pll enable (with is 64 MHz)
+#endif
+
+// Emulation des Delays C18 vers les fonctions natives XC8
+#define Delay10TCYx(x)   __delay_us((x) * 2)
 #define Delay100TCYx(x)  __delay_us((x) * 20)
 #define Delay10KTCYx(x)  __delay_ms((x) * 2)
 
-// Emulation des anciennes fonctions SPI (Stubs temporaires) ---
+// Compatibilité des anciennes fonctions SPI ---
 #define SPI_FOSC_16 0
 #define MODE_00     0
-#define MODE_10     0
+#define MODE_10     1
 #define SMPEND      0
-#define SMPMID      0
-#define _XTAL_FREQ  99999 // TODO c'est une valeur au pif la faut changer � la vrai valeur
+#define SMPMID      1
 void OpenSPI(char m, char edge, char smp);
 void CloseSPI(void);
 void putcSPI(unsigned char data);
 uint8_t getcSPI(void);
 
-// Emulation des anciennes fonctions USART (Stubs temporaires) ---
+// Compatibilité des anciennes fonctions USART ---
 char DataRdyUSART(void);
 char ReadUSART(void);
 void putcUSART(char data);
 char BusyUSART(void);
+
+// Compatibilité des anciennes fonctions de timer ---
+#define TIMER_INT_ON   0x80
+#define TIMER_INT_OFF  0x00
+#define T2_PS_1_16     0x00
+#define T2_POST_1_16   0x00
+#define T1_16BIT_RW    0x00
+#define T1_SOURCE_INT  0x00
+#define T1_PS_1_8      0x00
+#define T1_OSC1EN_OFF  0x00
+#define T1_SYNC_EXT_OFF 0x00
+#define T3_16BIT_RW    0x00
+#define T3_SOURCE_INT  0x00
+#define T3_PS_1_1      0x00
+#define T3_SYNC_EXT_OFF 0x00
+void OpenTimer1(unsigned int config);
+void OpenTimer2(unsigned char config);
+void OpenTimer3(unsigned int config);
+void WriteTimer1(unsigned int timer);
+unsigned int ReadTimer1(void);
 
 #endif
 
@@ -458,7 +483,7 @@ void EEWrite(unsigned int ad, unsigned char data);
  * @param ad EEPROM address.
  * @return Value stored at the given EEPROM address.
  */
-uint8_t EERead(uint16_t ad);
+uint8_t EERead(unsigned int ad);
 
 /**
  * @brief Parse an ASCII string and convert it into an unsigned integer.
@@ -782,7 +807,7 @@ char storeparam(void);
  * @param pr Null-terminated input string.
  * @return Parsed integer value.
  */
-uint16_t htoi(const char *pr);
+unsigned int htoi(const char *pr);
 
 /**
  * @brief Acquire PIC ADC channel voltages into the provided buffer.

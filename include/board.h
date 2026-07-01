@@ -3,12 +3,17 @@
 
 // #include <delays.h>
 
-#define FCY         16000000LL
-#define FOSC        FCY*4
-#define INSTR_FREQ  FOSC/4
+#define FCY             16000000LL
+#define BOARD_FOSC      (FCY * 4)
+#define BOARD_INSTR_FREQ (BOARD_FOSC / 4)
 
-#define __delay_ms(ms)      Delay10KTCYx((((INSTR_FREQ/10000)*ms)/1000))
-#define __delay_us(us)      Delay10TCYx((((INSTR_FREQ/10)*us)/1000))
+#ifndef __delay_ms
+#define __delay_ms(ms)      _delay((unsigned long)((ms) * (_XTAL_FREQ / 4000.0)))
+#endif
+
+#ifndef __delay_us
+#define __delay_us(us)      _delay((unsigned long)((us) * (_XTAL_FREQ / 4000000.0)))
+#endif
 
 #endif
 
