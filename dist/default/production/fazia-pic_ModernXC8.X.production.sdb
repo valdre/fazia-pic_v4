@@ -272,7 +272,7 @@ TRUE 1
 "102
 [v _ask_hv_calibration ask_hv_calibration `(v  1 e 1 0 ]
 "120
-[v _read_eeprom_u32 read_eeprom_u32 `(ul  1 s 4 read_eeprom_u32 ]
+[v _read_eeprom_s16 read_eeprom_s16 `(ul  1 s 4 read_eeprom_s16 ]
 "137
 [v _get_value_dec get_value_dec `(ul  1 e 4 0 ]
 "152
@@ -2527,9 +2527,9 @@ TRUE 1
 "142
 } 0
 "120
-[v _read_eeprom_u32 read_eeprom_u32 `(ul  1 s 4 read_eeprom_u32 ]
+[v _read_eeprom_s16 read_eeprom_s16 `(ul  1 s 4 read_eeprom_s16 ]
 {
-[v read_eeprom_u32@addr addr `us  1 p 2 19 ]
+[v read_eeprom_s16@addr addr `us  1 p 2 19 ]
 "125
 } 0
 "1878 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c

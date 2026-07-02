@@ -56,8 +56,8 @@ uint8_t temp_init(void) {
 		valeur_trisB = valeur_trisB & (0b11111111 ^ mask_capteur); 
 		PORTB = valeur_portB;
 		TRISB = valeur_trisB;
-		delay_runtime_ticks((uint16_t)(time_reset * 32U));
-		/*on met le bit A2 du port A � 1 pdt 10 �s avant la transaction*/
+		delay_runtime_ticks((uint16_t)(time_reset * 32U)); // old : Delay100TCYx(time_reset); to verify equivalent delay
+		/*on met le bit A2 du port A a 1 pdt 10 �s avant la transaction*/
 		attente_bit1(0);
 		write_bit_start();
 		attente_bit1(0);
@@ -181,7 +181,7 @@ void write_bit_start(void) {
 	valeur_trisB=valeur_trisB & (0b11111111^mask_capteur); 
 	PORTB = valeur_portB;
 	TRISB = valeur_trisB;
-	delay_runtime_ticks((uint16_t)(time_start * 8U));
+	delay_runtime_ticks((uint16_t)(time_start * 8U)); // old : Delay10TCYx(time_start); to verify equivalent delay
 }
 
 /**
@@ -193,9 +193,9 @@ void write_bit(char c) {
 	PORTB = valeur_portB;
 	TRISB = valeur_trisB;
 	if (c == 1) {
-		delay_runtime_ticks((uint16_t)(time_bit1 * 8U));
+		delay_runtime_ticks((uint16_t)(time_bit1 * 8U)); // old : Delay10TCYx(time_start); to verify equivalent delay
 	} else {
-		delay_runtime_ticks((uint16_t)(time_bit0 * 8U));
+		delay_runtime_ticks((uint16_t)(time_bit0 * 8U)); // old : Delay10TCYx(time_start); to verify equivalent delay
 	}
 }
 

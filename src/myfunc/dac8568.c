@@ -117,7 +117,7 @@ void ask_hv_calibration(char *str) {
     str[cp] = '\0';
 }
 
-static uint32_t read_eeprom_u32(uint16_t addr) {
+static uint32_t read_eeprom_s16(uint16_t addr) {
     return  ((uint32_t)EERead(addr + 3) << 24) |
             ((uint32_t)EERead(addr + 2) << 16) |
             ((uint32_t)EERead(addr + 1) <<  8) |
@@ -135,8 +135,8 @@ static uint32_t read_eeprom_u32(uint16_t addr) {
  */
 
 uint32_t get_value_dec(uint32_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
-    uint32_t dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
-    uint32_t dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
+    uint32_t dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
+    uint32_t dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
     /* Integer-only arithmetic for PIC18. */
     return (dac_cal_linear_coeff * (uint32_t)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
 }

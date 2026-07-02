@@ -1161,7 +1161,7 @@ cbuffer_large_getframe_length   0x00876c    program     extern /home/baptiste/MP
         preamplifier_test   0x000734    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/functions.c
                    pulser   0x0060a6    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
                     rdspi   0x008a10    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/spi.c
-          read_eeprom_u32   0x006146    program     static /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
+          read_eeprom_s16   0x006146    program     static /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
                  resetPIC   0x00047a    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/functions.c
           reset_both_fpga   0x008b7a    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/spi.c
                  setGetSN   0x0004e2    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/functions.c
@@ -2125,7 +2125,7 @@ cbuffer_large_getframe_length   0x00876c    program     extern /home/baptiste/MP
              dac_sequence   0x006028    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
                    pulser   0x0060a6    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
        ask_hv_calibration   0x0060dc    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
-          read_eeprom_u32   0x006146    program     static /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
+          read_eeprom_s16   0x006146    program     static /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
             get_value_dec   0x006248    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
                  slop_vhv   0x0062f8    program     extern /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c
                    __pa_0   0x0065b4    program     static /home/baptiste/MPLABXProjects/fazia-pic_v4/src/myfunc/dac8568.c

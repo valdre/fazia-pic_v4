@@ -3756,7 +3756,7 @@ _frame_init CD14 0 CODE 0 text104 dist/default/production/fazia-pic_ModernXC8.X.
 __LbssCOMRAM 0 0 ABS 0 bssCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 __end_of_getSoftStack C6EA 0 CODE 0 text27 dist/default/production/fazia-pic_ModernXC8.X.production.o
 _reset_both_fpga CBAA 0 CODE 0 text60 dist/default/production/fazia-pic_ModernXC8.X.production.o
-?_read_eeprom_u32 15 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
+?_read_eeprom_s16 15 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 get_HV@HVvalueDetector 9A 0 BANK0 1 cstackBANK0 dist/default/production/fazia-pic_ModernXC8.X.production.o
 set_data_eeprom_address@data_value A9 0 BANK0 1 cstackBANK0 dist/default/production/fazia-pic_ModernXC8.X.production.o
 ___aldiv@divisor 21 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
@@ -3771,7 +3771,7 @@ spi_set_regvalue@error AB 0 BANK0 1 cstackBANK0 dist/default/production/fazia-pi
 __Hifardata 0 0 CODE 0 ifardata dist/default/production/fazia-pic_ModernXC8.X.production.o
 frame_getdata@fsize 1F 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 _memsetup CD36 0 CODE 0 text20 dist/default/production/fazia-pic_ModernXC8.X.production.o
-__end_of_read_eeprom_u32 B3EE 0 CODE 0 text117 dist/default/production/fazia-pic_ModernXC8.X.production.o
+__end_of_read_eeprom_s16 B3EE 0 CODE 0 text117 dist/default/production/fazia-pic_ModernXC8.X.production.o
 ___aldiv@sign 26 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 uartbuf_putframe@channel 1D 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 __end_of_chardectoi A258 0 CODE 0 text85 dist/default/production/fazia-pic_ModernXC8.X.production.o
@@ -3952,7 +3952,7 @@ set_vhv@data 8D 0 BANK0 1 cstackBANK0 dist/default/production/fazia-pic_ModernXC
 apply_hvmax@tension_max 30 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 analyze_string@converted_value 2B 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 __end_of_ReadUSART CD32 0 CODE 0 text139 dist/default/production/fazia-pic_ModernXC8.X.production.o
-_read_eeprom_u32 B324 0 CODE 0 text117 dist/default/production/fazia-pic_ModernXC8.X.production.o
+_read_eeprom_s16 B324 0 CODE 0 text117 dist/default/production/fazia-pic_ModernXC8.X.production.o
 setparam@nb_bytes 26 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 __end_of_f_echo C6A2 0 CODE 0 text26 dist/default/production/fazia-pic_ModernXC8.X.production.o
 ?i2___lwmod 2 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
@@ -3992,7 +3992,7 @@ _time_scheduling D0 0 BANK0 1 bssBANK0 dist/default/production/fazia-pic_ModernX
 set_off_V_preamp3b@value 20 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 _get_fpga_version 769C 0 CODE 0 text46 dist/default/production/fazia-pic_ModernXC8.X.production.o
 start_initialization B578 0 CODE 0 cinit dist/default/production/fazia-pic_ModernXC8.X.production.o
-read_eeprom_u32@addr 15 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
+read_eeprom_s16@addr 15 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 myStrCpyChar@chaine 13 0 COMRAM 1 cstackCOMRAM dist/default/production/fazia-pic_ModernXC8.X.production.o
 current_leak_inspection@leak_current_table 99 0 BANK0 1 cstackBANK0 dist/default/production/fazia-pic_ModernXC8.X.production.o
 __HnvFARRAM 0 0 FARRAM 0 nvFARRAM dist/default/production/fazia-pic_ModernXC8.X.production.o

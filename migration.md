@@ -4022,81 +4022,82 @@ J'ai du changer ce code car il depend de signatures/types C18 et d'acces bas niv
 Audit des nouvelles fonctions de compatibilite ajoutees (remplacement API C18 indisponibles sous XC8):
 
 - `OpenSPI`:
-    - Role: initialiser le module SPI materiel (clock, mode, sampling, activation).
-    - Avant (C18): assure par la bibliotheque `spi.h` via `OpenSPI(...)`.
-    - Equivalence: **corrigee**. Le mapping `MODE_00/MODE_10` et `SMPEND/SMPMID` est explicite, et le debit cible `SPI_FOSC_16` est force en `FOSC/16`.
 
+  - Role: initialiser le module SPI materiel (clock, mode, sampling, activation).
+  - Avant (C18): assure par la bibliotheque `spi.h` via `OpenSPI(...)`.
+  - Equivalence: **corrigee**. Le mapping `MODE_00/MODE_10` et `SMPEND/SMPMID` est explicite, et le debit cible `SPI_FOSC_16` est force en `FOSC/16`.
 - `CloseSPI`:
-    - Role: desactiver le module SPI.
-    - Avant (C18): `CloseSPI()` dans `spi.h`.
-    - Equivalence: **OK** (desactivation `SSPEN`).
 
+  - Role: desactiver le module SPI.
+  - Avant (C18): `CloseSPI()` dans `spi.h`.
+  - Equivalence: **OK** (desactivation `SSPEN`).
 - `putcSPI`:
-    - Role: emettre un octet SPI en polling.
-    - Avant (C18): `putcSPI(...)`.
-    - Equivalence: **OK** (ecriture `SSPBUF`, attente `SSPIF`).
 
+  - Role: emettre un octet SPI en polling.
+  - Avant (C18): `putcSPI(...)`.
+  - Equivalence: **OK** (ecriture `SSPBUF`, attente `SSPIF`).
 - `getcSPI`:
-    - Role: lire un octet SPI via cycle d'horloge dummy.
-    - Avant (C18): `getcSPI()`.
-    - Equivalence: **OK** (dummy write + attente `SSPIF` + retour `SSPBUF`).
 
+  - Role: lire un octet SPI via cycle d'horloge dummy.
+  - Avant (C18): `getcSPI()`.
+  - Equivalence: **OK** (dummy write + attente `SSPIF` + retour `SSPBUF`).
 - `DataRdyUSART`:
-    - Role: tester la disponibilite d'un octet recu UART.
-    - Avant (C18): `DataRdyUSART()` dans `usart.h`.
-    - Equivalence: **OK** (base `RCIF`).
 
+  - Role: tester la disponibilite d'un octet recu UART.
+  - Avant (C18): `DataRdyUSART()` dans `usart.h`.
+  - Equivalence: **OK** (base `RCIF`).
 - `ReadUSART`:
-    - Role: lire l'octet UART recu.
-    - Avant (C18): `ReadUSART()`.
-    - Equivalence: **OK** (lecture directe `RCREG`, conforme usage historique).
 
+  - Role: lire l'octet UART recu.
+  - Avant (C18): `ReadUSART()`.
+  - Equivalence: **OK** (lecture directe `RCREG`, conforme usage historique).
 - `putcUSART`:
-    - Role: transmettre un octet UART en polling.
-    - Avant (C18): `putcUSART(...)`.
-    - Equivalence: **OK** (attente `TXIF`, ecriture `TXREG`).
 
+  - Role: transmettre un octet UART en polling.
+  - Avant (C18): `putcUSART(...)`.
+  - Equivalence: **OK** (attente `TXIF`, ecriture `TXREG`).
 - `BusyUSART`:
-    - Role: indiquer si l'emetteur UART est encore occupe.
-    - Avant (C18): `BusyUSART()`.
-    - Equivalence: **OK** (base `TRMT`).
 
+  - Role: indiquer si l'emetteur UART est encore occupe.
+  - Avant (C18): `BusyUSART()`.
+  - Equivalence: **OK** (base `TRMT`).
 - `OpenTimer1`:
-    - Role: initialiser Timer1 pour la mesure temporelle (notamment 1-wire).
-    - Avant (C18): `OpenTimer1(...)` dans `timers.h`.
-    - Equivalence: **OK**. Le parametre `config` est desormais applique sur `T1CON` (bits bas), ce qui restaure le modele C18 base masque de configuration.
 
+  - Role: initialiser Timer1 pour la mesure temporelle (notamment 1-wire).
+  - Avant (C18): `OpenTimer1(...)` dans `timers.h`.
+  - Equivalence: **OK**. Le parametre `config` est desormais applique sur `T1CON` (bits bas), ce qui restaure le modele C18 base masque de configuration.
 - `OpenTimer2`:
-    - Role: initialiser Timer2 pour base periodique.
-    - Avant (C18): `OpenTimer2(...)`.
-    - Equivalence: **OK**. Le parametre `config` pilote desormais `T2CON` (bits bas) et l'activation interruption via `TIMER_INT_ON`.
 
+  - Role: initialiser Timer2 pour base periodique.
+  - Avant (C18): `OpenTimer2(...)`.
+  - Equivalence: **OK**. Le parametre `config` pilote desormais `T2CON` (bits bas) et l'activation interruption via `TIMER_INT_ON`.
 - `OpenTimer3`:
-    - Role: initialiser Timer3 pour comptage libre/mesures.
-    - Avant (C18): `OpenTimer3(...)`.
-    - Equivalence: **OK**. Le parametre `config` est desormais applique sur `T3CON` (bits bas), conforme a l'intention C18.
 
+  - Role: initialiser Timer3 pour comptage libre/mesures.
+  - Avant (C18): `OpenTimer3(...)`.
+  - Equivalence: **OK**. Le parametre `config` est desormais applique sur `T3CON` (bits bas), conforme a l'intention C18.
 - `WriteTimer1`:
-    - Role: charger la valeur 16 bits du Timer1.
-    - Avant (C18): `WriteTimer1(...)`.
-    - Equivalence: **OK** (ecriture `TMR1H/TMR1L`).
 
+  - Role: charger la valeur 16 bits du Timer1.
+  - Avant (C18): `WriteTimer1(...)`.
+  - Equivalence: **OK** (ecriture `TMR1H/TMR1L`).
 - `ReadTimer1`:
-    - Role: lire la valeur 16 bits du Timer1.
-    - Avant (C18): `ReadTimer1()`.
-    - Equivalence: **OK** (reconstruction `TMR1H/TMR1L`).
 
+  - Role: lire la valeur 16 bits du Timer1.
+  - Avant (C18): `ReadTimer1()`.
+  - Equivalence: **OK** (reconstruction `TMR1H/TMR1L`).
 - `delay_runtime_ticks` (ajoutee dans `src/myfunc/Tsensor.c`):
-    - Role: remplacer des delais macros C18 dynamiques par une boucle `Nop()` runtime deterministe.
-    - Avant (C18): delais via macros `Delay*TCYx`.
-    - Equivalence: **fonctionnelle attendue**, mais non strictement cycle-a-cycle sans mesure instrumentee; validation materielle recommandee pour le 1-wire.
+
+  - Role: remplacer des delais macros C18 dynamiques par une boucle `Nop()` runtime deterministe.
+  - Avant (C18): delais via macros `Delay*TCYx`.
+  - Equivalence: **fonctionnelle attendue**, mais non strictement cycle-a-cycle sans mesure instrumentee; validation materielle recommandee pour le 1-wire.
 
 Correction de compatibilite complementaire appliquee:
 
 - Table de dispatch `func_init`:
-    - Constat: des commandes historiques (0x9F a 0xA6) n'etaient plus mappees dans `fplist`.
-    - Correctif: restauration des entrees `resetPIC`, `giveHvStatus`, `setInspecTime`, `getInspecTime`, `getSoftStack`, `f_echo`, `setGetSN`, `enDesHVdev`.
-    - Impact: comportement de protocole UART realigne avec le firmware C18.
+  - Constat: des commandes historiques (0x9F a 0xA6) n'etaient plus mappees dans `fplist`.
+  - Correctif: restauration des entrees `resetPIC`, `giveHvStatus`, `setInspecTime`, `getInspecTime`, `getSoftStack`, `f_echo`, `setGetSN`, `enDesHVdev`.
+  - Impact: comportement de protocole UART realigne avec le firmware C18.
 
 ### pourquoi c'est equivalent
 
@@ -9595,15 +9596,15 @@ void ask_hv_calibration(char *str) {
     }
     str[cp] = '\0';
 }
-static UINT32 read_eeprom_u32(UINT addr) {
+static UINT32 read_eeprom_s16(UINT addr) {
     return  ((UINT32)EERead(addr + 3) << 24) |
             ((UINT32)EERead(addr + 2) << 16) |
             ((UINT32)EERead(addr + 1) <<  8) |
             (UINT32)EERead(addr);
 }
 UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const) {
-    UINT32 dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
-    UINT32 dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
+    UINT32 dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
+    UINT32 dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
     return (dac_cal_linear_coeff * (UINT32)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
 }
 BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS) {
@@ -9734,15 +9735,15 @@ void ask_hv_calibration(char *str) {
     }
     str[cp] = '\0';
 }
-static uint32_t read_eeprom_u32(uint16_t addr) {
+static uint32_t read_eeprom_s16(uint16_t addr) {
     return  ((uint32_t)EERead(addr + 3) << 24) |
             ((uint32_t)EERead(addr + 2) << 16) |
             ((uint32_t)EERead(addr + 1) <<  8) |
             (uint32_t)EERead(addr);
 }
 uint32_t get_value_dec(uint16_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
-    uint32_t dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
-    uint32_t dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
+    uint32_t dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
+    uint32_t dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
     return (dac_cal_linear_coeff * (uint32_t)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
 }
 uint8_t slop_vhv(char tel, uint8_t module, uint16_t tension, uint32_t slopeVS) {
@@ -9852,12 +9853,12 @@ Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document
 @@ -116,11 +116,11 @@
      str[cp] = '\0';
  }
--static UINT32 read_eeprom_u32(UINT addr) {
+-static UINT32 read_eeprom_s16(UINT addr) {
 -    return  ((UINT32)EERead(addr + 3) << 24) |
 -            ((UINT32)EERead(addr + 2) << 16) |
 -            ((UINT32)EERead(addr + 1) <<  8) |
 -            (UINT32)EERead(addr);
-+static uint32_t read_eeprom_u32(uint16_t addr) {
++static uint32_t read_eeprom_s16(uint16_t addr) {
 +    return  ((uint32_t)EERead(addr + 3) << 24) |
 +            ((uint32_t)EERead(addr + 2) << 16) |
 +            ((uint32_t)EERead(addr + 1) <<  8) |
@@ -9865,11 +9866,11 @@ Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document
  }
 @@ -130,14 +130,14 @@
 -UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const) {
--    UINT32 dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
--    UINT32 dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
+-    UINT32 dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
+-    UINT32 dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
 +uint32_t get_value_dec(uint16_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
-+    uint32_t dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
-+    uint32_t dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
++    uint32_t dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
++    uint32_t dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
 -    return (dac_cal_linear_coeff * (UINT32)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
 +    return (dac_cal_linear_coeff * (uint32_t)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
  }
