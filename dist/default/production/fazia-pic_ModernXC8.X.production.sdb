@@ -80,6 +80,7 @@ TRUE 1
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
+[v i2___lwmod __lwmod `(ui  1 e 2 0 ]
 "3 /opt/microchip/xc8/v3.10/pic/sources/c99/common/memset.c
 [v _memset memset `(*.39v  1 e 2 0 ]
 "10 /opt/microchip/xc8/v3.10/pic/sources/c99/common/sprcadd.c
@@ -128,96 +129,114 @@ TRUE 1
 [v _frame_getcrc frame_getcrc `(us  1 e 2 0 ]
 "44 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _OpenSPI OpenSPI `(v  1 e 1 0 ]
-"62
+"74
 [v _CloseSPI CloseSPI `(v  1 e 1 0 ]
-"66
+"78
 [v _putcSPI putcSPI `(v  1 e 1 0 ]
-"75
+"87
 [v _getcSPI getcSPI `(uc  1 e 1 0 ]
-"85
+"97
 [v _DataRdyUSART DataRdyUSART `(uc  1 e 1 0 ]
-"89
+"101
 [v _ReadUSART ReadUSART `(uc  1 e 1 0 ]
-"93
+"105
 [v _putcUSART putcUSART `(v  1 e 1 0 ]
-"100
-[v _BusyUSART BusyUSART `(uc  1 e 1 0 ]
-"104
-[v _OpenTimer1 OpenTimer1 `(v  1 e 1 0 ]
 "112
+[v _BusyUSART BusyUSART `(uc  1 e 1 0 ]
+"116
+[v _OpenTimer1 OpenTimer1 `(v  1 e 1 0 ]
+"126
 [v _OpenTimer2 OpenTimer2 `(v  1 e 1 0 ]
-"120
+"137
 [v _OpenTimer3 OpenTimer3 `(v  1 e 1 0 ]
-"128
+"147
 [v _WriteTimer1 WriteTimer1 `(v  1 e 1 0 ]
-"133
+"152
 [v _ReadTimer1 ReadTimer1 `(ui  1 e 2 0 ]
-"140
+"159
 [v _func_init func_init `(v  1 e 1 0 ]
-"178
+"205
 [v _func_invoke func_invoke `(uc  1 e 1 0 ]
-"267
+"225
+[v _f_echo f_echo `(uc  1 e 1 0 ]
+"239
+[v _resetPIC resetPIC `(uc  1 e 1 0 ]
+"253
+[v _setGetSN setGetSN `(uc  1 e 1 0 ]
+"294
 [v _uart_csi_relay uart_csi_relay `(uc  1 e 1 0 ]
-"282
+"309
 [v _uart_reset_both_fpga uart_reset_both_fpga `(uc  1 e 1 0 ]
-"337
+"323
+[v _giveHvStatus giveHvStatus `(uc  1 e 1 0 ]
+"364
 [v _setHVCsiAB setHVCsiAB `(uc  1 e 1 0 ]
-"377
+"404
 [v _preamplifier_test preamplifier_test `(uc  1 e 1 0 ]
-"432
+"459
 [v _uart_preamplifier_test uart_preamplifier_test `(uc  1 e 1 0 ]
-"486
+"513
 [v _setautoffset setautoffset `(uc  1 e 1 0 ]
-"603
+"555
+[v _enDesHVdev enDesHVdev `(uc  1 e 1 0 ]
+"630
 [v _getGeneDacVoltage getGeneDacVoltage `(uc  1 e 1 0 ]
-"618
+"645
 [v _getCurrent getCurrent `(uc  1 e 1 0 ]
-"646
+"673
 [v _get_HV get_HV `(uc  1 e 1 0 ]
-"714
+"741
 [v _getHvValue getHvValue `(us  1 e 2 0 ]
-"740
+"767
 [v _get_fpga_version get_fpga_version `(uc  1 e 1 0 ]
-"802
+"829
 [v _get_ads8332 get_ads8332 `(uc  1 e 1 0 ]
-"848
+"875
 [v _get_pic_version get_pic_version `(uc  1 e 1 0 ]
-"865
+"892
 [v _get_leak_current get_leak_current `(uc  1 e 1 0 ]
-"916
+"943
 [v _set_pulse_parameters set_pulse_parameters `(uc  1 e 1 0 ]
-"987
+"1014
 [v _set_voltage_preamplifier set_voltage_preamplifier `(uc  1 e 1 0 ]
-"1075
+"1102
 [v _incdecHV incdecHV `(uc  1 e 1 0 ]
-"1339
+"1274
+[v _getInspecTime getInspecTime `(uc  1 e 1 0 ]
+"1294
+[v _getSoftStack getSoftStack `(uc  1 e 1 0 ]
+"1311
+[v _setInspecTime setInspecTime `(uc  1 e 1 0 ]
+"1366
 [v _set_vhv set_vhv `(uc  1 e 1 0 ]
-"1439
+"1466
 [v _get_temp get_temp `(uc  1 e 1 0 ]
-"1470
+"1497
 [v _get_hvmax get_hvmax `(uc  1 e 1 0 ]
-"1519
+"1546
 [v _apply_hvmax apply_hvmax `(uc  1 e 1 0 ]
-"1567
+"1594
 [v _enableDisableHVMeas enableDisableHVMeas `(uc  1 e 1 0 ]
-"1601
+"1628
 [v _set_hvmax set_hvmax `(uc  1 e 1 0 ]
-"1645
+"1672
 [v _uart_ask_hv_calibration uart_ask_hv_calibration `(uc  1 e 1 0 ]
-"1662
+"1689
 [v _store_param store_param `(uc  1 e 1 0 ]
-"1677
+"1704
 [v _set_data_eeprom_address set_data_eeprom_address `(uc  1 e 1 0 ]
-"1719
+"1746
 [v _get_data_eeprom_address get_data_eeprom_address `(uc  1 e 1 0 ]
-"1758
+"1785
 [v _spi_get_regvalue spi_get_regvalue `(uc  1 e 1 0 ]
-"1799
+"1826
 [v _spi_set_regvalue spi_set_regvalue `(uc  1 e 1 0 ]
-"1845
+"1872
 [v _getHighLcTrsh getHighLcTrsh `(us  1 e 2 0 ]
-"1851
+"1878
 [v _getLowLcTrsh getLowLcTrsh `(us  1 e 2 0 ]
+"33 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/isr.c
+[v _isr isr `IIH(v  1 e 1 0 ]
 "139 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/main.c
 [v _main main `(v  1 e 1 0 ]
 "415
@@ -310,11 +329,11 @@ TRUE 1
 [v _temp_init temp_init `(uc  1 e 1 0 ]
 "92
 [v _temp temp `(uc  1 e 1 0 ]
-"175
+"178
 [v _write_bit_start write_bit_start `(v  1 e 1 0 ]
-"188
+"191
 [v _write_bit write_bit `(v  1 e 1 0 ]
-"203
+"206
 [v _attente_bit1 attente_bit1 `(v  1 e 1 0 ]
 "7 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/wr_eeprom.c
 [v _setparam setparam `(v  1 e 1 0 ]
@@ -518,7 +537,7 @@ TRUE 1
 [v _TRISD TRISD `VEuc  1 e 1 @3989 ]
 "2904
 [v _TRISE TRISE `VEuc  1 e 1 @3990 ]
-[s S1705 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S1403 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -528,12 +547,12 @@ TRUE 1
 `uc 1 PSPIE 1 0 :1:7 
 ]
 "3148
-[s S1714 . 1 `uc 1 . 1 0 :4:0 
+[s S1412 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 TX1IE 1 0 :1:4 
 `uc 1 RC1IE 1 0 :1:5 
 ]
-[u S1718 . 1 `S1705 1 . 1 0 `S1714 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES1718  1 e 1 @3997 ]
+[u S1416 . 1 `S1403 1 . 1 0 `S1412 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES1416  1 e 1 @3997 ]
 [s S471 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
@@ -550,7 +569,7 @@ TRUE 1
 ]
 [u S484 . 1 `S471 1 . 1 0 `S480 1 . 1 0 ]
 [v _PIR1bits PIR1bits `VES484  1 e 1 @3998 ]
-[s S2868 . 1 `uc 1 CCP2IE 1 0 :1:0 
+[s S2918 . 1 `uc 1 CCP2IE 1 0 :1:0 
 `uc 1 TMR3IE 1 0 :1:1 
 `uc 1 HLVDIE 1 0 :1:2 
 `uc 1 BCLIE 1 0 :1:3 
@@ -560,15 +579,15 @@ TRUE 1
 `uc 1 OSCFIE 1 0 :1:7 
 ]
 "3382
-[s S2877 . 1 `uc 1 . 1 0 :2:0 
+[s S2927 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 LVDIE 1 0 :1:2 
 ]
-[s S2880 . 1 `uc 1 . 1 0 :6:0 
+[s S2930 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 CMIE 1 0 :1:6 
 ]
-[u S2883 . 1 `S2868 1 . 1 0 `S2877 1 . 1 0 `S2880 1 . 1 0 ]
-[v _PIE2bits PIE2bits `VES2883  1 e 1 @4000 ]
-[s S2833 . 1 `uc 1 CCP2IP 1 0 :1:0 
+[u S2933 . 1 `S2918 1 . 1 0 `S2927 1 . 1 0 `S2930 1 . 1 0 ]
+[v _PIE2bits PIE2bits `VES2933  1 e 1 @4000 ]
+[s S2883 . 1 `uc 1 CCP2IP 1 0 :1:0 
 `uc 1 TMR3IP 1 0 :1:1 
 `uc 1 HLVDIP 1 0 :1:2 
 `uc 1 BCLIP 1 0 :1:3 
@@ -578,14 +597,14 @@ TRUE 1
 `uc 1 OSCFIP 1 0 :1:7 
 ]
 "3542
-[s S2842 . 1 `uc 1 . 1 0 :2:0 
+[s S2892 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 LVDIP 1 0 :1:2 
 ]
-[s S2845 . 1 `uc 1 . 1 0 :6:0 
+[s S2895 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 CMIP 1 0 :1:6 
 ]
-[u S2848 . 1 `S2833 1 . 1 0 `S2842 1 . 1 0 `S2845 1 . 1 0 ]
-[v _IPR2bits IPR2bits `VES2848  1 e 1 @4002 ]
+[u S2898 . 1 `S2883 1 . 1 0 `S2892 1 . 1 0 `S2895 1 . 1 0 ]
+[v _IPR2bits IPR2bits `VES2898  1 e 1 @4002 ]
 [s S284 . 1 `uc 1 RD 1 0 :1:0 
 `uc 1 WR 1 0 :1:1 
 `uc 1 WREN 1 0 :1:2 
@@ -611,7 +630,7 @@ TRUE 1
 [v _EEADRH EEADRH `VEuc  1 e 1 @4010 ]
 "3765
 [v _RCSTA RCSTA `VEuc  1 e 1 @4011 ]
-[s S2204 . 1 `uc 1 RX9D 1 0 :1:0 
+[s S2250 . 1 `uc 1 RX9D 1 0 :1:0 
 `uc 1 OERR 1 0 :1:1 
 `uc 1 FERR 1 0 :1:2 
 `uc 1 ADDEN 1 0 :1:3 
@@ -621,22 +640,22 @@ TRUE 1
 `uc 1 SPEN 1 0 :1:7 
 ]
 "3806
-[s S2213 . 1 `uc 1 . 1 0 :3:0 
+[s S2259 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 ADEN 1 0 :1:3 
 ]
-[s S2216 . 1 `uc 1 . 1 0 :5:0 
+[s S2262 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 SRENA 1 0 :1:5 
 ]
-[s S2219 . 1 `uc 1 . 1 0 :6:0 
+[s S2265 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 RC8_9 1 0 :1:6 
 ]
-[s S2222 . 1 `uc 1 . 1 0 :6:0 
+[s S2268 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 RC9 1 0 :1:6 
 ]
-[s S2225 . 1 `uc 1 RCD8 1 0 :1:0 
+[s S2271 . 1 `uc 1 RCD8 1 0 :1:0 
 ]
-[u S2227 . 1 `S2204 1 . 1 0 `S2213 1 . 1 0 `S2216 1 . 1 0 `S2219 1 . 1 0 `S2222 1 . 1 0 `S2225 1 . 1 0 ]
-[v _RCSTAbits RCSTAbits `VES2227  1 e 1 @4011 ]
+[u S2273 . 1 `S2250 1 . 1 0 `S2259 1 . 1 0 `S2262 1 . 1 0 `S2265 1 . 1 0 `S2268 1 . 1 0 `S2271 1 . 1 0 ]
+[v _RCSTAbits RCSTAbits `VES2273  1 e 1 @4011 ]
 "3975
 [v _TXSTA TXSTA `VEuc  1 e 1 @4012 ]
 [s S1296 . 1 `uc 1 TX9D 1 0 :1:0 
@@ -675,11 +694,11 @@ TRUE 1
 [v _SPBRGH SPBRGH `VEuc  1 e 1 @4016 ]
 "4274
 [v _T3CON T3CON `VEuc  1 e 1 @4017 ]
-[s S1435 . 1 `uc 1 . 1 0 :2:0 
+[s S1464 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_T3SYNC 1 0 :1:2 
 ]
 "4311
-[s S1438 . 1 `uc 1 TMR3ON 1 0 :1:0 
+[s S1467 . 1 `uc 1 TMR3ON 1 0 :1:0 
 `uc 1 TMR3CS 1 0 :1:1 
 `uc 1 nT3SYNC 1 0 :1:2 
 `uc 1 T3CCP1 1 0 :1:3 
@@ -687,22 +706,22 @@ TRUE 1
 `uc 1 T3CCP2 1 0 :1:6 
 `uc 1 RD16 1 0 :1:7 
 ]
-[s S1446 . 1 `uc 1 . 1 0 :2:0 
+[s S1475 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T3SYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 T3CKPS0 1 0 :1:4 
 `uc 1 T3CKPS1 1 0 :1:5 
 ]
-[s S1452 . 1 `uc 1 . 1 0 :3:0 
+[s S1481 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 SOSCEN3 1 0 :1:3 
 `uc 1 . 1 0 :3:4 
 `uc 1 RD163 1 0 :1:7 
 ]
-[s S1457 . 1 `uc 1 . 1 0 :7:0 
+[s S1486 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 T3RD16 1 0 :1:7 
 ]
-[u S1460 . 1 `S1435 1 . 1 0 `S1438 1 . 1 0 `S1446 1 . 1 0 `S1452 1 . 1 0 `S1457 1 . 1 0 ]
-[v _T3CONbits T3CONbits `VES1460  1 e 1 @4017 ]
+[u S1489 . 1 `S1464 1 . 1 0 `S1467 1 . 1 0 `S1475 1 . 1 0 `S1481 1 . 1 0 `S1486 1 . 1 0 ]
+[v _T3CONbits T3CONbits `VES1489  1 e 1 @4017 ]
 "4393
 [v _TMR3L TMR3L `VEuc  1 e 1 @4018 ]
 "4400
@@ -719,30 +738,30 @@ TRUE 1
 [v _ADRESH ADRESH `VEuc  1 e 1 @4036 ]
 "5387
 [v _SSPCON1 SSPCON1 `VEuc  1 e 1 @4038 ]
-[s S1249 . 1 `uc 1 SSPM 1 0 :4:0 
+[s S1114 . 1 `uc 1 SSPM 1 0 :4:0 
 `uc 1 CKP 1 0 :1:4 
 `uc 1 SSPEN 1 0 :1:5 
 `uc 1 SSPOV 1 0 :1:6 
 `uc 1 WCOL 1 0 :1:7 
 ]
 "5407
-[s S1255 . 1 `uc 1 SSPM0 1 0 :1:0 
+[s S1120 . 1 `uc 1 SSPM0 1 0 :1:0 
 `uc 1 SSPM1 1 0 :1:1 
 `uc 1 SSPM2 1 0 :1:2 
 `uc 1 SSPM3 1 0 :1:3 
 ]
-[u S1260 . 1 `S1249 1 . 1 0 `S1255 1 . 1 0 ]
-[v _SSPCON1bits SSPCON1bits `VES1260  1 e 1 @4038 ]
+[u S1125 . 1 `S1114 1 . 1 0 `S1120 1 . 1 0 ]
+[v _SSPCON1bits SSPCON1bits `VES1125  1 e 1 @4038 ]
 "5457
 [v _SSPSTAT SSPSTAT `VEuc  1 e 1 @4039 ]
-[s S1114 . 1 `uc 1 . 1 0 :2:0 
+[s S1140 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_NOT_W 1 0 :1:2 
 ]
 "5537
-[s S1117 . 1 `uc 1 . 1 0 :5:0 
+[s S1143 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 D_NOT_A 1 0 :1:5 
 ]
-[s S1120 . 1 `uc 1 BF 1 0 :1:0 
+[s S1146 . 1 `uc 1 BF 1 0 :1:0 
 `uc 1 UA 1 0 :1:1 
 `uc 1 R_nW 1 0 :1:2 
 `uc 1 S 1 0 :1:3 
@@ -751,63 +770,63 @@ TRUE 1
 `uc 1 CKE 1 0 :1:6 
 `uc 1 SMP 1 0 :1:7 
 ]
-[s S1129 . 1 `uc 1 . 1 0 :2:0 
+[s S1155 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D 1 0 :1:5 
 ]
-[s S1134 . 1 `uc 1 . 1 0 :2:0 
+[s S1160 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 A 1 0 :1:5 
 ]
-[s S1139 . 1 `uc 1 . 1 0 :2:0 
+[s S1165 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nA 1 0 :1:5 
 ]
-[s S1144 . 1 `uc 1 . 1 0 :2:0 
+[s S1170 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D_A 1 0 :1:5 
 ]
-[s S1149 . 1 `uc 1 . 1 0 :2:0 
+[s S1175 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_WRITE 1 0 :1:2 
 ]
-[s S1152 . 1 `uc 1 . 1 0 :5:0 
+[s S1178 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 NOT_ADDRESS 1 0 :1:5 
 ]
-[s S1155 . 1 `uc 1 . 1 0 :2:0 
+[s S1181 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nWRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nADDRESS 1 0 :1:5 
 ]
-[s S1160 . 1 `uc 1 . 1 0 :3:0 
+[s S1186 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 START 1 0 :1:3 
 `uc 1 STOP 1 0 :1:4 
 ]
-[s S1164 . 1 `uc 1 . 1 0 :2:0 
+[s S1190 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 RW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 DA 1 0 :1:5 
 ]
-[s S1169 . 1 `uc 1 . 1 0 :2:0 
+[s S1195 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 NOT_A 1 0 :1:5 
 ]
-[u S1174 . 1 `S1114 1 . 1 0 `S1117 1 . 1 0 `S1120 1 . 1 0 `S1129 1 . 1 0 `S1134 1 . 1 0 `S1139 1 . 1 0 `S1144 1 . 1 0 `S1149 1 . 1 0 `S1152 1 . 1 0 `S1155 1 . 1 0 `S1160 1 . 1 0 `S1164 1 . 1 0 `S1169 1 . 1 0 ]
-[v _SSPSTATbits SSPSTATbits `VES1174  1 e 1 @4039 ]
+[u S1200 . 1 `S1140 1 . 1 0 `S1143 1 . 1 0 `S1146 1 . 1 0 `S1155 1 . 1 0 `S1160 1 . 1 0 `S1165 1 . 1 0 `S1170 1 . 1 0 `S1175 1 . 1 0 `S1178 1 . 1 0 `S1181 1 . 1 0 `S1186 1 . 1 0 `S1190 1 . 1 0 `S1195 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES1200  1 e 1 @4039 ]
 "5689
 [v _SSPBUF SSPBUF `VEuc  1 e 1 @4041 ]
 "5696
 [v _T2CON T2CON `VEuc  1 e 1 @4042 ]
-[s S1404 . 1 `uc 1 T2CKPS 1 0 :2:0 
+[s S1433 . 1 `uc 1 T2CKPS 1 0 :2:0 
 `uc 1 TMR2ON 1 0 :1:2 
 `uc 1 T2OUTPS 1 0 :4:3 
 ]
 "5717
-[s S1408 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+[s S1437 . 1 `uc 1 T2CKPS0 1 0 :1:0 
 `uc 1 T2CKPS1 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 T2OUTPS0 1 0 :1:3 
@@ -815,8 +834,8 @@ TRUE 1
 `uc 1 T2OUTPS2 1 0 :1:5 
 `uc 1 T2OUTPS3 1 0 :1:6 
 ]
-[u S1416 . 1 `S1404 1 . 1 0 `S1408 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES1416  1 e 1 @4042 ]
+[u S1445 . 1 `S1433 1 . 1 0 `S1437 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES1445  1 e 1 @4042 ]
 "5767
 [v _PR2 PR2 `VEuc  1 e 1 @4043 ]
 "5877
@@ -852,22 +871,22 @@ TRUE 1
 [v _TMR1L TMR1L `VEuc  1 e 1 @4046 ]
 "6001
 [v _TMR1H TMR1H `VEuc  1 e 1 @4047 ]
-[s S2332 . 1 `uc 1 NOT_BOR 1 0 :1:0 
+[s S2382 . 1 `uc 1 NOT_BOR 1 0 :1:0 
 ]
 "6051
-[s S2334 . 1 `uc 1 . 1 0 :1:0 
+[s S2384 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 NOT_POR 1 0 :1:1 
 ]
-[s S2337 . 1 `uc 1 . 1 0 :2:0 
+[s S2387 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_PD 1 0 :1:2 
 ]
-[s S2340 . 1 `uc 1 . 1 0 :3:0 
+[s S2390 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 NOT_TO 1 0 :1:3 
 ]
-[s S2343 . 1 `uc 1 . 1 0 :4:0 
+[s S2393 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 NOT_RI 1 0 :1:4 
 ]
-[s S2346 . 1 `uc 1 nBOR 1 0 :1:0 
+[s S2396 . 1 `uc 1 nBOR 1 0 :1:0 
 `uc 1 nPOR 1 0 :1:1 
 `uc 1 nPD 1 0 :1:2 
 `uc 1 nTO 1 0 :1:3 
@@ -876,14 +895,14 @@ TRUE 1
 `uc 1 SBOREN 1 0 :1:6 
 `uc 1 IPEN 1 0 :1:7 
 ]
-[s S2355 . 1 `uc 1 BOR 1 0 :1:0 
+[s S2405 . 1 `uc 1 BOR 1 0 :1:0 
 `uc 1 POR 1 0 :1:1 
 `uc 1 PD 1 0 :1:2 
 `uc 1 TO 1 0 :1:3 
 `uc 1 RI 1 0 :1:4 
 ]
-[u S2361 . 1 `S2332 1 . 1 0 `S2334 1 . 1 0 `S2337 1 . 1 0 `S2340 1 . 1 0 `S2343 1 . 1 0 `S2346 1 . 1 0 `S2355 1 . 1 0 ]
-[v _RCONbits RCONbits `VES2361  1 e 1 @4048 ]
+[u S2411 . 1 `S2382 1 . 1 0 `S2384 1 . 1 0 `S2387 1 . 1 0 `S2390 1 . 1 0 `S2393 1 . 1 0 `S2396 1 . 1 0 `S2405 1 . 1 0 ]
+[v _RCONbits RCONbits `VES2411  1 e 1 @4048 ]
 "6748
 [v _FSR1L FSR1L `VEuc  1 e 1 @4065 ]
 "6755
@@ -1103,6 +1122,8 @@ TRUE 1
 [s S930 . 276 `us 1 size 2 0 `us 1 rdp 2 2 `us 1 wrp 2 4 `[270]uc 1 data 270 6 ]
 "15 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/uartbuf.c
 [v __Uart _Uart `[2]S930  1 e 552 0 ]
+"16
+[v _Uart Uart `*.39S930  1 e 2 0 ]
 "139 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/main.c
 [v _main main `(v  1 e 1 0 ]
 {
@@ -1114,24 +1135,24 @@ TRUE 1
 [v _ucsetup ucsetup `(v  1 e 1 0 ]
 {
 "84
-[v ucsetup@cp cp `us  1 a 2 66 ]
-[v ucsetup@dep dep `us  1 a 2 64 ]
-[v ucsetup@co co `us  1 a 2 62 ]
+[v ucsetup@cp cp `us  1 a 2 31 ]
+[v ucsetup@dep dep `us  1 a 2 29 ]
+[v ucsetup@co co `us  1 a 2 27 ]
 "86
-[v ucsetup@coefB coefB `*.39ul  1 a 2 60 ]
-[v ucsetup@coefA coefA `*.39ul  1 a 2 58 ]
+[v ucsetup@coefB coefB `*.39ul  1 a 2 25 ]
+[v ucsetup@coefA coefA `*.39ul  1 a 2 23 ]
 "85
-[v ucsetup@lTime lTime `us  1 a 2 56 ]
-[v ucsetup@sTime sTime `us  1 a 2 54 ]
+[v ucsetup@lTime lTime `us  1 a 2 21 ]
+[v ucsetup@sTime sTime `us  1 a 2 19 ]
 "272
 } 0
 "40 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/dac8568.c
 [v _dac_init dac_init `(uc  1 e 1 0 ]
 {
 "42
-[v dac_init@ref_intern ref_intern `[4]uc  1 a 4 11 ]
+[v dac_init@ref_intern ref_intern `[4]uc  1 a 4 26 ]
 "41
-[v dac_init@mode_sync mode_sync `[4]uc  1 a 4 7 ]
+[v dac_init@mode_sync mode_sync `[4]uc  1 a 4 22 ]
 "40
 [v dac_init@F3571 F3571 `[4]uc  1 s 4 F3571 ]
 "41
@@ -1142,39 +1163,45 @@ TRUE 1
 [v _adc_init adc_init `(v  1 e 1 0 ]
 {
 "33
-[v adc_init@sequence sequence `[2]uc  1 a 2 1 ]
+[v adc_init@sequence sequence `[2]uc  1 a 2 16 ]
 "55
 } 0
-"120 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"137 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _OpenTimer3 OpenTimer3 `(v  1 e 1 0 ]
 {
-[v OpenTimer3@config config `ui  1 p 2 0 ]
-"126
+"138
+[v OpenTimer3@t3con t3con `uc  1 a 1 17 ]
+"137
+[v OpenTimer3@config config `ui  1 p 2 15 ]
+"145
 } 0
-"104
+"116
 [v _OpenTimer1 OpenTimer1 `(v  1 e 1 0 ]
 {
-[v OpenTimer1@config config `ui  1 p 2 0 ]
-"110
+"117
+[v OpenTimer1@t1con t1con `uc  1 a 1 17 ]
+"116
+[v OpenTimer1@config config `ui  1 p 2 15 ]
+"124
 } 0
 "92 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/uartbuf.c
 [v _uartbuf_putframe uartbuf_putframe `(v  1 e 1 0 ]
 {
 "93
-[v uartbuf_putframe@i i `us  1 a 2 22 ]
+[v uartbuf_putframe@i i `us  1 a 2 37 ]
 "94
-[v uartbuf_putframe@fsize fsize `us  1 a 2 20 ]
+[v uartbuf_putframe@fsize fsize `us  1 a 2 35 ]
 "92
-[v uartbuf_putframe@channel channel `us  1 p 2 12 ]
-[v uartbuf_putframe@f f `*.39uc  1 p 2 14 ]
+[v uartbuf_putframe@channel channel `us  1 p 2 27 ]
+[v uartbuf_putframe@f f `*.39uc  1 p 2 29 ]
 "119
 } 0
 "23 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/cbuffer.c
 [v _cbuffer_large_write cbuffer_large_write `(uc  1 e 1 0 ]
 {
 [s S930 . 276 `us 1 size 2 0 `us 1 rdp 2 2 `us 1 wrp 2 4 `[270]uc 1 data 270 6 ]
-[v cbuffer_large_write@cb cb `*.39S930  1 p 2 5 ]
-[v cbuffer_large_write@ch ch `uc  1 p 1 7 ]
+[v cbuffer_large_write@cb cb `*.39S930  1 p 2 20 ]
+[v cbuffer_large_write@ch ch `uc  1 p 1 22 ]
 "33
 } 0
 "22 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/uartbuf.c
@@ -1186,74 +1213,74 @@ TRUE 1
 [v _cbuffer_large_init cbuffer_large_init `(v  1 e 1 0 ]
 {
 [s S930 . 276 `us 1 size 2 0 `us 1 rdp 2 2 `us 1 wrp 2 4 `[270]uc 1 data 270 6 ]
-[v cbuffer_large_init@cb cb `*.39S930  1 p 2 8 ]
+[v cbuffer_large_init@cb cb `*.39S930  1 p 2 23 ]
 "15
 } 0
 "3 /opt/microchip/xc8/v3.10/pic/sources/c99/common/memset.c
 [v _memset memset `(*.39v  1 e 2 0 ]
 {
 "5
-[v memset@p p `*.39uc  1 a 2 6 ]
+[v memset@p p `*.39uc  1 a 2 21 ]
 "3
-[v memset@dest dest `*.39v  1 p 2 0 ]
-[v memset@c c `i  1 p 2 2 ]
-[v memset@n n `ui  1 p 2 4 ]
+[v memset@dest dest `*.39v  1 p 2 15 ]
+[v memset@c c `i  1 p 2 17 ]
+[v memset@n n `ui  1 p 2 19 ]
 "10
 } 0
 "69 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/uartbuf.c
 [v _uartbuf_getframe uartbuf_getframe `(v  1 e 1 0 ]
 {
 "70
-[v uartbuf_getframe@i i `us  1 a 2 25 ]
+[v uartbuf_getframe@i i `us  1 a 2 40 ]
 "71
-[v uartbuf_getframe@ch ch `uc  1 a 1 24 ]
+[v uartbuf_getframe@ch ch `uc  1 a 1 39 ]
 "69
-[v uartbuf_getframe@channel channel `us  1 p 2 12 ]
-[v uartbuf_getframe@f f `*.39uc  1 p 2 14 ]
-[v uartbuf_getframe@flen flen `us  1 p 2 16 ]
-[v uartbuf_getframe@foffset foffset `us  1 p 2 18 ]
+[v uartbuf_getframe@channel channel `us  1 p 2 27 ]
+[v uartbuf_getframe@f f `*.39uc  1 p 2 29 ]
+[v uartbuf_getframe@flen flen `us  1 p 2 31 ]
+[v uartbuf_getframe@foffset foffset `us  1 p 2 33 ]
 "85
 } 0
 "43
 [v _uartbuf_flush uartbuf_flush `(v  1 e 1 0 ]
 {
 "45
-[v uartbuf_flush@ch ch `uc  1 a 1 26 ]
+[v uartbuf_flush@ch ch `uc  1 a 1 45 ]
 "43
-[v uartbuf_flush@channel channel `us  1 p 2 12 ]
+[v uartbuf_flush@channel channel `us  1 p 2 27 ]
 "60
 } 0
-"93 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"105 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _putcUSART putcUSART `(v  1 e 1 0 ]
 {
 [v putcUSART@data data `uc  1 p 1 wreg ]
 [v putcUSART@data data `uc  1 p 1 wreg ]
-[v putcUSART@data data `uc  1 p 1 0 ]
-"98
+[v putcUSART@data data `uc  1 p 1 15 ]
+"110
 } 1
 "41 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/cbuffer.c
 [v _cbuffer_large_read cbuffer_large_read `(uc  1 e 1 0 ]
 {
 [s S930 . 276 `us 1 size 2 0 `us 1 rdp 2 2 `us 1 wrp 2 4 `[270]uc 1 data 270 6 ]
-[v cbuffer_large_read@cb cb `*.39S930  1 p 2 5 ]
-[v cbuffer_large_read@ch ch `*.30uc  1 p 1 7 ]
+[v cbuffer_large_read@cb cb `*.39S930  1 p 2 20 ]
+[v cbuffer_large_read@ch ch `*.30uc  1 p 1 22 ]
 "50
 } 0
-"100 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"112 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _BusyUSART BusyUSART `(uc  1 e 1 0 ]
 {
-"102
+"114
 } 0
 "26 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/Tsensor.c
 [v _temp_init temp_init `(uc  1 e 1 0 ]
 {
 "29
-[v temp_init@BitTab BitTab `[29]c  1 a 29 35 ]
+[v temp_init@BitTab BitTab `[29]c  1 a 29 29 ]
 "32
-[v temp_init@BitTab2 BitTab2 `[29]c  1 a 29 6 ]
+[v temp_init@BitTab2 BitTab2 `[29]c  1 a 29 0 ]
 "33
-[v temp_init@j j `uc  1 a 1 65 ]
-[v temp_init@co co `uc  1 a 1 64 ]
+[v temp_init@j j `uc  1 a 1 59 ]
+[v temp_init@co co `uc  1 a 1 58 ]
 "26
 [v temp_init@F3573 F3573 `[29]c  1 s 29 F3573 ]
 "29
@@ -1264,32 +1291,32 @@ TRUE 1
 [v _setparam setparam `(v  1 e 1 0 ]
 {
 "8
-[v setparam@co co `ui  1 a 2 26 ]
+[v setparam@co co `ui  1 a 2 41 ]
 "9
-[v setparam@p p `*.39uc  1 a 2 24 ]
+[v setparam@p p `*.39uc  1 a 2 39 ]
 "8
-[v setparam@nb_bytes nb_bytes `ui  1 a 2 21 ]
+[v setparam@nb_bytes nb_bytes `ui  1 a 2 36 ]
 "10
-[v setparam@cflag cflag `uc  1 a 1 23 ]
+[v setparam@cflag cflag `uc  1 a 1 38 ]
 "37
 } 0
 "428 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/main.c
 [v _pa_offset_settings pa_offset_settings `(v  1 e 1 0 ]
 {
 "434
-[v pa_offset_settings@regAdc1 regAdc1 `i  1 a 2 51 ]
+[v pa_offset_settings@regAdc1 regAdc1 `i  1 a 2 8 ]
 "435
-[v pa_offset_settings@regfpga regfpga `us  1 a 2 48 ]
+[v pa_offset_settings@regfpga regfpga `us  1 a 2 5 ]
 "436
-[v pa_offset_settings@regfpga2 regfpga2 `us  1 a 2 46 ]
+[v pa_offset_settings@regfpga2 regfpga2 `us  1 a 2 3 ]
 "437
-[v pa_offset_settings@p p `*.39us  1 a 2 43 ]
+[v pa_offset_settings@p p `*.39us  1 a 2 0 ]
 "440
-[v pa_offset_settings@id id `uc  1 a 1 53 ]
+[v pa_offset_settings@id id `uc  1 a 1 10 ]
 "439
-[v pa_offset_settings@co co `uc  1 a 1 50 ]
+[v pa_offset_settings@co co `uc  1 a 1 7 ]
 "438
-[v pa_offset_settings@cp cp `uc  1 a 1 45 ]
+[v pa_offset_settings@cp cp `uc  1 a 1 2 ]
 "429
 [v pa_offset_settings@state state `uc  1 s 1 state ]
 "430
@@ -1306,17 +1333,17 @@ TRUE 1
 [v _myStrCpyHex myStrCpyHex `(v  1 e 1 0 ]
 {
 "271
-[v myStrCpyHex@b b `[4]uc  1 a 4 10 ]
+[v myStrCpyHex@b b `[4]uc  1 a 4 25 ]
 "269
-[v myStrCpyHex@comptInt comptInt `us  1 a 2 18 ]
-[v myStrCpyHex@compt compt `us  1 a 2 16 ]
+[v myStrCpyHex@comptInt comptInt `us  1 a 2 33 ]
+[v myStrCpyHex@compt compt `us  1 a 2 31 ]
 "270
-[v myStrCpyHex@co co `i  1 a 2 14 ]
+[v myStrCpyHex@co co `i  1 a 2 29 ]
 "268
-[v myStrCpyHex@container container `*.39uc  1 p 2 0 ]
-[v myStrCpyHex@a a `us  1 p 2 2 ]
-[v myStrCpyHex@format format `i  1 p 2 4 ]
-[v myStrCpyHex@cend cend `uc  1 p 1 6 ]
+[v myStrCpyHex@container container `*.39uc  1 p 2 15 ]
+[v myStrCpyHex@a a `us  1 p 2 17 ]
+[v myStrCpyHex@format format `i  1 p 2 19 ]
+[v myStrCpyHex@cend cend `uc  1 p 1 21 ]
 "314
 } 0
 "277 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/setup.c
@@ -1329,716 +1356,805 @@ TRUE 1
 {
 [v leak_current@tel tel `uc  1 p 1 wreg ]
 "70
-[v leak_current@inside_current inside_current `ul  1 a 4 70 ]
+[v leak_current@inside_current inside_current `ul  1 a 4 25 ]
 "71
-[v leak_current@corrected_voltage corrected_voltage `ul  1 a 4 66 ]
+[v leak_current@corrected_voltage corrected_voltage `ul  1 a 4 21 ]
 "69
-[v leak_current@coeffB coeffB `*.39ul  1 a 2 63 ]
+[v leak_current@coeffB coeffB `*.39ul  1 a 2 18 ]
 "68
-[v leak_current@coeffA coeffA `*.39ul  1 a 2 60 ]
+[v leak_current@coeffA coeffA `*.39ul  1 a 2 15 ]
 "72
-[v leak_current@lc lc `us  1 a 2 58 ]
+[v leak_current@lc lc `us  1 a 2 13 ]
 "67
-[v leak_current@ad ad `uc  1 a 1 62 ]
+[v leak_current@ad ad `uc  1 a 1 17 ]
 "66
-[v leak_current@sign sign `uc  1 a 1 57 ]
+[v leak_current@sign sign `uc  1 a 1 12 ]
 "64
 [v leak_current@tel tel `uc  1 p 1 wreg ]
-[v leak_current@module module `uc  1 p 1 48 ]
-[v leak_current@lcAdcRead lcAdcRead `ul  1 p 4 49 ]
+[v leak_current@module module `uc  1 p 1 55 ]
+[v leak_current@lcAdcRead lcAdcRead `ul  1 p 4 56 ]
 "73
 [v leak_current@leakage_current leakage_current `ul  1 s 4 leakage_current ]
 "74
 [v leak_current@leakage_current_na leakage_current_na `ul  1 s 4 leakage_current_na ]
 "64
-[v leak_current@tel tel `uc  1 p 1 65 ]
+[v leak_current@tel tel `uc  1 p 1 20 ]
 "144
 } 1
 "9 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/display.c
 [v _getid getid `(uc  1 e 1 0 ]
 {
 "10
-[v getid@id id `uc  1 a 1 1 ]
+[v getid@id id `uc  1 a 1 16 ]
 "15
 } 0
-"178 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"205 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _func_invoke func_invoke `(uc  1 e 1 0 ]
 {
 [v func_invoke@code code `uc  1 p 1 wreg ]
 [v func_invoke@code code `uc  1 p 1 wreg ]
-[v func_invoke@data data `*.39uc  1 p 2 43 ]
-[v func_invoke@result result `*.39uc  1 p 2 45 ]
-[v func_invoke@code code `uc  1 p 1 51 ]
-"189
+[v func_invoke@data data `*.39uc  1 p 2 92 ]
+[v func_invoke@result result `*.39uc  1 p 2 94 ]
+[v func_invoke@code code `uc  1 p 1 4 ]
+"216
 } 1
-"1567
+"555
+[v _enDesHVdev enDesHVdev `(uc  1 e 1 0 ]
+{
+"556
+[v enDesHVdev@error error `uc  1 a 1 57 ]
+[v enDesHVdev@retval retval `uc  1 a 1 56 ]
+"555
+[v enDesHVdev@data data `*.39uc  1 p 2 45 ]
+[v enDesHVdev@result result `*.39uc  1 p 2 47 ]
+"621
+} 0
+"253
+[v _setGetSN setGetSN `(uc  1 e 1 0 ]
+{
+"256
+[v setGetSN@charDataSN charDataSN `[6]uc  1 a 6 52 ]
+"255
+[v setGetSN@sn sn `us  1 a 2 59 ]
+[v setGetSN@data_value data_value `us  1 a 2 50 ]
+"254
+[v setGetSN@comp comp `uc  1 a 1 61 ]
+[v setGetSN@retval retval `uc  1 a 1 58 ]
+[v setGetSN@error error `uc  1 a 1 49 ]
+"253
+[v setGetSN@data data `*.39uc  1 p 2 45 ]
+[v setGetSN@result result `*.39uc  1 p 2 47 ]
+"286
+} 0
+"225
+[v _f_echo f_echo `(uc  1 e 1 0 ]
+{
+[v f_echo@data data `*.39uc  1 p 2 45 ]
+[v f_echo@result result `*.39uc  1 p 2 47 ]
+"231
+} 0
+"1294
+[v _getSoftStack getSoftStack `(uc  1 e 1 0 ]
+{
+[v getSoftStack@result result `*.39uc  1 p 2 47 ]
+"1303
+} 0
+"1274
+[v _getInspecTime getInspecTime `(uc  1 e 1 0 ]
+{
+"1276
+[v getInspecTime@lTime lTime `us  1 a 2 57 ]
+[v getInspecTime@sTime sTime `us  1 a 2 55 ]
+"1274
+[v getInspecTime@result result `*.39uc  1 p 2 47 ]
+"1286
+} 0
+"1311
+[v _setInspecTime setInspecTime `(uc  1 e 1 0 ]
+{
+"1314
+[v setInspecTime@charDataLtime charDataLtime `[10]uc  1 a 10 59 ]
+"1313
+[v setInspecTime@charDataStime charDataStime `[10]uc  1 a 10 49 ]
+"1315
+[v setInspecTime@lTime lTime `us  1 a 2 74 ]
+[v setInspecTime@sTime sTime `us  1 a 2 72 ]
+"1312
+[v setInspecTime@comp comp `uc  1 a 1 76 ]
+[v setInspecTime@error error `uc  1 a 1 71 ]
+[v setInspecTime@dep dep `uc  1 a 1 70 ]
+[v setInspecTime@retval retval `uc  1 a 1 69 ]
+"1311
+[v setInspecTime@data data `*.39uc  1 p 2 45 ]
+[v setInspecTime@result result `*.39uc  1 p 2 47 ]
+"1358
+} 0
+"323
+[v _giveHvStatus giveHvStatus `(uc  1 e 1 0 ]
+{
+"324
+[v giveHvStatus@status status `uc  1 a 1 59 ]
+[v giveHvStatus@error error `uc  1 a 1 58 ]
+"323
+[v giveHvStatus@data data `*.39uc  1 p 2 45 ]
+[v giveHvStatus@result result `*.39uc  1 p 2 47 ]
+"356
+} 0
+"239
+[v _resetPIC resetPIC `(uc  1 e 1 0 ]
+{
+[v resetPIC@result result `*.39uc  1 p 2 47 ]
+"245
+} 0
+"1594
 [v _enableDisableHVMeas enableDisableHVMeas `(uc  1 e 1 0 ]
 {
-"1568
-[v enableDisableHVMeas@error error `uc  1 a 1 91 ]
-[v enableDisableHVMeas@retval retval `uc  1 a 1 90 ]
-"1567
-[v enableDisableHVMeas@data data `*.39uc  1 p 2 85 ]
-[v enableDisableHVMeas@result result `*.39uc  1 p 2 87 ]
-"1593
+"1595
+[v enableDisableHVMeas@error error `uc  1 a 1 57 ]
+[v enableDisableHVMeas@retval retval `uc  1 a 1 56 ]
+"1594
+[v enableDisableHVMeas@data data `*.39uc  1 p 2 45 ]
+[v enableDisableHVMeas@result result `*.39uc  1 p 2 47 ]
+"1620
 } 0
-"603
+"630
 [v _getGeneDacVoltage getGeneDacVoltage `(uc  1 e 1 0 ]
 {
-[v getGeneDacVoltage@result result `*.39uc  1 p 2 87 ]
-"609
+[v getGeneDacVoltage@result result `*.39uc  1 p 2 47 ]
+"636
 } 0
-"267
+"294
 [v _uart_csi_relay uart_csi_relay `(uc  1 e 1 0 ]
 {
-[v uart_csi_relay@result result `*.39uc  1 p 2 87 ]
-"274
+[v uart_csi_relay@result result `*.39uc  1 p 2 47 ]
+"301
 } 0
-"432
+"459
 [v _uart_preamplifier_test uart_preamplifier_test `(uc  1 e 1 0 ]
 {
-"433
-[v uart_preamplifier_test@module module `uc  1 a 1 93 ]
-[v uart_preamplifier_test@tel tel `uc  1 a 1 92 ]
-[v uart_preamplifier_test@valeur valeur `uc  1 a 1 91 ]
-[v uart_preamplifier_test@error error `uc  1 a 1 90 ]
-"432
-[v uart_preamplifier_test@data data `*.39uc  1 p 2 85 ]
-[v uart_preamplifier_test@result result `*.39uc  1 p 2 87 ]
-"478
+"460
+[v uart_preamplifier_test@module module `uc  1 a 1 52 ]
+[v uart_preamplifier_test@tel tel `uc  1 a 1 51 ]
+[v uart_preamplifier_test@valeur valeur `uc  1 a 1 50 ]
+[v uart_preamplifier_test@error error `uc  1 a 1 49 ]
+"459
+[v uart_preamplifier_test@data data `*.39uc  1 p 2 45 ]
+[v uart_preamplifier_test@result result `*.39uc  1 p 2 47 ]
+"505
 } 0
-"337
+"364
 [v _setHVCsiAB setHVCsiAB `(uc  1 e 1 0 ]
 {
-"338
-[v setHVCsiAB@error error `uc  1 a 1 91 ]
-[v setHVCsiAB@retval retval `uc  1 a 1 90 ]
-"337
-[v setHVCsiAB@data data `*.39uc  1 p 2 85 ]
-[v setHVCsiAB@result result `*.39uc  1 p 2 87 ]
-"370
+"365
+[v setHVCsiAB@error error `uc  1 a 1 59 ]
+[v setHVCsiAB@retval retval `uc  1 a 1 58 ]
+"364
+[v setHVCsiAB@data data `*.39uc  1 p 2 45 ]
+[v setHVCsiAB@result result `*.39uc  1 p 2 47 ]
+"397
 } 0
-"1677
+"1704
 [v _set_data_eeprom_address set_data_eeprom_address `(uc  1 e 1 0 ]
 {
-"1679
-[v set_data_eeprom_address@charDataValue charDataValue `[10]uc  1 a 10 10 ]
-[v set_data_eeprom_address@charDataAdr charDataAdr `[10]uc  1 a 10 0 ]
-"1680
-[v set_data_eeprom_address@data_value data_value `us  1 a 2 24 ]
-[v set_data_eeprom_address@data_adr data_adr `us  1 a 2 22 ]
-"1678
-[v set_data_eeprom_address@comp comp `uc  1 a 1 27 ]
-[v set_data_eeprom_address@dep dep `uc  1 a 1 26 ]
-[v set_data_eeprom_address@error error `uc  1 a 1 21 ]
-[v set_data_eeprom_address@retval retval `uc  1 a 1 20 ]
-"1677
-[v set_data_eeprom_address@data data `*.39uc  1 p 2 85 ]
-[v set_data_eeprom_address@result result `*.39uc  1 p 2 87 ]
-"1711
+"1706
+[v set_data_eeprom_address@charDataValue charDataValue `[10]uc  1 a 10 59 ]
+[v set_data_eeprom_address@charDataAdr charDataAdr `[10]uc  1 a 10 49 ]
+"1707
+[v set_data_eeprom_address@data_value data_value `us  1 a 2 73 ]
+[v set_data_eeprom_address@data_adr data_adr `us  1 a 2 71 ]
+"1705
+[v set_data_eeprom_address@comp comp `uc  1 a 1 76 ]
+[v set_data_eeprom_address@dep dep `uc  1 a 1 75 ]
+[v set_data_eeprom_address@error error `uc  1 a 1 70 ]
+[v set_data_eeprom_address@retval retval `uc  1 a 1 69 ]
+"1704
+[v set_data_eeprom_address@data data `*.39uc  1 p 2 45 ]
+[v set_data_eeprom_address@result result `*.39uc  1 p 2 47 ]
+"1738
 } 0
-"1645
+"1672
 [v _uart_ask_hv_calibration uart_ask_hv_calibration `(uc  1 e 1 0 ]
 {
-"1646
-[v uart_ask_hv_calibration@myresult myresult `[14]uc  1 a 14 0 ]
-"1645
-[v uart_ask_hv_calibration@result result `*.39uc  1 p 2 87 ]
-"1654
+"1673
+[v uart_ask_hv_calibration@myresult myresult `[14]uc  1 a 14 49 ]
+"1672
+[v uart_ask_hv_calibration@result result `*.39uc  1 p 2 47 ]
+"1681
 } 0
-"486
+"513
 [v _setautoffset setautoffset `(uc  1 e 1 0 ]
 {
-"489
-[v setautoffset@charDataMarge charDataMarge `[10]uc  1 a 10 0 ]
-"488
-[v setautoffset@marge marge `us  1 a 2 11 ]
-"487
-[v setautoffset@comp comp `uc  1 a 1 13 ]
-[v setautoffset@error error `uc  1 a 1 10 ]
-"486
-[v setautoffset@data data `*.39uc  1 p 2 85 ]
-[v setautoffset@result result `*.39uc  1 p 2 87 ]
-"520
+"516
+[v setautoffset@charDataMarge charDataMarge `[10]uc  1 a 10 49 ]
+"515
+[v setautoffset@marge marge `us  1 a 2 60 ]
+"514
+[v setautoffset@comp comp `uc  1 a 1 62 ]
+[v setautoffset@error error `uc  1 a 1 59 ]
+"513
+[v setautoffset@data data `*.39uc  1 p 2 45 ]
+[v setautoffset@result result `*.39uc  1 p 2 47 ]
+"547
 } 0
-"1601
+"1628
 [v _set_hvmax set_hvmax `(uc  1 e 1 0 ]
 {
-"1603
-[v set_hvmax@charDataVoltage charDataVoltage `[10]uc  1 a 10 0 ]
-"1604
-[v set_hvmax@tension_max tension_max `us  1 a 2 14 ]
-"1602
-[v set_hvmax@comp comp `uc  1 a 1 17 ]
-[v set_hvmax@dep dep `uc  1 a 1 16 ]
-[v set_hvmax@error error `uc  1 a 1 13 ]
-"1603
-[v set_hvmax@tel tel `uc  1 a 1 12 ]
-"1602
-[v set_hvmax@retval retval `uc  1 a 1 11 ]
-"1603
-[v set_hvmax@module module `uc  1 a 1 10 ]
-"1601
-[v set_hvmax@data data `*.39uc  1 p 2 85 ]
-[v set_hvmax@result result `*.39uc  1 p 2 87 ]
-"1637
+"1630
+[v set_hvmax@charDataVoltage charDataVoltage `[10]uc  1 a 10 49 ]
+"1631
+[v set_hvmax@tension_max tension_max `us  1 a 2 63 ]
+"1629
+[v set_hvmax@comp comp `uc  1 a 1 66 ]
+[v set_hvmax@dep dep `uc  1 a 1 65 ]
+[v set_hvmax@error error `uc  1 a 1 62 ]
+"1630
+[v set_hvmax@tel tel `uc  1 a 1 61 ]
+"1629
+[v set_hvmax@retval retval `uc  1 a 1 60 ]
+"1630
+[v set_hvmax@module module `uc  1 a 1 59 ]
+"1628
+[v set_hvmax@data data `*.39uc  1 p 2 45 ]
+[v set_hvmax@result result `*.39uc  1 p 2 47 ]
+"1664
 } 0
-"1470
+"1497
 [v _get_hvmax get_hvmax `(uc  1 e 1 0 ]
 {
-"1472
-[v get_hvmax@valeur valeur `us  1 a 2 91 ]
-"1471
-[v get_hvmax@module module `uc  1 a 1 94 ]
-[v get_hvmax@tel tel `uc  1 a 1 93 ]
-[v get_hvmax@error error `uc  1 a 1 90 ]
-"1470
-[v get_hvmax@data data `*.39uc  1 p 2 85 ]
-[v get_hvmax@result result `*.39uc  1 p 2 87 ]
-"1510
+"1499
+[v get_hvmax@valeur valeur `us  1 a 2 50 ]
+"1498
+[v get_hvmax@module module `uc  1 a 1 53 ]
+[v get_hvmax@tel tel `uc  1 a 1 52 ]
+[v get_hvmax@error error `uc  1 a 1 49 ]
+"1497
+[v get_hvmax@data data `*.39uc  1 p 2 45 ]
+[v get_hvmax@result result `*.39uc  1 p 2 47 ]
+"1537
 } 0
-"1719
+"1746
 [v _get_data_eeprom_address get_data_eeprom_address `(uc  1 e 1 0 ]
 {
-"1721
-[v get_data_eeprom_address@charDataAdr charDataAdr `[10]uc  1 a 10 0 ]
-"1722
-[v get_data_eeprom_address@data_adr data_adr `us  1 a 2 12 ]
-"1723
-[v get_data_eeprom_address@comp comp `uc  1 a 1 14 ]
-"1720
-[v get_data_eeprom_address@error error `uc  1 a 1 11 ]
-"1723
-[v get_data_eeprom_address@data_value data_value `uc  1 a 1 10 ]
-"1719
-[v get_data_eeprom_address@data data `*.39uc  1 p 2 85 ]
-[v get_data_eeprom_address@result result `*.39uc  1 p 2 87 ]
+"1748
+[v get_data_eeprom_address@charDataAdr charDataAdr `[10]uc  1 a 10 49 ]
+"1749
+[v get_data_eeprom_address@data_adr data_adr `us  1 a 2 61 ]
 "1750
+[v get_data_eeprom_address@comp comp `uc  1 a 1 63 ]
+"1747
+[v get_data_eeprom_address@error error `uc  1 a 1 60 ]
+"1750
+[v get_data_eeprom_address@data_value data_value `uc  1 a 1 59 ]
+"1746
+[v get_data_eeprom_address@data data `*.39uc  1 p 2 45 ]
+[v get_data_eeprom_address@result result `*.39uc  1 p 2 47 ]
+"1777
 } 0
-"802
+"829
 [v _get_ads8332 get_ads8332 `(uc  1 e 1 0 ]
 {
-"805
-[v get_ads8332@value value `us  1 a 2 90 ]
-"804
-[v get_ads8332@error error `uc  1 a 1 92 ]
-"802
-[v get_ads8332@data data `*.39uc  1 p 2 85 ]
-[v get_ads8332@result result `*.39uc  1 p 2 87 ]
-"803
+"832
+[v get_ads8332@value value `us  1 a 2 49 ]
+"831
+[v get_ads8332@error error `uc  1 a 1 51 ]
+"829
+[v get_ads8332@data data `*.39uc  1 p 2 45 ]
+[v get_ads8332@result result `*.39uc  1 p 2 47 ]
+"830
 [v get_ads8332@canal canal `uc  1 s 1 canal ]
-"826
+"853
 } 0
-"1662
+"1689
 [v _store_param store_param `(uc  1 e 1 0 ]
 {
-[v store_param@result result `*.39uc  1 p 2 87 ]
-"1669
+[v store_param@result result `*.39uc  1 p 2 47 ]
+"1696
 } 0
-"1075
+"1102
 [v _incdecHV incdecHV `(uc  1 e 1 0 ]
 {
-"1078
-[v incdecHV@charDataStep charDataStep `[10]uc  1 a 10 0 ]
-"1079
-[v incdecHV@step step `us  1 a 2 15 ]
-"1076
-[v incdecHV@retval retval `uc  1 a 1 17 ]
-"1077
-[v incdecHV@sens sens `uc  1 a 1 14 ]
-"1076
-[v incdecHV@comp comp `uc  1 a 1 13 ]
-[v incdecHV@error error `uc  1 a 1 12 ]
-"1077
-[v incdecHV@tel tel `uc  1 a 1 11 ]
-[v incdecHV@module module `uc  1 a 1 10 ]
-"1075
-[v incdecHV@data data `*.39uc  1 p 2 85 ]
-[v incdecHV@result result `*.39uc  1 p 2 87 ]
-"1239
+"1105
+[v incdecHV@charDataStep charDataStep `[10]uc  1 a 10 49 ]
+"1106
+[v incdecHV@step step `us  1 a 2 64 ]
+"1103
+[v incdecHV@retval retval `uc  1 a 1 66 ]
+"1104
+[v incdecHV@sens sens `uc  1 a 1 63 ]
+"1103
+[v incdecHV@comp comp `uc  1 a 1 62 ]
+[v incdecHV@error error `uc  1 a 1 61 ]
+"1104
+[v incdecHV@tel tel `uc  1 a 1 60 ]
+[v incdecHV@module module `uc  1 a 1 59 ]
+"1102
+[v incdecHV@data data `*.39uc  1 p 2 45 ]
+[v incdecHV@result result `*.39uc  1 p 2 47 ]
+"1266
 } 0
-"740
+"767
 [v _get_fpga_version get_fpga_version `(uc  1 e 1 0 ]
 {
-"742
-[v get_fpga_version@version version `us  1 a 2 7 ]
-[v get_fpga_version@y y `us  1 a 2 0 ]
-"741
-[v get_fpga_version@error error `uc  1 a 1 6 ]
-[v get_fpga_version@v v `uc  1 a 1 5 ]
-[v get_fpga_version@d d `uc  1 a 1 4 ]
-[v get_fpga_version@m m `uc  1 a 1 3 ]
-[v get_fpga_version@t t `uc  1 a 1 2 ]
-"740
-[v get_fpga_version@data data `*.39uc  1 p 2 85 ]
-[v get_fpga_version@result result `*.39uc  1 p 2 87 ]
-"781
+"769
+[v get_fpga_version@version version `us  1 a 2 56 ]
+[v get_fpga_version@y y `us  1 a 2 49 ]
+"768
+[v get_fpga_version@error error `uc  1 a 1 55 ]
+[v get_fpga_version@v v `uc  1 a 1 54 ]
+[v get_fpga_version@d d `uc  1 a 1 53 ]
+[v get_fpga_version@m m `uc  1 a 1 52 ]
+[v get_fpga_version@t t `uc  1 a 1 51 ]
+"767
+[v get_fpga_version@data data `*.39uc  1 p 2 45 ]
+[v get_fpga_version@result result `*.39uc  1 p 2 47 ]
+"808
 } 0
-"848
+"875
 [v _get_pic_version get_pic_version `(uc  1 e 1 0 ]
 {
-[v get_pic_version@result result `*.39uc  1 p 2 87 ]
-"857
+[v get_pic_version@result result `*.39uc  1 p 2 47 ]
+"884
 } 0
-"916
+"943
 [v _set_pulse_parameters set_pulse_parameters `(uc  1 e 1 0 ]
 {
-"920
-[v set_pulse_parameters@charDataHighTime charDataHighTime `[10]uc  1 a 10 20 ]
-"919
-[v set_pulse_parameters@charDataPeriod charDataPeriod `[10]uc  1 a 10 10 ]
-"918
-[v set_pulse_parameters@charDataValue charDataValue `[10]uc  1 a 10 0 ]
-"922
-[v set_pulse_parameters@value2 value2 `ul  1 a 4 30 ]
-"921
-[v set_pulse_parameters@period period `us  1 a 2 38 ]
-[v set_pulse_parameters@value value `us  1 a 2 36 ]
-[v set_pulse_parameters@high_time high_time `us  1 a 2 34 ]
-"917
-[v set_pulse_parameters@comp comp `uc  1 a 1 42 ]
-[v set_pulse_parameters@error error `uc  1 a 1 41 ]
-[v set_pulse_parameters@dep dep `uc  1 a 1 40 ]
-"916
-[v set_pulse_parameters@data data `*.39uc  1 p 2 85 ]
-[v set_pulse_parameters@result result `*.39uc  1 p 2 87 ]
-"979
+"947
+[v set_pulse_parameters@charDataHighTime charDataHighTime `[10]uc  1 a 10 69 ]
+"946
+[v set_pulse_parameters@charDataPeriod charDataPeriod `[10]uc  1 a 10 59 ]
+"945
+[v set_pulse_parameters@charDataValue charDataValue `[10]uc  1 a 10 49 ]
+"949
+[v set_pulse_parameters@value2 value2 `ul  1 a 4 79 ]
+"948
+[v set_pulse_parameters@period period `us  1 a 2 87 ]
+[v set_pulse_parameters@value value `us  1 a 2 85 ]
+[v set_pulse_parameters@high_time high_time `us  1 a 2 83 ]
+"944
+[v set_pulse_parameters@comp comp `uc  1 a 1 91 ]
+[v set_pulse_parameters@error error `uc  1 a 1 90 ]
+[v set_pulse_parameters@dep dep `uc  1 a 1 89 ]
+"943
+[v set_pulse_parameters@data data `*.39uc  1 p 2 45 ]
+[v set_pulse_parameters@result result `*.39uc  1 p 2 47 ]
+"1006
 } 0
-"987
+"1014
 [v _set_voltage_preamplifier set_voltage_preamplifier `(uc  1 e 1 0 ]
 {
-"989
-[v set_voltage_preamplifier@charDataValue charDataValue `[10]uc  1 a 10 0 ]
-"990
-[v set_voltage_preamplifier@value value `us  1 a 2 12 ]
-"988
-[v set_voltage_preamplifier@error error `uc  1 a 1 11 ]
-[v set_voltage_preamplifier@comp comp `uc  1 a 1 10 ]
-"987
-[v set_voltage_preamplifier@data data `*.39uc  1 p 2 85 ]
-[v set_voltage_preamplifier@result result `*.39uc  1 p 2 87 ]
-"1067
+"1016
+[v set_voltage_preamplifier@charDataValue charDataValue `[10]uc  1 a 10 49 ]
+"1017
+[v set_voltage_preamplifier@value value `us  1 a 2 61 ]
+"1015
+[v set_voltage_preamplifier@error error `uc  1 a 1 60 ]
+[v set_voltage_preamplifier@comp comp `uc  1 a 1 59 ]
+"1014
+[v set_voltage_preamplifier@data data `*.39uc  1 p 2 45 ]
+[v set_voltage_preamplifier@result result `*.39uc  1 p 2 47 ]
+"1094
 } 0
-"646
+"673
 [v _get_HV get_HV `(uc  1 e 1 0 ]
 {
-"650
-[v get_HV@HVvalueDetector HVvalueDetector `us  1 a 2 9 ]
-[v get_HV@lc lc `us  1 a 2 7 ]
-[v get_HV@HVvalue HVvalue `us  1 a 2 1 ]
-"649
-[v get_HV@tel tel `uc  1 a 1 6 ]
-"648
-[v get_HV@module module `uc  1 a 1 5 ]
-[v get_HV@error error `uc  1 a 1 0 ]
-"646
-[v get_HV@data data `*.39uc  1 p 2 85 ]
-[v get_HV@result result `*.39uc  1 p 2 87 ]
-"647
+"677
+[v get_HV@HVvalueDetector HVvalueDetector `us  1 a 2 58 ]
+[v get_HV@lc lc `us  1 a 2 56 ]
+[v get_HV@HVvalue HVvalue `us  1 a 2 50 ]
+"676
+[v get_HV@tel tel `uc  1 a 1 55 ]
+"675
+[v get_HV@module module `uc  1 a 1 54 ]
+[v get_HV@error error `uc  1 a 1 49 ]
+"673
+[v get_HV@data data `*.39uc  1 p 2 45 ]
+[v get_HV@result result `*.39uc  1 p 2 47 ]
+"674
 [v get_HV@canal canal `uc  1 s 1 canal ]
-"707
+"734
 } 0
-"865
+"892
 [v _get_leak_current get_leak_current `(uc  1 e 1 0 ]
 {
-"867
-[v get_leak_current@lc lc `us  1 a 2 93 ]
-"866
-[v get_leak_current@error error `uc  1 a 1 92 ]
-"868
-[v get_leak_current@module module `uc  1 a 1 91 ]
-[v get_leak_current@tel tel `uc  1 a 1 90 ]
-"865
-[v get_leak_current@data data `*.39uc  1 p 2 85 ]
-[v get_leak_current@result result `*.39uc  1 p 2 87 ]
-"908
+"894
+[v get_leak_current@lc lc `us  1 a 2 52 ]
+"893
+[v get_leak_current@error error `uc  1 a 1 51 ]
+"895
+[v get_leak_current@module module `uc  1 a 1 50 ]
+[v get_leak_current@tel tel `uc  1 a 1 49 ]
+"892
+[v get_leak_current@data data `*.39uc  1 p 2 45 ]
+[v get_leak_current@result result `*.39uc  1 p 2 47 ]
+"935
 } 0
-"1339
+"1366
 [v _set_vhv set_vhv `(uc  1 e 1 0 ]
 {
-"1343
-[v set_vhv@charDataInc charDataInc `[10]uc  1 a 10 10 ]
-"1342
-[v set_vhv@charDataVoltage charDataVoltage `[10]uc  1 a 10 0 ]
-"1341
-[v set_vhv@tension tension `us  1 a 2 27 ]
-[v set_vhv@intslopeVS intslopeVS `us  1 a 2 22 ]
-"1340
-[v set_vhv@comp comp `uc  1 a 1 30 ]
-[v set_vhv@tel tel `uc  1 a 1 29 ]
-[v set_vhv@module module `uc  1 a 1 26 ]
-[v set_vhv@error error `uc  1 a 1 25 ]
-[v set_vhv@dep dep `uc  1 a 1 24 ]
-[v set_vhv@retval retval `uc  1 a 1 21 ]
-[v set_vhv@nb_param nb_param `uc  1 a 1 20 ]
-"1339
-[v set_vhv@data data `*.39uc  1 p 2 85 ]
-[v set_vhv@result result `*.39uc  1 p 2 87 ]
-"1431
+"1370
+[v set_vhv@charDataInc charDataInc `[10]uc  1 a 10 59 ]
+"1369
+[v set_vhv@charDataVoltage charDataVoltage `[10]uc  1 a 10 49 ]
+"1368
+[v set_vhv@tension tension `us  1 a 2 76 ]
+[v set_vhv@intslopeVS intslopeVS `us  1 a 2 71 ]
+"1367
+[v set_vhv@comp comp `uc  1 a 1 79 ]
+[v set_vhv@tel tel `uc  1 a 1 78 ]
+[v set_vhv@module module `uc  1 a 1 75 ]
+[v set_vhv@error error `uc  1 a 1 74 ]
+[v set_vhv@dep dep `uc  1 a 1 73 ]
+[v set_vhv@retval retval `uc  1 a 1 70 ]
+[v set_vhv@nb_param nb_param `uc  1 a 1 69 ]
+"1366
+[v set_vhv@data data `*.39uc  1 p 2 45 ]
+[v set_vhv@result result `*.39uc  1 p 2 47 ]
+"1458
 } 0
-"1758
+"1785
 [v _spi_get_regvalue spi_get_regvalue `(uc  1 e 1 0 ]
 {
-"1761
-[v spi_get_regvalue@charDataAdr charDataAdr `[10]uc  1 a 10 0 ]
-"1762
-[v spi_get_regvalue@data_adr data_adr `us  1 a 2 13 ]
-[v spi_get_regvalue@data_value data_value `us  1 a 2 10 ]
-"1760
-[v spi_get_regvalue@comp comp `uc  1 a 1 16 ]
-[v spi_get_regvalue@dep dep `uc  1 a 1 15 ]
-[v spi_get_regvalue@error error `uc  1 a 1 12 ]
-"1758
-[v spi_get_regvalue@data data `*.39uc  1 p 2 85 ]
-[v spi_get_regvalue@result result `*.39uc  1 p 2 87 ]
-"1791
+"1788
+[v spi_get_regvalue@charDataAdr charDataAdr `[10]uc  1 a 10 49 ]
+"1789
+[v spi_get_regvalue@data_adr data_adr `us  1 a 2 62 ]
+[v spi_get_regvalue@data_value data_value `us  1 a 2 59 ]
+"1787
+[v spi_get_regvalue@comp comp `uc  1 a 1 65 ]
+[v spi_get_regvalue@dep dep `uc  1 a 1 64 ]
+[v spi_get_regvalue@error error `uc  1 a 1 61 ]
+"1785
+[v spi_get_regvalue@data data `*.39uc  1 p 2 45 ]
+[v spi_get_regvalue@result result `*.39uc  1 p 2 47 ]
+"1818
 } 0
-"1799
+"1826
 [v _spi_set_regvalue spi_set_regvalue `(uc  1 e 1 0 ]
 {
-"1802
-[v spi_set_regvalue@charDataValue charDataValue `[10]uc  1 a 10 10 ]
-"1801
-[v spi_set_regvalue@charDataAdr charDataAdr `[10]uc  1 a 10 0 ]
-"1803
-[v spi_set_regvalue@data_value data_value `us  1 a 2 24 ]
-[v spi_set_regvalue@data_adr data_adr `us  1 a 2 22 ]
-"1800
-[v spi_set_regvalue@comp comp `uc  1 a 1 28 ]
-[v spi_set_regvalue@dep dep `uc  1 a 1 27 ]
-[v spi_set_regvalue@error error `uc  1 a 1 26 ]
-[v spi_set_regvalue@retval retval `uc  1 a 1 21 ]
-"1804
-[v spi_set_regvalue@nb_fpga nb_fpga `uc  1 a 1 20 ]
-"1799
-[v spi_set_regvalue@data data `*.39uc  1 p 2 85 ]
-[v spi_set_regvalue@result result `*.39uc  1 p 2 87 ]
-"1842
+"1829
+[v spi_set_regvalue@charDataValue charDataValue `[10]uc  1 a 10 59 ]
+"1828
+[v spi_set_regvalue@charDataAdr charDataAdr `[10]uc  1 a 10 49 ]
+"1830
+[v spi_set_regvalue@data_value data_value `us  1 a 2 73 ]
+[v spi_set_regvalue@data_adr data_adr `us  1 a 2 71 ]
+"1827
+[v spi_set_regvalue@comp comp `uc  1 a 1 77 ]
+[v spi_set_regvalue@dep dep `uc  1 a 1 76 ]
+[v spi_set_regvalue@error error `uc  1 a 1 75 ]
+[v spi_set_regvalue@retval retval `uc  1 a 1 70 ]
+"1831
+[v spi_set_regvalue@nb_fpga nb_fpga `uc  1 a 1 69 ]
+"1826
+[v spi_set_regvalue@data data `*.39uc  1 p 2 45 ]
+[v spi_set_regvalue@result result `*.39uc  1 p 2 47 ]
+"1869
 } 0
-"1439
+"1466
 [v _get_temp get_temp `(uc  1 e 1 0 ]
 {
-"1441
-[v get_temp@temperature_array temperature_array `[6]i  1 a 12 0 ]
-"1439
-[v get_temp@result result `*.39uc  1 p 2 87 ]
-"1462
+"1468
+[v get_temp@temperature_array temperature_array `[6]i  1 a 12 49 ]
+"1466
+[v get_temp@result result `*.39uc  1 p 2 47 ]
+"1489
 } 0
 "93 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/analog.c
 [v _getLTClinVoltages getLTClinVoltages `(uc  1 e 1 0 ]
 {
 "95
-[v getLTClinVoltages@u u `[8]us  1 a 16 0 ]
+[v getLTClinVoltages@u u `[8]us  1 a 16 49 ]
 "93
-[v getLTClinVoltages@result result `*.39uc  1 p 2 87 ]
+[v getLTClinVoltages@result result `*.39uc  1 p 2 47 ]
 "113
 } 0
 "66
 [v _getLTCswVoltages getLTCswVoltages `(uc  1 e 1 0 ]
 {
 "68
-[v getLTCswVoltages@v v `[8]us  1 a 16 0 ]
+[v getLTCswVoltages@v v `[8]us  1 a 16 49 ]
 "66
-[v getLTCswVoltages@result result `*.39uc  1 p 2 87 ]
+[v getLTCswVoltages@result result `*.39uc  1 p 2 47 ]
 "85
 } 0
 "35
 [v _getVoltages getVoltages `(uc  1 e 1 0 ]
 {
 "39
-[v getVoltages@tab tab `[18]uc  1 a 18 8 ]
+[v getVoltages@tab tab `[18]uc  1 a 18 57 ]
 "36
-[v getVoltages@voltages voltages `[3]us  1 a 6 27 ]
+[v getVoltages@voltages voltages `[3]us  1 a 6 76 ]
 "37
-[v getVoltages@prov prov `ul  1 a 4 35 ]
+[v getVoltages@prov prov `ul  1 a 4 84 ]
 "36
-[v getVoltages@decimaux decimaux `us  1 a 2 39 ]
-[v getVoltages@intpart intpart `us  1 a 2 33 ]
+[v getVoltages@decimaux decimaux `us  1 a 2 88 ]
+[v getVoltages@intpart intpart `us  1 a 2 82 ]
 "38
-[v getVoltages@co co `uc  1 a 1 41 ]
-[v getVoltages@retval retval `uc  1 a 1 26 ]
+[v getVoltages@co co `uc  1 a 1 90 ]
+[v getVoltages@retval retval `uc  1 a 1 75 ]
 "35
-[v getVoltages@result result `*.39uc  1 p 2 87 ]
+[v getVoltages@result result `*.39uc  1 p 2 47 ]
 "63
 } 0
-"282 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"309 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _uart_reset_both_fpga uart_reset_both_fpga `(uc  1 e 1 0 ]
 {
-[v uart_reset_both_fpga@result result `*.39uc  1 p 2 87 ]
-"288
+[v uart_reset_both_fpga@result result `*.39uc  1 p 2 47 ]
+"315
 } 0
 "94 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/spi.c
 [v _reset_both_fpga reset_both_fpga `(v  1 e 1 0 ]
 {
 "97
 } 0
-"377 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"404 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _preamplifier_test preamplifier_test `(uc  1 e 1 0 ]
 {
 [v preamplifier_test@preamp preamp `uc  1 p 1 wreg ]
-"382
-[v preamplifier_test@regfpga regfpga `[3]ui  1 a 6 30 ]
-"381
-[v preamplifier_test@regAdc regAdc `[2]i  1 a 4 42 ]
-"378
-[v preamplifier_test@tab tab `[2]us  1 a 4 25 ]
-"381
-[v preamplifier_test@essais essais `i  1 a 2 38 ]
-"378
-[v preamplifier_test@value value `us  1 a 2 36 ]
-[v preamplifier_test@p p `*.39us  1 a 2 23 ]
-"379
-[v preamplifier_test@i i `uc  1 a 1 47 ]
-"380
-[v preamplifier_test@id id `uc  1 a 1 41 ]
-"379
-[v preamplifier_test@co co `uc  1 a 1 40 ]
-[v preamplifier_test@valeur valeur `uc  1 a 1 29 ]
-"377
+"409
+[v preamplifier_test@regfpga regfpga `[3]ui  1 a 6 7 ]
+"408
+[v preamplifier_test@regAdc regAdc `[2]i  1 a 4 19 ]
+"405
+[v preamplifier_test@tab tab `[2]us  1 a 4 2 ]
+"408
+[v preamplifier_test@essais essais `i  1 a 2 15 ]
+"405
+[v preamplifier_test@value value `us  1 a 2 13 ]
+[v preamplifier_test@p p `*.39us  1 a 2 0 ]
+"406
+[v preamplifier_test@i i `uc  1 a 1 24 ]
+"407
+[v preamplifier_test@id id `uc  1 a 1 18 ]
+"406
+[v preamplifier_test@co co `uc  1 a 1 17 ]
+[v preamplifier_test@valeur valeur `uc  1 a 1 6 ]
+"404
 [v preamplifier_test@preamp preamp `uc  1 p 1 wreg ]
-"383
-[v preamplifier_test@preamp preamp `uc  1 p 1 46 ]
-"424
+"410
+[v preamplifier_test@preamp preamp `uc  1 p 1 23 ]
+"451
 } 1
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
 {
 "10
-[v ___awmod@sign sign `uc  1 a 1 5 ]
-[v ___awmod@counter counter `uc  1 a 1 4 ]
+[v ___awmod@sign sign `uc  1 a 1 20 ]
+[v ___awmod@counter counter `uc  1 a 1 19 ]
 "7
-[v ___awmod@dividend dividend `i  1 p 2 0 ]
-[v ___awmod@divisor divisor `i  1 p 2 2 ]
+[v ___awmod@dividend dividend `i  1 p 2 15 ]
+[v ___awmod@divisor divisor `i  1 p 2 17 ]
 "34
 } 0
 "102 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/dac8568.c
 [v _ask_hv_calibration ask_hv_calibration `(v  1 e 1 0 ]
 {
 "103
-[v ask_hv_calibration@co co `uc  1 a 1 7 ]
-[v ask_hv_calibration@cp cp `uc  1 a 1 6 ]
+[v ask_hv_calibration@co co `uc  1 a 1 22 ]
+[v ask_hv_calibration@cp cp `uc  1 a 1 21 ]
 "104
-[v ask_hv_calibration@nbmodules nbmodules `uc  1 a 1 5 ]
+[v ask_hv_calibration@nbmodules nbmodules `uc  1 a 1 20 ]
 "102
-[v ask_hv_calibration@str str `*.30uc  1 p 1 4 ]
+[v ask_hv_calibration@str str `*.30uc  1 p 1 19 ]
 "118
 } 0
 "43 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/wr_eeprom.c
 [v _storeparam storeparam `(uc  1 e 1 0 ]
 {
 "45
-[v storeparam@co co `us  1 a 2 36 ]
+[v storeparam@co co `us  1 a 2 51 ]
 "46
-[v storeparam@p p `*.39uc  1 a 2 34 ]
+[v storeparam@p p `*.39uc  1 a 2 49 ]
 "44
-[v storeparam@nb_bytes nb_bytes `us  1 a 2 32 ]
+[v storeparam@nb_bytes nb_bytes `us  1 a 2 47 ]
 "54
 } 0
 "118 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/spi.c
 [v _set_off_V_preamp3b set_off_V_preamp3b `(uc  1 e 1 0 ]
 {
-[v set_off_V_preamp3b@value value `us  1 p 2 15 ]
+[v set_off_V_preamp3b@value value `us  1 p 2 30 ]
 "123
 } 0
 "111
 [v _set_off_V_preamp3a set_off_V_preamp3a `(uc  1 e 1 0 ]
 {
-[v set_off_V_preamp3a@value value `us  1 p 2 15 ]
+[v set_off_V_preamp3a@value value `us  1 p 2 30 ]
 "116
 } 0
 "132
 [v _set_off_V_preamp2b set_off_V_preamp2b `(uc  1 e 1 0 ]
 {
-[v set_off_V_preamp2b@value value `us  1 p 2 15 ]
+[v set_off_V_preamp2b@value value `us  1 p 2 30 ]
 "137
 } 0
 "125
 [v _set_off_V_preamp2a set_off_V_preamp2a `(uc  1 e 1 0 ]
 {
-[v set_off_V_preamp2a@value value `us  1 p 2 15 ]
+[v set_off_V_preamp2a@value value `us  1 p 2 30 ]
 "130
 } 0
 "146
 [v _set_off_V_preamp1b set_off_V_preamp1b `(uc  1 e 1 0 ]
 {
-[v set_off_V_preamp1b@value value `us  1 p 2 15 ]
+[v set_off_V_preamp1b@value value `us  1 p 2 30 ]
 "151
 } 0
 "139
 [v _set_off_V_preamp1a set_off_V_preamp1a `(uc  1 e 1 0 ]
 {
-[v set_off_V_preamp1a@value value `us  1 p 2 15 ]
+[v set_off_V_preamp1a@value value `us  1 p 2 30 ]
 "144
 } 0
 "91 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/dac8568.c
 [v _pulser pulser `(uc  1 e 1 0 ]
 {
-[v pulser@data data `us  1 p 2 17 ]
-[v pulser@period period `us  1 p 2 19 ]
-[v pulser@high_time high_time `us  1 p 2 21 ]
+[v pulser@data data `us  1 p 2 32 ]
+[v pulser@period period `us  1 p 2 34 ]
+[v pulser@high_time high_time `us  1 p 2 36 ]
 "96
 } 0
-"1519 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"1546 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _apply_hvmax apply_hvmax `(uc  1 e 1 0 ]
 {
 [v apply_hvmax@tel tel `uc  1 p 1 wreg ]
-"1520
-[v apply_hvmax@error error `uc  1 a 1 33 ]
-"1519
+"1547
+[v apply_hvmax@error error `uc  1 a 1 48 ]
+"1546
 [v apply_hvmax@tel tel `uc  1 p 1 wreg ]
-[v apply_hvmax@module module `uc  1 p 1 30 ]
-[v apply_hvmax@tension_max tension_max `us  1 p 2 31 ]
-"1521
-[v apply_hvmax@tel tel `uc  1 p 1 34 ]
-"1559
+[v apply_hvmax@module module `uc  1 p 1 45 ]
+[v apply_hvmax@tension_max tension_max `us  1 p 2 46 ]
+"1548
+[v apply_hvmax@tel tel `uc  1 p 1 49 ]
+"1586
 } 1
 "92 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/Tsensor.c
 [v _temp temp `(uc  1 e 1 0 ]
 {
 "95
-[v temp@BitTab3 BitTab3 `[29]c  1 a 29 36 ]
+[v temp@BitTab3 BitTab3 `[29]c  1 a 29 0 ]
+"103
+[v temp@result result `l  1 a 4 31 ]
+"101
+[v temp@timer1 timer1 `ui  1 a 2 36 ]
+"102
+[v temp@mask mask `ui  1 a 2 29 ]
+"97
+[v temp@co co `uc  1 a 1 39 ]
 "100
-[v temp@result result `l  1 a 4 67 ]
-"99
-[v temp@timer1 timer1 `ui  1 a 2 72 ]
-[v temp@mask mask `ui  1 a 2 65 ]
-"97
-[v temp@co co `uc  1 a 1 75 ]
+[v temp@j j `uc  1 a 1 38 ]
 "98
-[v temp@j j `uc  1 a 1 74 ]
-"97
-[v temp@parity parity `uc  1 a 1 71 ]
+[v temp@parity parity `uc  1 a 1 35 ]
 "92
-[v temp@temperature temperature `*.39i  1 p 2 26 ]
+[v temp@temperature temperature `*.39i  1 p 2 41 ]
 [v temp@F3582 F3582 `[29]c  1 s 29 F3582 ]
-"168
+"171
 } 0
 "57 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/spi.c
 [v _wrspi wrspi `(v  1 e 1 0 ]
 {
 [v wrspi@id_fpga id_fpga `uc  1 p 1 wreg ]
 "59
-[v wrspi@data_lsb data_lsb `uc  1 a 1 13 ]
-[v wrspi@data_msb data_msb `uc  1 a 1 12 ]
+[v wrspi@data_lsb data_lsb `uc  1 a 1 28 ]
+[v wrspi@data_msb data_msb `uc  1 a 1 27 ]
 "58
-[v wrspi@adr_lsb adr_lsb `uc  1 a 1 11 ]
-[v wrspi@adr_msb adr_msb `uc  1 a 1 10 ]
+[v wrspi@adr_lsb adr_lsb `uc  1 a 1 26 ]
+[v wrspi@adr_msb adr_msb `uc  1 a 1 25 ]
 "57
 [v wrspi@id_fpga id_fpga `uc  1 p 1 wreg ]
-[v wrspi@adr adr `ui  1 p 2 6 ]
-[v wrspi@data data `ui  1 p 2 8 ]
+[v wrspi@adr adr `ui  1 p 2 21 ]
+[v wrspi@data data `ui  1 p 2 23 ]
 "60
-[v wrspi@id_fpga id_fpga `uc  1 p 1 14 ]
+[v wrspi@id_fpga id_fpga `uc  1 p 1 29 ]
 "89
 } 1
-"175 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/Tsensor.c
+"178 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/Tsensor.c
 [v _write_bit_start write_bit_start `(v  1 e 1 0 ]
 {
-"182
+"185
 } 0
-"188
+"191
 [v _write_bit write_bit `(v  1 e 1 0 ]
 {
 [v write_bit@c c `uc  1 p 1 wreg ]
 [v write_bit@c c `uc  1 p 1 wreg ]
-[v write_bit@c c `uc  1 p 1 4 ]
-"197
+[v write_bit@c c `uc  1 p 1 19 ]
+"200
 } 1
-"203
+"206
 [v _attente_bit1 attente_bit1 `(v  1 e 1 0 ]
 {
-"215
+"218
 } 1
 "15
 [v _delay_runtime_ticks delay_runtime_ticks `(v  1 s 1 delay_runtime_ticks ]
 {
 "16
-[v delay_runtime_ticks@i i `VEus  1 a 2 2 ]
+[v delay_runtime_ticks@i i `VEus  1 a 2 17 ]
 "15
-[v delay_runtime_ticks@ticks ticks `us  1 p 2 0 ]
+[v delay_runtime_ticks@ticks ticks `us  1 p 2 15 ]
 "20
 } 0
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 {
 "10
-[v ___awdiv@quotient quotient `i  1 a 2 6 ]
+[v ___awdiv@quotient quotient `i  1 a 2 21 ]
 "11
-[v ___awdiv@sign sign `uc  1 a 1 5 ]
-[v ___awdiv@counter counter `uc  1 a 1 4 ]
+[v ___awdiv@sign sign `uc  1 a 1 20 ]
+[v ___awdiv@counter counter `uc  1 a 1 19 ]
 "7
-[v ___awdiv@dividend dividend `i  1 p 2 0 ]
-[v ___awdiv@divisor divisor `i  1 p 2 2 ]
+[v ___awdiv@dividend dividend `i  1 p 2 15 ]
+[v ___awdiv@divisor divisor `i  1 p 2 17 ]
 "41
 } 0
-"128 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"147 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _WriteTimer1 WriteTimer1 `(v  1 e 1 0 ]
 {
-[v WriteTimer1@timer timer `ui  1 p 2 0 ]
-"131
+[v WriteTimer1@timer timer `ui  1 p 2 15 ]
+"150
 } 0
-"133
+"152
 [v _ReadTimer1 ReadTimer1 `(ui  1 e 2 0 ]
 {
-"135
+"154
 } 0
 "17 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/spi.c
 [v _rdspi rdspi `(us  1 e 2 0 ]
 {
 [v rdspi@id_fpga id_fpga `uc  1 p 1 wreg ]
 "21
-[v rdspi@mot mot `[2]uc  1 a 2 14 ]
+[v rdspi@mot mot `[2]uc  1 a 2 29 ]
 "22
-[v rdspi@data_value data_value `ui  1 a 2 10 ]
+[v rdspi@data_value data_value `ui  1 a 2 25 ]
 "20
-[v rdspi@adr_lsb adr_lsb `uc  1 a 1 13 ]
+[v rdspi@adr_lsb adr_lsb `uc  1 a 1 28 ]
 "19
-[v rdspi@adr_msb adr_msb `uc  1 a 1 12 ]
+[v rdspi@adr_msb adr_msb `uc  1 a 1 27 ]
 "17
 [v rdspi@id_fpga id_fpga `uc  1 p 1 wreg ]
-[v rdspi@adr adr `ui  1 p 2 6 ]
+[v rdspi@adr adr `ui  1 p 2 21 ]
 "24
-[v rdspi@id_fpga id_fpga `uc  1 p 1 16 ]
+[v rdspi@id_fpga id_fpga `uc  1 p 1 31 ]
 "49
 } 1
 "59 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/maths.c
 [v _analyze_string analyze_string `(uc  1 e 1 0 ]
 {
 "60
-[v analyze_string@co co `uc  1 a 1 29 ]
+[v analyze_string@co co `uc  1 a 1 44 ]
 "61
-[v analyze_string@error error `uc  1 a 1 28 ]
+[v analyze_string@error error `uc  1 a 1 43 ]
 "59
-[v analyze_string@pr pr `*.30uc  1 p 1 25 ]
-[v analyze_string@converted_value converted_value `*.30us  1 p 1 26 ]
+[v analyze_string@pr pr `*.30uc  1 p 1 40 ]
+[v analyze_string@converted_value converted_value `*.30us  1 p 1 41 ]
 "102
 } 0
 "146
 [v _charhextoi charhextoi `(us  1 e 2 0 ]
 {
 "147
-[v charhextoi@co co `i  1 a 2 9 ]
+[v charhextoi@co co `i  1 a 2 24 ]
 "148
-[v charhextoi@erreur erreur `i  1 a 2 7 ]
+[v charhextoi@erreur erreur `i  1 a 2 22 ]
 "149
-[v charhextoi@accumulateur accumulateur `ui  1 a 2 5 ]
+[v charhextoi@accumulateur accumulateur `ui  1 a 2 20 ]
 "150
-[v charhextoi@nbre nbre `uc  1 a 1 4 ]
+[v charhextoi@nbre nbre `uc  1 a 1 19 ]
 "146
-[v charhextoi@pr pr `*.30uc  1 p 1 0 ]
+[v charhextoi@pr pr `*.30uc  1 p 1 15 ]
 "177
 } 0
 "110
 [v _chardectoi chardectoi `(us  1 e 2 0 ]
 {
 "114
-[v chardectoi@result result `ul  1 a 4 20 ]
+[v chardectoi@result result `ul  1 a 4 35 ]
 "112
-[v chardectoi@co co `uc  1 a 1 24 ]
+[v chardectoi@co co `uc  1 a 1 39 ]
 "113
-[v chardectoi@max max `uc  1 a 1 19 ]
+[v chardectoi@max max `uc  1 a 1 34 ]
 "110
-[v chardectoi@pr pr `*.30uc  1 p 1 12 ]
+[v chardectoi@pr pr `*.30uc  1 p 1 27 ]
 "139
 } 0
 "184
@@ -2046,63 +2162,63 @@ TRUE 1
 {
 [v power10@c c `uc  1 p 1 wreg ]
 "185
-[v power10@value value `ui  1 a 2 9 ]
+[v power10@value value `ui  1 a 2 24 ]
 "186
-[v power10@k k `uc  1 a 1 8 ]
+[v power10@k k `uc  1 a 1 23 ]
 "184
 [v power10@c c `uc  1 p 1 wreg ]
-[v power10@c c `uc  1 p 1 11 ]
+[v power10@c c `uc  1 p 1 26 ]
 "195
 } 1
 "15 /opt/microchip/xc8/v3.10/pic/sources/c99/common/Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
 {
 "17
-[v ___wmul@product product `ui  1 a 2 4 ]
+[v ___wmul@product product `ui  1 a 2 19 ]
 "15
-[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+[v ___wmul@multiplier multiplier `ui  1 p 2 15 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 17 ]
 "53
 } 0
 "221 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/display.c
 [v _myStrCpyChar2 myStrCpyChar2 `(v  1 e 1 0 ]
 {
 "222
-[v myStrCpyChar2@compt compt `us  1 a 2 7 ]
-[v myStrCpyChar2@comptChain comptChain `us  1 a 2 5 ]
+[v myStrCpyChar2@compt compt `us  1 a 2 22 ]
+[v myStrCpyChar2@comptChain comptChain `us  1 a 2 20 ]
 "221
-[v myStrCpyChar2@container container `*.39uc  1 p 2 0 ]
-[v myStrCpyChar2@chaine chaine `*.31Cuc  1 p 1 2 ]
-[v myStrCpyChar2@cend cend `uc  1 p 1 3 ]
+[v myStrCpyChar2@container container `*.39uc  1 p 2 15 ]
+[v myStrCpyChar2@chaine chaine `*.31Cuc  1 p 1 17 ]
+[v myStrCpyChar2@cend cend `uc  1 p 1 18 ]
 "237
 } 0
 "245
 [v _myStrCpy1Char myStrCpy1Char `(v  1 e 1 0 ]
 {
 "246
-[v myStrCpy1Char@compt compt `us  1 a 2 4 ]
+[v myStrCpy1Char@compt compt `us  1 a 2 19 ]
 "245
-[v myStrCpy1Char@container container `*.39uc  1 p 2 0 ]
-[v myStrCpy1Char@c c `uc  1 p 1 2 ]
-[v myStrCpy1Char@cend cend `uc  1 p 1 3 ]
+[v myStrCpy1Char@container container `*.39uc  1 p 2 15 ]
+[v myStrCpy1Char@c c `uc  1 p 1 17 ]
+[v myStrCpy1Char@cend cend `uc  1 p 1 18 ]
 "259
 } 0
-"714 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"741 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _getHvValue getHvValue `(us  1 e 2 0 ]
 {
-"716
-[v getHvValue@HVValue1 HVValue1 `l  1 a 4 38 ]
-[v getHvValue@HVValue2 HVValue2 `l  1 a 4 34 ]
-"715
-[v getHvValue@ADCResult ADCResult `us  1 a 2 32 ]
-"714
-[v getHvValue@canal canal `*.30uc  1 p 1 26 ]
-"732
+"743
+[v getHvValue@HVValue1 HVValue1 `l  1 a 4 53 ]
+[v getHvValue@HVValue2 HVValue2 `l  1 a 4 49 ]
+"742
+[v getHvValue@ADCResult ADCResult `us  1 a 2 47 ]
+"741
+[v getHvValue@canal canal `*.30uc  1 p 1 41 ]
+"759
 } 0
 "153 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/ads8332.c
 [v _adc_getvalue adc_getvalue `(us  1 e 2 0 ]
 {
-[v adc_getvalue@canal canal `*.30uc  1 p 1 1 ]
+[v adc_getvalue@canal canal `*.30uc  1 p 1 16 ]
 "155
 [v adc_getvalue@data data `[2]uc  1 s 2 data ]
 "156
@@ -2116,45 +2232,33 @@ TRUE 1
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
 {
 "10
-[v ___aldiv@quotient quotient `l  1 a 4 22 ]
+[v ___aldiv@quotient quotient `l  1 a 4 37 ]
 "11
-[v ___aldiv@sign sign `uc  1 a 1 21 ]
-[v ___aldiv@counter counter `uc  1 a 1 20 ]
+[v ___aldiv@sign sign `uc  1 a 1 36 ]
+[v ___aldiv@counter counter `uc  1 a 1 35 ]
 "7
-[v ___aldiv@dividend dividend `l  1 p 4 12 ]
-[v ___aldiv@divisor divisor `l  1 p 4 16 ]
+[v ___aldiv@dividend dividend `l  1 p 4 27 ]
+[v ___aldiv@divisor divisor `l  1 p 4 31 ]
 "41
 } 0
-"618 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"645 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _getCurrent getCurrent `(uc  1 e 1 0 ]
 {
 [v getCurrent@tel tel `uc  1 p 1 wreg ]
-"619
-[v getCurrent@error error `uc  1 a 1 2 ]
-"618
+"646
+[v getCurrent@error error `uc  1 a 1 17 ]
+"645
 [v getCurrent@tel tel `uc  1 p 1 wreg ]
-[v getCurrent@module module `uc  1 p 1 0 ]
-[v getCurrent@lc lc `*.30us  1 p 1 1 ]
-"620
-[v getCurrent@tel tel `uc  1 p 1 3 ]
-"638
+[v getCurrent@module module `uc  1 p 1 15 ]
+[v getCurrent@lc lc `*.30us  1 p 1 16 ]
+"647
+[v getCurrent@tel tel `uc  1 p 1 18 ]
+"665
 } 1
-"196 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/display.c
-[v _myStrCpyChar myStrCpyChar `(v  1 e 1 0 ]
-{
-"197
-[v myStrCpyChar@compt compt `us  1 a 2 7 ]
-[v myStrCpyChar@comptChain comptChain `us  1 a 2 5 ]
-"196
-[v myStrCpyChar@container container `*.39uc  1 p 2 0 ]
-[v myStrCpyChar@chaine chaine `*.39uc  1 p 2 2 ]
-[v myStrCpyChar@cend cend `uc  1 p 1 4 ]
-"213
-} 0
 "5 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/analog.c
 [v _get_PIC_AD_voltages get_PIC_AD_voltages `(v  1 e 1 0 ]
 {
-[v get_PIC_AD_voltages@ADvoltages ADvoltages `*.30us  1 p 1 0 ]
+[v get_PIC_AD_voltages@ADvoltages ADvoltages `*.30us  1 p 1 15 ]
 "27
 } 0
 "122
@@ -2162,204 +2266,219 @@ TRUE 1
 {
 [v getLTC2308Voltages@mask mask `uc  1 p 1 wreg ]
 "125
-[v getLTC2308Voltages@mot mot `us  1 a 2 11 ]
-[v getLTC2308Voltages@mot2 mot2 `us  1 a 2 9 ]
+[v getLTC2308Voltages@mot mot `us  1 a 2 27 ]
+[v getLTC2308Voltages@mot2 mot2 `us  1 a 2 25 ]
 "123
-[v getLTC2308Voltages@co co `uc  1 a 1 16 ]
+[v getLTC2308Voltages@co co `uc  1 a 1 32 ]
 "124
-[v getLTC2308Voltages@elt_OU elt_OU `uc  1 a 1 15 ]
-[v getLTC2308Voltages@elt_ET elt_ET `uc  1 a 1 14 ]
+[v getLTC2308Voltages@elt_OU elt_OU `uc  1 a 1 31 ]
+[v getLTC2308Voltages@elt_ET elt_ET `uc  1 a 1 30 ]
 "123
-[v getLTC2308Voltages@os os `uc  1 a 1 13 ]
-[v getLTC2308Voltages@din din `uc  1 a 1 7 ]
+[v getLTC2308Voltages@os os `uc  1 a 1 29 ]
+[v getLTC2308Voltages@din din `uc  1 a 1 23 ]
 "122
 [v getLTC2308Voltages@mask mask `uc  1 p 1 wreg ]
-[v getLTC2308Voltages@ADvoltages ADvoltages `*.30us  1 p 1 3 ]
+[v getLTC2308Voltages@ADvoltages ADvoltages `*.30us  1 p 1 19 ]
 "127
-[v getLTC2308Voltages@mask mask `uc  1 p 1 8 ]
+[v getLTC2308Voltages@mask mask `uc  1 p 1 24 ]
 "173
 } 1
-"75 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"87 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _getcSPI getcSPI `(uc  1 e 1 0 ]
 {
-"83
+"95
 } 0
 "44
 [v _OpenSPI OpenSPI `(v  1 e 1 0 ]
 {
-[v OpenSPI@edge edge `uc  1 p 1 0 ]
-[v OpenSPI@smp smp `uc  1 p 1 1 ]
-"60
+[v OpenSPI@m m `uc  1 p 1 wreg ]
+[v OpenSPI@m m `uc  1 p 1 wreg ]
+[v OpenSPI@edge edge `uc  1 p 1 15 ]
+[v OpenSPI@smp smp `uc  1 p 1 16 ]
+[v OpenSPI@m m `uc  1 p 1 18 ]
+"72
 } 1
-"62
+"74
 [v _CloseSPI CloseSPI `(v  1 e 1 0 ]
 {
-"64
+"76
 } 0
 "111 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/display.c
 [v _myStrCpyUint myStrCpyUint `(v  1 e 1 0 ]
 {
 "112
-[v myStrCpyUint@u u `[5]us  1 a 10 26 ]
+[v myStrCpyUint@u u `[5]us  1 a 10 41 ]
 "113
-[v myStrCpyUint@compt compt `us  1 a 2 38 ]
-[v myStrCpyUint@comptInt comptInt `us  1 a 2 36 ]
+[v myStrCpyUint@compt compt `us  1 a 2 53 ]
+[v myStrCpyUint@comptInt comptInt `us  1 a 2 51 ]
 "111
-[v myStrCpyUint@container container `*.39uc  1 p 2 7 ]
-[v myStrCpyUint@a a `us  1 p 2 9 ]
-[v myStrCpyUint@cend cend `uc  1 p 1 11 ]
+[v myStrCpyUint@container container `*.39uc  1 p 2 22 ]
+[v myStrCpyUint@a a `us  1 p 2 24 ]
+[v myStrCpyUint@cend cend `uc  1 p 1 26 ]
 "148
 } 0
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
+[v ___lwdiv@quotient quotient `ui  1 a 2 20 ]
 "11
-[v ___lwdiv@counter counter `uc  1 a 1 4 ]
+[v ___lwdiv@counter counter `uc  1 a 1 19 ]
 "7
-[v ___lwdiv@dividend dividend `ui  1 p 2 0 ]
-[v ___lwdiv@divisor divisor `ui  1 p 2 2 ]
+[v ___lwdiv@dividend dividend `ui  1 p 2 15 ]
+[v ___lwdiv@divisor divisor `ui  1 p 2 17 ]
 "30
+} 0
+"196 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/display.c
+[v _myStrCpyChar myStrCpyChar `(v  1 e 1 0 ]
+{
+"197
+[v myStrCpyChar@compt compt `us  1 a 2 22 ]
+[v myStrCpyChar@comptChain comptChain `us  1 a 2 20 ]
+"196
+[v myStrCpyChar@container container `*.39uc  1 p 2 15 ]
+[v myStrCpyChar@chaine chaine `*.39uc  1 p 2 17 ]
+[v myStrCpyChar@cend cend `uc  1 p 1 19 ]
+"213
 } 0
 "62 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/wr_eeprom.c
 [v _EEWrite EEWrite `(v  1 e 1 0 ]
 {
 "63
-[v EEWrite@ad_msb ad_msb `uc  1 a 1 29 ]
-[v EEWrite@ad_lsb ad_lsb `uc  1 a 1 28 ]
+[v EEWrite@ad_msb ad_msb `uc  1 a 1 44 ]
+[v EEWrite@ad_lsb ad_lsb `uc  1 a 1 43 ]
 "62
-[v EEWrite@ad ad `ui  1 p 2 25 ]
-[v EEWrite@data data `uc  1 p 1 27 ]
+[v EEWrite@ad ad `ui  1 p 2 40 ]
+[v EEWrite@data data `uc  1 p 1 42 ]
 "79
 } 0
-"140 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"159 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _func_init func_init `(v  1 e 1 0 ]
 {
-"169
+"196
 } 0
 "10 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/frame.c
 [v _frame_init frame_init `(v  1 e 1 0 ]
 {
-[v frame_init@f f `*.39uc  1 p 2 0 ]
+[v frame_init@f f `*.39uc  1 p 2 15 ]
 "12
 } 0
 "49
 [v _frame_getseq frame_getseq `(uc  1 e 1 0 ]
 {
-[v frame_getseq@f f `*.39uc  1 p 2 0 ]
+[v frame_getseq@f f `*.39uc  1 p 2 15 ]
 "55
 } 0
 "33
 [v _frame_getidb frame_getidb `(us  1 e 2 0 ]
 {
 "34
-[v frame_getidb@idb idb `[4]uc  1 a 4 11 ]
+[v frame_getidb@idb idb `[4]uc  1 a 4 26 ]
 "35
-[v frame_getidb@IDB IDB `us  1 a 2 15 ]
+[v frame_getidb@IDB IDB `us  1 a 2 30 ]
 "33
-[v frame_getidb@f f `*.39uc  1 p 2 9 ]
+[v frame_getidb@f f `*.39uc  1 p 2 24 ]
 "42
 } 0
 "62
 [v _frame_getdata frame_getdata `(v  1 e 1 0 ]
 {
 "63
-[v frame_getdata@fsize fsize `us  1 a 2 14 ]
+[v frame_getdata@fsize fsize `us  1 a 2 29 ]
 "62
-[v frame_getdata@f f `*.39uc  1 p 2 8 ]
-[v frame_getdata@d d `*.39uc  1 p 2 10 ]
+[v frame_getdata@f f `*.39uc  1 p 2 23 ]
+[v frame_getdata@d d `*.39uc  1 p 2 25 ]
 "71
 } 0
 "3 /opt/microchip/xc8/v3.10/pic/sources/c99/common/strncpy.c
 [v _strncpy strncpy `(*.39uc  1 e 2 0 ]
 {
 "5
-[v strncpy@cp cp `*.39uc  1 a 2 6 ]
+[v strncpy@cp cp `*.39uc  1 a 2 21 ]
 "3
-[v strncpy@d d `*.39uc  1 p 2 0 ]
-[v strncpy@s s `*.39Cuc  1 p 2 2 ]
-[v strncpy@n n `ui  1 p 2 4 ]
+[v strncpy@d d `*.39uc  1 p 2 15 ]
+[v strncpy@s s `*.39Cuc  1 p 2 17 ]
+[v strncpy@n n `ui  1 p 2 19 ]
 "15
 } 0
 "78 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/frame.c
 [v _frame_getcrc frame_getcrc `(us  1 e 2 0 ]
 {
 "79
-[v frame_getcrc@crc crc `[3]uc  1 a 3 15 ]
+[v frame_getcrc@crc crc `[3]uc  1 a 3 30 ]
 "81
-[v frame_getcrc@fsize fsize `us  1 a 2 18 ]
+[v frame_getcrc@fsize fsize `us  1 a 2 33 ]
 "80
-[v frame_getcrc@CRC CRC `us  1 a 2 13 ]
+[v frame_getcrc@CRC CRC `us  1 a 2 28 ]
 "78
-[v frame_getcrc@f f `*.39uc  1 p 2 9 ]
+[v frame_getcrc@f f `*.39uc  1 p 2 24 ]
 "87
 } 0
 "5 /opt/microchip/xc8/v3.10/pic/sources/c99/common/strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
 {
 "7
-[v strlen@a a `*.39Cuc  1 a 2 2 ]
+[v strlen@a a `*.39Cuc  1 a 2 17 ]
 "5
-[v strlen@s s `*.39Cuc  1 p 2 0 ]
+[v strlen@s s `*.39Cuc  1 p 2 15 ]
 "12
 } 0
 "11 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/utils.c
 [v _htoi htoi `(ui  1 e 2 0 ]
 {
 "12
-[v htoi@value value `ui  1 a 2 6 ]
+[v htoi@value value `ui  1 a 2 21 ]
 "13
-[v htoi@ch ch `uc  1 a 1 8 ]
+[v htoi@ch ch `uc  1 a 1 23 ]
 "11
-[v htoi@ptr ptr `*.30Cuc  1 p 1 0 ]
+[v htoi@ptr ptr `*.30Cuc  1 p 1 15 ]
 "28
 } 0
 "19 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/frame.c
 [v _frame_docrc frame_docrc `(us  1 e 2 0 ]
 {
 "20
-[v frame_docrc@i i `i  1 a 2 5 ]
+[v frame_docrc@i i `i  1 a 2 20 ]
 "21
-[v frame_docrc@crc crc `us  1 a 2 3 ]
+[v frame_docrc@crc crc `us  1 a 2 18 ]
 "19
-[v frame_docrc@f f `*.39uc  1 p 2 0 ]
+[v frame_docrc@f f `*.39uc  1 p 2 15 ]
 "26
 } 0
 "415 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/main.c
 [v _diffLcTime diffLcTime `(ul  1 e 4 0 ]
 {
 "416
-[v diffLcTime@t4 t4 `ul  1 a 4 37 ]
+[v diffLcTime@t4 t4 `ul  1 a 4 52 ]
 "415
-[v diffLcTime@t1 t1 `ul  1 p 4 0 ]
-[v diffLcTime@t2 t2 `ul  1 p 4 4 ]
-[v diffLcTime@t3 t3 `ul  1 p 4 8 ]
+[v diffLcTime@t1 t1 `ul  1 p 4 15 ]
+[v diffLcTime@t2 t2 `ul  1 p 4 19 ]
+[v diffLcTime@t3 t3 `ul  1 p 4 23 ]
 "423
 } 0
 "593
 [v _current_leak_inspection current_leak_inspection `(ul  1 e 4 0 ]
 {
 "603
-[v current_leak_inspection@leak_current_table leak_current_table `[4]us  1 a 8 8 ]
+[v current_leak_inspection@leak_current_table leak_current_table `[4]us  1 a 8 57 ]
 "597
-[v current_leak_inspection@Rd Rd `f  1 a 4 20 ]
+[v current_leak_inspection@Rd Rd `f  1 a 4 69 ]
 "601
-[v current_leak_inspection@timing timing `ul  1 a 4 4 ]
+[v current_leak_inspection@timing timing `ul  1 a 4 53 ]
 "598
-[v current_leak_inspection@HV HV `f  1 a 4 0 ]
+[v current_leak_inspection@HV HV `f  1 a 4 49 ]
 "600
-[v current_leak_inspection@hvInt hvInt `us  1 a 2 25 ]
+[v current_leak_inspection@hvInt hvInt `us  1 a 2 74 ]
 "599
-[v current_leak_inspection@leakCur leakCur `us  1 a 2 17 ]
+[v current_leak_inspection@leakCur leakCur `us  1 a 2 66 ]
 "594
-[v current_leak_inspection@compteur compteur `uc  1 a 1 27 ]
+[v current_leak_inspection@compteur compteur `uc  1 a 1 76 ]
 "595
-[v current_leak_inspection@module module `uc  1 a 1 24 ]
+[v current_leak_inspection@module module `uc  1 a 1 73 ]
 "602
-[v current_leak_inspection@tel tel `uc  1 a 1 19 ]
+[v current_leak_inspection@tel tel `uc  1 a 1 68 ]
 "596
-[v current_leak_inspection@flag flag `uc  1 a 1 16 ]
+[v current_leak_inspection@flag flag `uc  1 a 1 65 ]
 "645
 } 0
 "152 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/dac8568.c
@@ -2367,232 +2486,236 @@ TRUE 1
 {
 [v slop_vhv@tel tel `uc  1 p 1 wreg ]
 "158
-[v slop_vhv@coef coef `ul  1 a 4 81 ]
+[v slop_vhv@coef coef `ul  1 a 4 41 ]
 "154
-[v slop_vhv@value_dec value_dec `ul  1 a 4 75 ]
+[v slop_vhv@value_dec value_dec `ul  1 a 4 35 ]
 "156
-[v slop_vhv@default_value default_value `ul  1 a 4 66 ]
+[v slop_vhv@default_value default_value `ul  1 a 4 26 ]
 "157
-[v slop_vhv@max_dac max_dac `ul  1 a 4 62 ]
+[v slop_vhv@max_dac max_dac `ul  1 a 4 22 ]
 "155
-[v slop_vhv@inc inc `ul  1 a 4 55 ]
+[v slop_vhv@inc inc `ul  1 a 4 15 ]
 "160
-[v slop_vhv@calibration_addr_const calibration_addr_const `us  1 a 2 72 ]
+[v slop_vhv@calibration_addr_const calibration_addr_const `us  1 a 2 32 ]
 "159
-[v slop_vhv@calibration_addr_coeff calibration_addr_coeff `us  1 a 2 70 ]
+[v slop_vhv@calibration_addr_coeff calibration_addr_coeff `us  1 a 2 30 ]
 "162
-[v slop_vhv@channel channel `uc  1 a 1 79 ]
+[v slop_vhv@channel channel `uc  1 a 1 39 ]
 "161
-[v slop_vhv@use_linear use_linear `uc  1 a 1 74 ]
+[v slop_vhv@use_linear use_linear `uc  1 a 1 34 ]
 "153
-[v slop_vhv@verdict verdict `uc  1 a 1 59 ]
+[v slop_vhv@verdict verdict `uc  1 a 1 19 ]
 "152
 [v slop_vhv@tel tel `uc  1 p 1 wreg ]
-[v slop_vhv@module module `uc  1 p 1 48 ]
-[v slop_vhv@tension tension `us  1 p 2 49 ]
-[v slop_vhv@slopeVS slopeVS `ul  1 p 4 51 ]
-[v slop_vhv@tel tel `uc  1 p 1 80 ]
+[v slop_vhv@module module `uc  1 p 1 8 ]
+[v slop_vhv@tension tension `us  1 p 2 9 ]
+[v slop_vhv@slopeVS slopeVS `ul  1 p 4 11 ]
+[v slop_vhv@tel tel `uc  1 p 1 40 ]
 "208
 } 1
 "137
 [v _get_value_dec get_value_dec `(ul  1 e 4 0 ]
 {
 "139
-[v get_value_dec@dac_cal_linear_const dac_cal_linear_const `ul  1 a 4 44 ]
+[v get_value_dec@dac_cal_linear_const dac_cal_linear_const `ul  1 a 4 4 ]
 "138
-[v get_value_dec@dac_cal_linear_coeff dac_cal_linear_coeff `ul  1 a 4 40 ]
+[v get_value_dec@dac_cal_linear_coeff dac_cal_linear_coeff `ul  1 a 4 0 ]
 "137
-[v get_value_dec@tension tension `ul  1 p 4 32 ]
-[v get_value_dec@eeprom_adr_coeff eeprom_adr_coeff `us  1 p 2 36 ]
-[v get_value_dec@eeprom_adr_const eeprom_adr_const `us  1 p 2 38 ]
+[v get_value_dec@tension tension `ul  1 p 4 47 ]
+[v get_value_dec@eeprom_adr_coeff eeprom_adr_coeff `us  1 p 2 51 ]
+[v get_value_dec@eeprom_adr_const eeprom_adr_const `us  1 p 2 53 ]
 "142
 } 0
 "120
 [v _read_eeprom_u32 read_eeprom_u32 `(ul  1 s 4 read_eeprom_u32 ]
 {
-[v read_eeprom_u32@addr addr `us  1 p 2 4 ]
+[v read_eeprom_u32@addr addr `us  1 p 2 19 ]
 "125
 } 0
-"1851 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"1878 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _getLowLcTrsh getLowLcTrsh `(us  1 e 2 0 ]
 {
-"1853
-[v getLowLcTrsh@msb msb `us  1 a 2 10 ]
-"1852
-[v getLowLcTrsh@lsb lsb `us  1 a 2 8 ]
-"1855
+"1880
+[v getLowLcTrsh@msb msb `us  1 a 2 25 ]
+"1879
+[v getLowLcTrsh@lsb lsb `us  1 a 2 23 ]
+"1882
 } 0
-"1845
+"1872
 [v _getHighLcTrsh getHighLcTrsh `(us  1 e 2 0 ]
 {
-"1847
-[v getHighLcTrsh@msb msb `us  1 a 2 10 ]
-"1846
-[v getHighLcTrsh@lsb lsb `us  1 a 2 8 ]
-"1849
+"1874
+[v getHighLcTrsh@msb msb `us  1 a 2 25 ]
+"1873
+[v getHighLcTrsh@lsb lsb `us  1 a 2 23 ]
+"1876
 } 0
 "10 /opt/microchip/xc8/v3.10/pic/sources/c99/common/xxtofl.c
 [v ___xxtofl __xxtofl `(d  1 e 4 0 ]
 {
 [v ___xxtofl@sign sign `uc  1 p 1 wreg ]
 "13
-[v ___xxtofl@arg arg `ul  1 a 4 10 ]
+[v ___xxtofl@arg arg `ul  1 a 4 25 ]
 "12
-[v ___xxtofl@exp exp `uc  1 a 1 9 ]
+[v ___xxtofl@exp exp `uc  1 a 1 24 ]
 "10
 [v ___xxtofl@sign sign `uc  1 p 1 wreg ]
-[v ___xxtofl@val val `l  1 p 4 0 ]
+[v ___xxtofl@val val `l  1 p 4 15 ]
 "15
-[v ___xxtofl@sign sign `uc  1 p 1 8 ]
+[v ___xxtofl@sign sign `uc  1 p 1 23 ]
 "44
 } 1
 "43 /opt/microchip/xc8/v3.10/pic/sources/c99/common/fltol.c
 [v ___fltol __fltol `(l  1 e 4 0 ]
 {
 "45
-[v ___fltol@exp1 exp1 `uc  1 a 1 9 ]
-[v ___fltol@sign1 sign1 `uc  1 a 1 8 ]
+[v ___fltol@exp1 exp1 `uc  1 a 1 24 ]
+[v ___fltol@sign1 sign1 `uc  1 a 1 23 ]
 "43
-[v ___fltol@f1 f1 `d  1 p 4 0 ]
+[v ___fltol@f1 f1 `d  1 p 4 15 ]
 "70
 } 0
 "8 /opt/microchip/xc8/v3.10/pic/sources/c99/common/sprcmul.c
 [v ___flmul __flmul `(d  1 e 4 0 ]
 {
-[s S3454 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+[s S3504 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
 "13
-[s S3459 . 4 `s 1 wordA 2 0 `s 1 wordB 2 2 ]
-[u S3462 . 4 `l 1 i 4 0 `d 1 f 4 0 `S3454 1 fAsBytes 4 0 `S3459 1 fAsWords 4 0 ]
-[v ___flmul@prod prod `S3462  1 a 4 74 ]
+[s S3509 . 4 `s 1 wordA 2 0 `s 1 wordB 2 2 ]
+[u S3512 . 4 `l 1 i 4 0 `d 1 f 4 0 `S3504 1 fAsBytes 4 0 `S3509 1 fAsWords 4 0 ]
+[v ___flmul@prod prod `S3512  1 a 4 31 ]
 "12
-[v ___flmul@grs grs `ul  1 a 4 68 ]
-[s S3530 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+[v ___flmul@grs grs `ul  1 a 4 25 ]
+[s S3580 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
 "14
-[u S3533 . 2 `s 1 i 2 0 `us 1 n 2 0 `S3530 1 nAsBytes 2 0 ]
-[v ___flmul@temp temp `S3533  1 a 2 78 ]
+[u S3583 . 2 `s 1 i 2 0 `us 1 n 2 0 `S3580 1 nAsBytes 2 0 ]
+[v ___flmul@temp temp `S3583  1 a 2 35 ]
 "10
-[v ___flmul@bexp bexp `uc  1 a 1 73 ]
+[v ___flmul@bexp bexp `uc  1 a 1 30 ]
 "11
-[v ___flmul@aexp aexp `uc  1 a 1 72 ]
+[v ___flmul@aexp aexp `uc  1 a 1 29 ]
 "9
-[v ___flmul@sign sign `uc  1 a 1 67 ]
+[v ___flmul@sign sign `uc  1 a 1 24 ]
 "8
-[v ___flmul@b b `d  1 p 4 55 ]
-[v ___flmul@a a `d  1 p 4 59 ]
+[v ___flmul@b b `d  1 p 4 12 ]
+[v ___flmul@a a `d  1 p 4 16 ]
 "205
 } 0
 "11 /opt/microchip/xc8/v3.10/pic/sources/c99/common/sprcdiv.c
 [v ___fldiv __fldiv `(d  1 e 4 0 ]
 {
 "21
-[v ___fldiv@grs grs `ul  1 a 4 33 ]
+[v ___fldiv@grs grs `ul  1 a 4 48 ]
 "22
-[v ___fldiv@rem rem `ul  1 a 4 26 ]
+[v ___fldiv@rem rem `ul  1 a 4 41 ]
 "20
-[v ___fldiv@new_exp new_exp `s  1 a 2 31 ]
+[v ___fldiv@new_exp new_exp `s  1 a 2 46 ]
 "19
-[v ___fldiv@aexp aexp `uc  1 a 1 38 ]
+[v ___fldiv@aexp aexp `uc  1 a 1 53 ]
 "18
-[v ___fldiv@bexp bexp `uc  1 a 1 37 ]
+[v ___fldiv@bexp bexp `uc  1 a 1 52 ]
 "16
-[v ___fldiv@sign sign `uc  1 a 1 30 ]
+[v ___fldiv@sign sign `uc  1 a 1 45 ]
 "11
-[v ___fldiv@b b `d  1 p 4 14 ]
-[v ___fldiv@a a `d  1 p 4 18 ]
+[v ___fldiv@b b `d  1 p 4 29 ]
+[v ___fldiv@a a `d  1 p 4 33 ]
 "185
 } 0
 "10 /opt/microchip/xc8/v3.10/pic/sources/c99/common/sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 {
 "17
-[v ___fladd@grs grs `uc  1 a 1 54 ]
+[v ___fladd@grs grs `uc  1 a 1 11 ]
 "15
-[v ___fladd@bexp bexp `uc  1 a 1 53 ]
+[v ___fladd@bexp bexp `uc  1 a 1 10 ]
 "16
-[v ___fladd@aexp aexp `uc  1 a 1 52 ]
+[v ___fladd@aexp aexp `uc  1 a 1 9 ]
 "13
-[v ___fladd@signs signs `uc  1 a 1 51 ]
+[v ___fladd@signs signs `uc  1 a 1 8 ]
 "10
-[v ___fladd@b b `d  1 p 4 39 ]
-[v ___fladd@a a `d  1 p 4 43 ]
+[v ___fladd@b b `d  1 p 4 0 ]
+[v ___fladd@a a `d  1 p 4 4 ]
 "237
 } 0
 "59 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/cbuffer.c
 [v _cbuffer_large_getframe_length cbuffer_large_getframe_length `(us  1 e 2 0 ]
 {
 "61
-[v cbuffer_large_getframe_length@j j `us  1 a 2 26 ]
-[v cbuffer_large_getframe_length@len len `us  1 a 2 21 ]
-[v cbuffer_large_getframe_length@offset offset `us  1 a 2 18 ]
+[v cbuffer_large_getframe_length@j j `us  1 a 2 42 ]
+[v cbuffer_large_getframe_length@len len `us  1 a 2 37 ]
+[v cbuffer_large_getframe_length@offset offset `us  1 a 2 34 ]
 "62
-[v cbuffer_large_getframe_length@hbound hbound `us  1 a 2 16 ]
-[v cbuffer_large_getframe_length@lbound lbound `us  1 a 2 14 ]
+[v cbuffer_large_getframe_length@hbound hbound `us  1 a 2 32 ]
+[v cbuffer_large_getframe_length@lbound lbound `us  1 a 2 30 ]
 "63
-[v cbuffer_large_getframe_length@ch ch `uc  1 a 1 28 ]
+[v cbuffer_large_getframe_length@ch ch `uc  1 a 1 44 ]
 "67
-[v cbuffer_large_getframe_length@loop_end loop_end `E36  1 a 1 25 ]
+[v cbuffer_large_getframe_length@loop_end loop_end `E36  1 a 1 41 ]
 "66
-[v cbuffer_large_getframe_length@frame_end frame_end `E36  1 a 1 24 ]
+[v cbuffer_large_getframe_length@frame_end frame_end `E36  1 a 1 40 ]
 "64
-[v cbuffer_large_getframe_length@ncrc ncrc `uc  1 a 1 23 ]
+[v cbuffer_large_getframe_length@ncrc ncrc `uc  1 a 1 39 ]
 "65
-[v cbuffer_large_getframe_length@frame_start frame_start `E36  1 a 1 20 ]
+[v cbuffer_large_getframe_length@frame_start frame_start `E36  1 a 1 36 ]
 [s S930 . 276 `us 1 size 2 0 `us 1 rdp 2 2 `us 1 wrp 2 4 `[270]uc 1 data 270 6 ]
 "59
-[v cbuffer_large_getframe_length@cb cb `*.39S930  1 p 2 5 ]
-[v cbuffer_large_getframe_length@flen flen `*.30us  1 p 1 7 ]
-[v cbuffer_large_getframe_length@foffset foffset `*.39us  1 p 2 8 ]
+[v cbuffer_large_getframe_length@cb cb `*.39S930  1 p 2 20 ]
+[v cbuffer_large_getframe_length@flen flen `*.39us  1 p 2 22 ]
+[v cbuffer_large_getframe_length@foffset foffset `*.39us  1 p 2 24 ]
 "110
 } 0
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwmod@counter counter `uc  1 a 1 4 ]
+[v ___lwmod@counter counter `uc  1 a 1 19 ]
 "7
-[v ___lwmod@dividend dividend `ui  1 p 2 0 ]
-[v ___lwmod@divisor divisor `ui  1 p 2 2 ]
+[v ___lwmod@dividend dividend `ui  1 p 2 15 ]
+[v ___lwmod@divisor divisor `ui  1 p 2 17 ]
 "25
 } 0
 "5 /opt/microchip/xc8/v3.10/pic/sources/c99/common/atoi.c
 [v _atoi atoi `(i  1 e 2 0 ]
 {
 "7
-[v atoi@n n `i  1 a 2 6 ]
+[v atoi@n n `i  1 a 2 21 ]
 "8
-[v atoi@neg neg `a  1 a 1 5 ]
+[v atoi@neg neg `a  1 a 1 20 ]
 "5
-[v atoi@s s `*.39Cuc  1 p 2 0 ]
+[v atoi@s s `*.39Cuc  1 p 2 15 ]
 "24
 } 0
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/llmod.c
 [v ___llmod __llmod `(ul  1 e 4 0 ]
 {
 "10
-[v ___llmod@counter counter `uc  1 a 1 49 ]
+[v ___llmod@counter counter `uc  1 a 1 56 ]
 "7
-[v ___llmod@dividend dividend `ul  1 p 4 41 ]
-[v ___llmod@divisor divisor `ul  1 p 4 45 ]
+[v ___llmod@dividend dividend `ul  1 p 4 0 ]
+[v ___llmod@divisor divisor `ul  1 p 4 4 ]
 "25
 } 0
-"112 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"126 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _OpenTimer2 OpenTimer2 `(v  1 e 1 0 ]
 {
-"118
-} 1
+"127
+[v OpenTimer2@t2con t2con `uc  1 a 1 18 ]
+"126
+[v OpenTimer2@config config `ui  1 p 2 15 ]
+"135
+} 0
 "540 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/main.c
 [v _HVfunc HVfunc `(v  1 e 1 0 ]
 {
 "544
-[v HVfunc@deltaV deltaV `ul  1 a 4 38 ]
+[v HVfunc@deltaV deltaV `ul  1 a 4 53 ]
 "546
-[v HVfunc@gapV gapV `ul  1 a 4 33 ]
+[v HVfunc@gapV gapV `ul  1 a 4 48 ]
 "541
-[v HVfunc@HVvalue_meas HVvalue_meas `us  1 a 2 31 ]
+[v HVfunc@HVvalue_meas HVvalue_meas `us  1 a 2 46 ]
 "542
-[v HVfunc@cp cp `uc  1 a 1 42 ]
+[v HVfunc@cp cp `uc  1 a 1 57 ]
 "543
-[v HVfunc@HV_direction HV_direction `uc  1 a 1 37 ]
+[v HVfunc@HV_direction HV_direction `uc  1 a 1 52 ]
 "547
 [v HVfunc@pendingFinalization pendingFinalization `[4]E3344  1 s 4 pendingFinalization ]
 "587
@@ -2602,61 +2725,88 @@ TRUE 1
 {
 [v dac_sequence@ad ad `uc  1 p 1 wreg ]
 "65
-[v dac_sequence@sequence sequence `[4]uc  1 a 4 13 ]
+[v dac_sequence@sequence sequence `[4]uc  1 a 4 28 ]
 "64
 [v dac_sequence@ad ad `uc  1 p 1 wreg ]
-[v dac_sequence@data data `ui  1 p 2 7 ]
+[v dac_sequence@data data `ui  1 p 2 22 ]
 "67
-[v dac_sequence@ad ad `uc  1 p 1 12 ]
+[v dac_sequence@ad ad `uc  1 p 1 27 ]
 "82
 } 1
 "104 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/spi.c
 [v _myputsspi myputsspi `(v  1 e 1 0 ]
 {
 "105
-[v myputsspi@cp cp `i  1 a 2 5 ]
+[v myputsspi@cp cp `i  1 a 2 20 ]
 "104
-[v myputsspi@co co `i  1 p 2 1 ]
-[v myputsspi@wrptr wrptr `*.30uc  1 p 1 3 ]
+[v myputsspi@co co `i  1 p 2 16 ]
+[v myputsspi@wrptr wrptr `*.30uc  1 p 1 18 ]
 "109
 } 0
-"66 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+"78 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
 [v _putcSPI putcSPI `(v  1 e 1 0 ]
 {
 [v putcSPI@data data `uc  1 p 1 wreg ]
 [v putcSPI@data data `uc  1 p 1 wreg ]
-[v putcSPI@data data `uc  1 p 1 0 ]
-"73
+[v putcSPI@data data `uc  1 p 1 15 ]
+"85
 } 1
 "15 /opt/microchip/xc8/v3.10/pic/sources/c99/common/Umul32.c
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 {
 "17
-[v ___lmul@product product `ul  1 a 4 8 ]
+[v ___lmul@product product `ul  1 a 4 23 ]
 "15
-[v ___lmul@multiplier multiplier `ul  1 p 4 0 ]
-[v ___lmul@multiplicand multiplicand `ul  1 p 4 4 ]
+[v ___lmul@multiplier multiplier `ul  1 p 4 15 ]
+[v ___lmul@multiplicand multiplicand `ul  1 p 4 19 ]
 "129
 } 0
 "7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/__lldiv.c
 [v ___lldiv __lldiv `(ul  1 e 4 0 ]
 {
 "10
-[v ___lldiv@quotient quotient `ul  1 a 4 20 ]
+[v ___lldiv@quotient quotient `ul  1 a 4 35 ]
 "11
-[v ___lldiv@counter counter `uc  1 a 1 24 ]
+[v ___lldiv@counter counter `uc  1 a 1 39 ]
 "7
-[v ___lldiv@dividend dividend `ul  1 p 4 12 ]
-[v ___lldiv@divisor divisor `ul  1 p 4 16 ]
+[v ___lldiv@dividend dividend `ul  1 p 4 27 ]
+[v ___lldiv@divisor divisor `ul  1 p 4 31 ]
 "30
 } 0
 "86 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/myfunc/wr_eeprom.c
 [v _EERead EERead `(uc  1 e 1 0 ]
 {
 "87
-[v EERead@ad_msb ad_msb `uc  1 a 1 3 ]
-[v EERead@ad_lsb ad_lsb `uc  1 a 1 2 ]
+[v EERead@ad_msb ad_msb `uc  1 a 1 18 ]
+[v EERead@ad_lsb ad_lsb `uc  1 a 1 17 ]
 "86
-[v EERead@ad ad `ui  1 p 2 0 ]
+[v EERead@ad ad `ui  1 p 2 15 ]
 "96
+} 0
+"33 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/isr.c
+[v _isr isr `IIH(v  1 e 1 0 ]
+{
+"34
+[v isr@test test `us  1 a 2 13 ]
+"65
+} 0
+"7 /opt/microchip/xc8/v3.10/pic/sources/c99/common/lwmod.c
+[v i2___lwmod __lwmod `(ui  1 e 2 0 ]
+{
+"10
+[v i2___lwmod@counter counter `uc  1 a 1 4 ]
+"7
+[v i2___lwmod@dividend dividend `ui  1 p 2 0 ]
+[v i2___lwmod@divisor divisor `ui  1 p 2 2 ]
+"25
+} 0
+"101 /home/baptiste/MPLABXProjects/fazia-pic_ModernXC8.X/src/functions.c
+[v _ReadUSART ReadUSART `(uc  1 e 1 0 ]
+{
+"103
+} 0
+"97
+[v _DataRdyUSART DataRdyUSART `(uc  1 e 1 0 ]
+{
+"99
 } 0

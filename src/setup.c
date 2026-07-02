@@ -171,9 +171,9 @@ void ucsetup(void) {
     RCSTAbits.SPEN = 1; // Enable receiver
     RCSTAbits.CREN = 1;
     //The Timer1 device is required for T�C sensor functions
-    OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
+    OpenTimer1(TIMER_INT_OFF | T1_16BIT_RW | T1_SOURCE_INT | T1_PS_1_8 | T1_OSC1EN_OFF | T1_SYNC_EXT_OFF);
     //The Timer3 device is required for the High voltage slope
-    OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW & T3_SOURCE_INT & T3_PS_1_1 & T3_SYNC_EXT_OFF);
+    OpenTimer3(TIMER_INT_OFF | T3_16BIT_RW | T3_SOURCE_INT | T3_PS_1_1 | T3_SYNC_EXT_OFF);
     IPR2bits.TMR3IP=1; // TMR3 overflow interrupt priority bit : low priority
     PIE2bits.TMR3IE=0; // disable the TMR3 overflow interrupt. It will be enabled when the setHTV function will be called
     OpenSPI(SPI_FOSC_16, MODE_10,SMPMID);

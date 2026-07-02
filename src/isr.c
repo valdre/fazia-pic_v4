@@ -22,9 +22,6 @@ extern CBuffer_large *Uart;
 //extern CBuffer_small _hpUart[2];
 //extern CBuffer_small *hpUart;
 
-#pragma code isr=0x08
-#pragma interrupt isr
-
 /**
  * @brief Central interrupt service routine for UART receive and timer scheduling.
  * @details Handles UART RX, clears UART errors, stores received bytes, and increments the scheduling timer.
@@ -33,7 +30,7 @@ extern CBuffer_large *Uart;
 /**
  * @brief Interrupt service routine for hardware events.
  */
-void isr(void) {   
+void __interrupt() isr(void) {
     uint16_t test;
     test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
     if (test>max) {
@@ -66,8 +63,6 @@ void isr(void) {
         PIR1bits.RCIF = 0; // reset interrupt
     }
 }
-
-#pragma code
 
 // EOF
 

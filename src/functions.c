@@ -42,20 +42,32 @@ typedef uint8_t(*func_p)(char *, char *);
 func_p fplist[MAX_FUNC_NUM];
 
 void OpenSPI(char m, char edge, char smp) {
-    (void)m;
     SSPCON1 = 0;
     SSPSTAT = 0;
     TRISCbits.TRISC5 = 0;
     TRISCbits.TRISC4 = 1;
     TRISCbits.TRISC3 = 0;
     TRISAbits.TRISA5 = 1;
-    SSPSTATbits.CKE = (edge == MODE_10) ? 1 : 0;
-    SSPSTATbits.SMP = (smp == SMPEND) ? 0 : 1;
-    SSPCON1bits.CKP = (edge == MODE_10) ? 1 : 0;
-    SSPCON1bits.SSPM0 = 0;
-    SSPCON1bits.SSPM1 = 0;
-    SSPCON1bits.SSPM2 = 1;
-    SSPCON1bits.SSPM3 = 0;
+
+    // C18 MODE_00 means CKP=0 and CKE=1, MODE_10 means CKP=1 and CKE=0.
+    if (edge == MODE_10) {
+        SSPCON1bits.CKP = 1;
+        SSPSTATbits.CKE = 0;
+    } else {
+        SSPCON1bits.CKP = 0;
+        SSPSTATbits.CKE = 1;
+    }
+
+    // C18 SMPEND selects sample-at-end (SMP=1), SMPMID selects sample-in-middle (SMP=0).
+    SSPSTATbits.SMP = (smp == SMPEND) ? 1 : 0;
+
+    // Keep current firmware call compatibility: SPI_FOSC_16 is the expected bus speed.
+    if (m == SPI_FOSC_16) {
+        SSPCON1bits.SSPM = 0b0001; // FOSC/16
+    } else {
+        SSPCON1bits.SSPM = 0b0001; // Fallback to conservative known-good speed
+    }
+
     SSPCON1bits.SSPEN = 1;
 }
 
@@ -102,24 +114,31 @@ char BusyUSART(void) {
 }
 
 void OpenTimer1(unsigned int config) {
-    (void)config;
-    T1CON = 0x00;
+    unsigned char t1con;
+
+    t1con = (unsigned char)(config & 0xFFU);
+    T1CON = t1con;
     TMR1H = 0;
     TMR1L = 0;
     T1CONbits.TMR1ON = 1;
 }
 
-void OpenTimer2(unsigned char config) {
-    (void)config;
-    T2CON = 0x04;
+void OpenTimer2(unsigned int config) {
+    unsigned char t2con;
+
+    t2con = (unsigned char)(config & 0x7FU);
+    T2CON = t2con;
     TMR2 = 0;
-    PR2 = 0xFF;
+    PIR1bits.TMR2IF = 0;
+    PIE1bits.TMR2IE = (config & TIMER_INT_ON) ? 1 : 0;
     T2CONbits.TMR2ON = 1;
 }
 
 void OpenTimer3(unsigned int config) {
-    (void)config;
-    T3CON = 0x00;
+    unsigned char t3con;
+
+    t3con = (unsigned char)(config & 0xFFU);
+    T3CON = t3con;
     TMR3H = 0;
     TMR3L = 0;
     T3CONbits.TMR3ON = 1;
@@ -166,6 +185,14 @@ void func_init(void) {
     fplist[25] = &getLTClinVoltages;        // 0x9C : get the voltage measurements from LTC ADC for linear regulators
     fplist[26] = &getLTCswVoltages;         // 0x9D : get the voltage measurements from LTC ADC for switching regulators
     fplist[27] = &enableDisableHVMeas;      // 0x9E : enable/disable HV measurement
+    fplist[28] = &resetPIC;                 // 0x9F : reset PIC
+    fplist[29] = &giveHvStatus;             // 0xA0 : get HV status
+    fplist[30] = &setInspecTime;            // 0xA1 : set automatic HV correction timings
+    fplist[31] = &getInspecTime;            // 0xA2 : get automatic HV correction timings
+    fplist[32] = &getSoftStack;             // 0xA3 : get software stack max
+    fplist[33] = &f_echo;                   // 0xA4 : echo function
+    fplist[34] = &setGetSN;                 // 0xA5 : set/get serial number
+    fplist[35] = &enDesHVdev;               // 0xA6 : enable/disable HV devices
 }
 
 /**
@@ -852,7 +879,7 @@ uint8_t get_pic_version(char *data, char *result) {
     result[1]='|';
     result[2]='\0';
     // TODO : change the date 
-    myStrCpyChar2(result,"11,06,2026,NewCalibration",'\0');
+    myStrCpyChar2(result,"02,07,2026,XC8.10 refactored version 0.1",'\0');
     return FUNC_CMD_OK;
 }
 

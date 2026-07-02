@@ -210,7 +210,7 @@ void main(void) {
     INTCONbits.GIE = 1; // enable the high priority interrupts
     INTCONbits.PEIE = 1; // enable the low priority interrupts
     PIE1bits.RCIE = 1; // Enable Rx interrupts
-    OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+    OpenTimer2(TIMER_INT_ON | T2_PS_1_16 | T2_POST_1_16);
     PR2 = 0xFA;
     timing_inspection = shortInspecTime; //short delay first between each inspection
     time_lc_prec = 0;

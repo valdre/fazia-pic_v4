@@ -27,13 +27,13 @@
 #define MHz *1000000UL
 
 #ifndef _XTAL_FREQ
-#define _XTAL_FREQ ( 16 MHz ) // to verify : with or without pll enable (with is 64 MHz)
+#define _XTAL_FREQ 64000000UL
 #endif
 
-// Emulation des Delays C18 vers les fonctions natives XC8
-#define Delay10TCYx(x)   __delay_us((x) * 2)
-#define Delay100TCYx(x)  __delay_us((x) * 20)
-#define Delay10KTCYx(x)  __delay_ms((x) * 2)
+// Emulation des Delays C18 en cycles instruction (TCY) pour garder le meme timing.
+#define Delay10TCYx(x)   _delay((unsigned long)(x) * 10UL)
+#define Delay100TCYx(x)  _delay((unsigned long)(x) * 100UL)
+#define Delay10KTCYx(x)  _delay((unsigned long)(x) * 10000UL)
 
 // Compatibilité des anciennes fonctions SPI ---
 #define SPI_FOSC_16 0
@@ -53,21 +53,21 @@ void putcUSART(char data);
 char BusyUSART(void);
 
 // Compatibilité des anciennes fonctions de timer ---
-#define TIMER_INT_ON   0x80
+#define TIMER_INT_ON   0x8000U
 #define TIMER_INT_OFF  0x00
-#define T2_PS_1_16     0x00
-#define T2_POST_1_16   0x00
-#define T1_16BIT_RW    0x00
+#define T2_PS_1_16     0x0002U
+#define T2_POST_1_16   0x0078U
+#define T1_16BIT_RW    0x0080U
 #define T1_SOURCE_INT  0x00
-#define T1_PS_1_8      0x00
+#define T1_PS_1_8      0x0030U
 #define T1_OSC1EN_OFF  0x00
 #define T1_SYNC_EXT_OFF 0x00
-#define T3_16BIT_RW    0x00
+#define T3_16BIT_RW    0x0080U
 #define T3_SOURCE_INT  0x00
 #define T3_PS_1_1      0x00
 #define T3_SYNC_EXT_OFF 0x00
 void OpenTimer1(unsigned int config);
-void OpenTimer2(unsigned char config);
+void OpenTimer2(unsigned int config);
 void OpenTimer3(unsigned int config);
 void WriteTimer1(unsigned int timer);
 unsigned int ReadTimer1(void);

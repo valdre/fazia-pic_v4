@@ -11,10 +11,80 @@ Méthode de vérification:
 - Build XC8 exécuté avec succès (avec warnings)
 - Vérification logique des transformations de migration (types, qualifiers, signatures, nettoyage, commentaires)
 
-## Verification d'exhaustivite et changements oublies
+## Criteres globaux d'equivalence fonctionnelle
 
-- Element non source detecte: dist/ (artefacts de build, a exclure du commit de migration).
-- Tous les fichiers C/H modifies listes par git status sont couverts dans ce rapport (board.h, functions.h, functions.c, isr.c, main.c, Tsensor.c, ads8332.c, analog.c, dac8568.c, display.c, maths.c, spi.c, wr_eeprom.c, setup.c, uartbuf.c).
+Ces criteres s'appliquent a toutes les sections fichier par fichier:
+
+- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
+- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
+- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
+- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+
+## Re-verification complete (etat actuel)
+
+Cette section remplace l'ancien etat partiel et documente l'etat reel actuel apres les derniers changements.
+
+Resultat global de comparaison C18 -> XC8 sur le code:
+
+- Les differences ne concernent pas uniquement la frequence/delais.
+- Les ecarts couvrent l'ensemble des couches: headers API, wrappers bas niveau, dispatch, capteurs, HV, buffers, setup et utilitaires.
+
+Inventaire exhaustif des fichiers code modifies (compare a `fazia-pic_v4`):
+
+- include/board.h (adds: 15, dels: 6)
+- include/cbuffer.h (adds: 6, dels: 6)
+- include/frame.h (adds: 3, dels: 3)
+- include/functions.h (adds: 156, dels: 99)
+- include/Generic.h (adds: 44, dels: 52)
+- include/uartbuf.h (adds: 4, dels: 4)
+- src/cbuffer.c (adds: 28, dels: 148)
+- src/frame.c (adds: 18, dels: 27)
+- src/functions.c (adds: 684, dels: 930)
+- src/isr.c (adds: 22, dels: 35)
+- src/main.c (adds: 172, dels: 281)
+- src/myfunc/ads8332.c (adds: 45, dels: 45)
+- src/myfunc/analog.c (adds: 47, dels: 58)
+- src/myfunc/dac8568.c (adds: 65, dels: 64)
+- src/myfunc/display.c (adds: 113, dels: 149)
+- src/myfunc/maths.c (adds: 97, dels: 159)
+- src/myfunc/spi.c (adds: 51, dels: 67)
+- src/myfunc/Tsensor.c (adds: 108, dels: 164)
+- src/myfunc/wr_eeprom.c (adds: 48, dels: 71)
+- src/setup.c (adds: 118, dels: 269)
+- src/uartbuf.c (adds: 22, dels: 71)
+- src/utils.c (adds: 3, dels: 6)
+
+Verification des points techniques majeurs (etat courant):
+
+- Horloge et delais:
+
+  - Ancien C18: `FOSC = HSPLL`, `FCY = 16000000`, `FOSC = FCY*4`.
+  - XC8 actuel: `_XTAL_FREQ = 64000000UL`, `BOARD_INSTR_FREQ = _XTAL_FREQ/4`, wrappers delai en entier avec `_delay`.
+  - Conclusion: objectif comportemental conserve (16 MHz instruction, 64 MHz oscillateur).
+- Wrappers de compatibilite C18 -> XC8:
+
+  - SPI/USART/Timers C18 remplaces par wrappers explicites XC8.
+  - Les signatures et types ont ete normalises en `uint8_t/uint16_t/uint32_t`.
+- Tsensor (modifie au-dela de la frequence):
+
+  - Remplacement des temporisations macro par boucle `Nop()` runtime (`delay_runtime_ticks`).
+  - Ajustement des tableaux sentinelle en `int8_t` et casts explicites.
+  - Impact: chemin timing 1-wire modifie structurellement; necessite validation hardware terrain.
+- Fichiers projet/metadata:
+
+  - Des ecarts existent aussi dans `nbproject/*` (config MPLABX/makefiles).
+  - Les artefacts `dist/*` restent des sorties de build et ne doivent pas etre traites comme migration source.
+
+Statut build:
+
+- Build XC8 courant reussi (`make` et `make clean && make -j2`).
+- Warnings 520/1498 toujours presents (connus), sans erreur de link/compile bloquante.
+
+## Synthese de verification
+
+- Le correctif timing est integre dans l'etat courant: `_XTAL_FREQ=64000000UL`, derivee instruction a 16 MHz, delais base cycles `_delay`.
+- L'inventaire des fichiers modifies et les deltas quantifies sont listes en section Re-verification complete.
+- Les artefacts `dist/*` restent hors perimetre source et a exclure du commit de migration.
 
 # include/board.h
 
@@ -42,27 +112,26 @@ Ce fichier correspond a l'implementation historique C18. Il sert de reference co
 ```c
 #ifndef _BOARD_H
 #define _BOARD_H
-#define FCY             16000000LL
-#define BOARD_FOSC      (FCY * 4)
-#define BOARD_INSTR_FREQ (BOARD_FOSC / 4)
+#ifndef _XTAL_FREQ
+#define _XTAL_FREQ      64000000UL
+#endif
+#define BOARD_FOSC       (_XTAL_FREQ)
+#define BOARD_INSTR_FREQ (BOARD_FOSC / 4UL)
+#define FCY              (BOARD_INSTR_FREQ)
 #ifndef __delay_ms
-#define __delay_ms(ms)      _delay((unsigned long)((ms) * (_XTAL_FREQ / 4000.0)))
+#define __delay_ms(ms)   _delay((unsigned long)(ms) * (BOARD_INSTR_FREQ / 1000UL))
 #endif
 #ifndef __delay_us
-#define __delay_us(us)      _delay((unsigned long)((us) * (_XTAL_FREQ / 4000000.0)))
+#define __delay_us(us)   _delay((unsigned long)(us) * (BOARD_INSTR_FREQ / 1000000UL))
 #endif
 #endif
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car XC8 n'utilise pas les primitives de delay C18 et la macro FOSC locale entrait en collision avec les definitions device; les macros de tempo ont ete rebasees sur _XTAL_FREQ et _delay.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -76,16 +145,19 @@ J'ai du changer ce code car XC8 n'utilise pas les primitives de delay C18 et la 
 -#define FCY         16000000LL
 -#define FOSC        FCY*4
 -#define INSTR_FREQ  FOSC/4
-+#define FCY             16000000LL
-+#define BOARD_FOSC      (FCY * 4)
-+#define BOARD_INSTR_FREQ (BOARD_FOSC / 4)
++#ifndef _XTAL_FREQ
++#define _XTAL_FREQ      64000000UL
++#endif
++#define BOARD_FOSC       (_XTAL_FREQ)
++#define BOARD_INSTR_FREQ (BOARD_FOSC / 4UL)
++#define FCY              (BOARD_INSTR_FREQ)
 -#define __delay_ms(ms)      Delay10KTCYx((((INSTR_FREQ/10000)*ms)/1000))
 -#define __delay_us(us)      Delay10TCYx((((INSTR_FREQ/10)*us)/1000))
 +#ifndef __delay_ms
-+#define __delay_ms(ms)      _delay((unsigned long)((ms) * (_XTAL_FREQ / 4000.0)))
++#define __delay_ms(ms)   _delay((unsigned long)(ms) * (BOARD_INSTR_FREQ / 1000UL))
 +#endif
 +#ifndef __delay_us
-+#define __delay_us(us)      _delay((unsigned long)((us) * (_XTAL_FREQ / 4000000.0)))
++#define __delay_us(us)   _delay((unsigned long)(us) * (BOARD_INSTR_FREQ / 1000000UL))
 +#endif
  #endif
 ```
@@ -316,11 +388,11 @@ Ce fichier correspond a l'implementation historique C18. Il sert de reference co
 #define KHz *1000UL
 #define MHz *1000000UL
 #ifndef _XTAL_FREQ
-#define _XTAL_FREQ ( 16 MHz )
+#define _XTAL_FREQ 64000000UL
 #endif
-#define Delay10TCYx(x)   __delay_us((x) * 2)
-#define Delay100TCYx(x)  __delay_us((x) * 20)
-#define Delay10KTCYx(x)  __delay_ms((x) * 2)
+#define Delay10TCYx(x)   _delay((unsigned long)(x) * 10UL)
+#define Delay100TCYx(x)  _delay((unsigned long)(x) * 100UL)
+#define Delay10KTCYx(x)  _delay((unsigned long)(x) * 10000UL)
 #define SPI_FOSC_16 0
 #define MODE_00     0
 #define MODE_10     1
@@ -334,21 +406,21 @@ char DataRdyUSART(void);
 char ReadUSART(void);
 void putcUSART(char data);
 char BusyUSART(void);
-#define TIMER_INT_ON   0x80
+#define TIMER_INT_ON   0x8000U
 #define TIMER_INT_OFF  0x00
-#define T2_PS_1_16     0x00
-#define T2_POST_1_16   0x00
-#define T1_16BIT_RW    0x00
+#define T2_PS_1_16     0x0002U
+#define T2_POST_1_16   0x0078U
+#define T1_16BIT_RW    0x0080U
 #define T1_SOURCE_INT  0x00
-#define T1_PS_1_8      0x00
+#define T1_PS_1_8      0x0030U
 #define T1_OSC1EN_OFF  0x00
 #define T1_SYNC_EXT_OFF 0x00
-#define T3_16BIT_RW    0x00
+#define T3_16BIT_RW    0x0080U
 #define T3_SOURCE_INT  0x00
 #define T3_PS_1_1      0x00
 #define T3_SYNC_EXT_OFF 0x00
 void OpenTimer1(unsigned int config);
-void OpenTimer2(unsigned char config);
+void OpenTimer2(unsigned int config);
 void OpenTimer3(unsigned int config);
 void WriteTimer1(unsigned int timer);
 unsigned int ReadTimer1(void);
@@ -544,15 +616,11 @@ uint16_t getLowLcTrsh(void);
 #endif
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car il concentrait les dependances C18 (types, qualifiers memoire, includes bibliotheques) devenues obsoletes sous XC8; les signatures ont ete normalisees en uint8_t/uint16_t/uint32_t et les wrappers de compatibilite ont ete introduits.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -575,11 +643,11 @@ J'ai du changer ce code car il concentrait les dependances C18 (types, qualifier
 +#define KHz *1000UL
 +#define MHz *1000000UL
 +#ifndef _XTAL_FREQ
-+#define _XTAL_FREQ ( 16 MHz )
++#define _XTAL_FREQ 64000000UL
 +#endif
-+#define Delay10TCYx(x)   __delay_us((x) * 2)
-+#define Delay100TCYx(x)  __delay_us((x) * 20)
-+#define Delay10KTCYx(x)  __delay_ms((x) * 2)
++#define Delay10TCYx(x)   _delay((unsigned long)(x) * 10UL)
++#define Delay100TCYx(x)  _delay((unsigned long)(x) * 100UL)
++#define Delay10KTCYx(x)  _delay((unsigned long)(x) * 10000UL)
 +#define SPI_FOSC_16 0
 +#define MODE_00     0
 +#define MODE_10     1
@@ -593,21 +661,21 @@ J'ai du changer ce code car il concentrait les dependances C18 (types, qualifier
 +char ReadUSART(void);
 +void putcUSART(char data);
 +char BusyUSART(void);
-+#define TIMER_INT_ON   0x80
++#define TIMER_INT_ON   0x8000U
 +#define TIMER_INT_OFF  0x00
-+#define T2_PS_1_16     0x00
-+#define T2_POST_1_16   0x00
-+#define T1_16BIT_RW    0x00
++#define T2_PS_1_16     0x0002U
++#define T2_POST_1_16   0x0078U
++#define T1_16BIT_RW    0x0080U
 +#define T1_SOURCE_INT  0x00
-+#define T1_PS_1_8      0x00
++#define T1_PS_1_8      0x0030U
 +#define T1_OSC1EN_OFF  0x00
 +#define T1_SYNC_EXT_OFF 0x00
-+#define T3_16BIT_RW    0x00
++#define T3_16BIT_RW    0x0080U
 +#define T3_SOURCE_INT  0x00
 +#define T3_PS_1_1      0x00
 +#define T3_SYNC_EXT_OFF 0x00
 +void OpenTimer1(unsigned int config);
-+void OpenTimer2(unsigned char config);
++void OpenTimer2(unsigned int config);
 +void OpenTimer3(unsigned int config);
 +void WriteTimer1(unsigned int timer);
 +unsigned int ReadTimer1(void);
@@ -2518,22 +2586,26 @@ char BusyUSART(void) {
     return (char)(!TXSTAbits.TRMT);
 }
 void OpenTimer1(unsigned int config) {
-    (void)config;
-    T1CON = 0x00;
+    unsigned char t1con;
+    t1con = (unsigned char)(config & 0xFFU);
+    T1CON = t1con;
     TMR1H = 0;
     TMR1L = 0;
     T1CONbits.TMR1ON = 1;
 }
-void OpenTimer2(unsigned char config) {
-    (void)config;
-    T2CON = 0x04;
+void OpenTimer2(unsigned int config) {
+    unsigned char t2con;
+    t2con = (unsigned char)(config & 0x7FU);
+    T2CON = t2con;
     TMR2 = 0;
-    PR2 = 0xFF;
+    PIR1bits.TMR2IF = 0;
+    PIE1bits.TMR2IE = (config & TIMER_INT_ON) ? 1 : 0;
     T2CONbits.TMR2ON = 1;
 }
 void OpenTimer3(unsigned int config) {
-    (void)config;
-    T3CON = 0x00;
+    unsigned char t3con;
+    t3con = (unsigned char)(config & 0xFFU);
+    T3CON = t3con;
     TMR3H = 0;
     TMR3L = 0;
     T3CONbits.TMR3ON = 1;
@@ -3945,15 +4017,90 @@ uint16_t getLowLcTrsh(void) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car il depend de signatures/types C18 et d'acces bas niveau qui devaient etre rendus explicites pour XC8 sans alterer le dispatch des commandes ni les calculs HV/EEPROM.
+
+Audit des nouvelles fonctions de compatibilite ajoutees (remplacement API C18 indisponibles sous XC8):
+
+- `OpenSPI`:
+    - Role: initialiser le module SPI materiel (clock, mode, sampling, activation).
+    - Avant (C18): assure par la bibliotheque `spi.h` via `OpenSPI(...)`.
+    - Equivalence: **corrigee**. Le mapping `MODE_00/MODE_10` et `SMPEND/SMPMID` est explicite, et le debit cible `SPI_FOSC_16` est force en `FOSC/16`.
+
+- `CloseSPI`:
+    - Role: desactiver le module SPI.
+    - Avant (C18): `CloseSPI()` dans `spi.h`.
+    - Equivalence: **OK** (desactivation `SSPEN`).
+
+- `putcSPI`:
+    - Role: emettre un octet SPI en polling.
+    - Avant (C18): `putcSPI(...)`.
+    - Equivalence: **OK** (ecriture `SSPBUF`, attente `SSPIF`).
+
+- `getcSPI`:
+    - Role: lire un octet SPI via cycle d'horloge dummy.
+    - Avant (C18): `getcSPI()`.
+    - Equivalence: **OK** (dummy write + attente `SSPIF` + retour `SSPBUF`).
+
+- `DataRdyUSART`:
+    - Role: tester la disponibilite d'un octet recu UART.
+    - Avant (C18): `DataRdyUSART()` dans `usart.h`.
+    - Equivalence: **OK** (base `RCIF`).
+
+- `ReadUSART`:
+    - Role: lire l'octet UART recu.
+    - Avant (C18): `ReadUSART()`.
+    - Equivalence: **OK** (lecture directe `RCREG`, conforme usage historique).
+
+- `putcUSART`:
+    - Role: transmettre un octet UART en polling.
+    - Avant (C18): `putcUSART(...)`.
+    - Equivalence: **OK** (attente `TXIF`, ecriture `TXREG`).
+
+- `BusyUSART`:
+    - Role: indiquer si l'emetteur UART est encore occupe.
+    - Avant (C18): `BusyUSART()`.
+    - Equivalence: **OK** (base `TRMT`).
+
+- `OpenTimer1`:
+    - Role: initialiser Timer1 pour la mesure temporelle (notamment 1-wire).
+    - Avant (C18): `OpenTimer1(...)` dans `timers.h`.
+    - Equivalence: **OK**. Le parametre `config` est desormais applique sur `T1CON` (bits bas), ce qui restaure le modele C18 base masque de configuration.
+
+- `OpenTimer2`:
+    - Role: initialiser Timer2 pour base periodique.
+    - Avant (C18): `OpenTimer2(...)`.
+    - Equivalence: **OK**. Le parametre `config` pilote desormais `T2CON` (bits bas) et l'activation interruption via `TIMER_INT_ON`.
+
+- `OpenTimer3`:
+    - Role: initialiser Timer3 pour comptage libre/mesures.
+    - Avant (C18): `OpenTimer3(...)`.
+    - Equivalence: **OK**. Le parametre `config` est desormais applique sur `T3CON` (bits bas), conforme a l'intention C18.
+
+- `WriteTimer1`:
+    - Role: charger la valeur 16 bits du Timer1.
+    - Avant (C18): `WriteTimer1(...)`.
+    - Equivalence: **OK** (ecriture `TMR1H/TMR1L`).
+
+- `ReadTimer1`:
+    - Role: lire la valeur 16 bits du Timer1.
+    - Avant (C18): `ReadTimer1()`.
+    - Equivalence: **OK** (reconstruction `TMR1H/TMR1L`).
+
+- `delay_runtime_ticks` (ajoutee dans `src/myfunc/Tsensor.c`):
+    - Role: remplacer des delais macros C18 dynamiques par une boucle `Nop()` runtime deterministe.
+    - Avant (C18): delais via macros `Delay*TCYx`.
+    - Equivalence: **fonctionnelle attendue**, mais non strictement cycle-a-cycle sans mesure instrumentee; validation materielle recommandee pour le 1-wire.
+
+Correction de compatibilite complementaire appliquee:
+
+- Table de dispatch `func_init`:
+    - Constat: des commandes historiques (0x9F a 0xA6) n'etaient plus mappees dans `fplist`.
+    - Correctif: restauration des entrees `resetPIC`, `giveHvStatus`, `setInspecTime`, `getInspecTime`, `getSoftStack`, `f_echo`, `setGetSN`, `enDesHVdev`.
+    - Impact: comportement de protocole UART realigne avec le firmware C18.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -4079,22 +4226,26 @@ J'ai du changer ce code car il depend de signatures/types C18 et d'acces bas niv
 +    return (char)(!TXSTAbits.TRMT);
 +}
 +void OpenTimer1(unsigned int config) {
-+    (void)config;
-+    T1CON = 0x00;
++    unsigned char t1con;
++    t1con = (unsigned char)(config & 0xFFU);
++    T1CON = t1con;
 +    TMR1H = 0;
 +    TMR1L = 0;
 +    T1CONbits.TMR1ON = 1;
 +}
-+void OpenTimer2(unsigned char config) {
-+    (void)config;
-+    T2CON = 0x04;
++void OpenTimer2(unsigned int config) {
++    unsigned char t2con;
++    t2con = (unsigned char)(config & 0x7FU);
++    T2CON = t2con;
 +    TMR2 = 0;
-+    PR2 = 0xFF;
++    PIR1bits.TMR2IF = 0;
++    PIE1bits.TMR2IE = (config & TIMER_INT_ON) ? 1 : 0;
 +    T2CONbits.TMR2ON = 1;
 +}
 +void OpenTimer3(unsigned int config) {
-+    (void)config;
-+    T3CON = 0x00;
++    unsigned char t3con;
++    t3con = (unsigned char)(config & 0xFFU);
++    T3CON = t3con;
 +    TMR3H = 0;
 +    TMR3L = 0;
 +    T3CONbits.TMR3ON = 1;
@@ -6167,9 +6318,7 @@ extern bool check;
 extern uint16_t max;
 extern CBuffer_large _Uart[2];
 extern CBuffer_large *Uart;
-#pragma code isr=0x08
-#pragma interrupt isr
-void isr(void) {
+void __interrupt() isr(void) {
     uint16_t test;
     test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
     if (test>max) {
@@ -6205,15 +6354,11 @@ void isr(void) {
 #pragma code
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car le modele d'interruption C18 et certains attributs de declaration devaient etre adaptes a la chaine XC8 tout en conservant la logique d'ISR.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -6248,7 +6393,7 @@ J'ai du changer ce code car le modele d'interruption C18 et certains attributs d
 -    UINT test;
 -    test = (UINT)FSR1L+(UINT)(FSR1H<<8);
 -    if (test>max)
-+void isr(void) {
++void __interrupt() isr(void) {
 +    uint16_t test;
 +    test = (uint16_t)FSR1L+(uint16_t)(FSR1H<<8);
 +    if (test>max) {
@@ -6481,7 +6626,7 @@ void main(void) {
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
     PIE1bits.RCIE = 1;
-    OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+    OpenTimer2(TIMER_INT_ON | T2_PS_1_16 | T2_POST_1_16);
     PR2 = 0xFA;
     timing_inspection = shortInspecTime;
     time_lc_prec = 0;
@@ -7031,7 +7176,7 @@ void main(void) {
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
     PIE1bits.RCIE = 1;
-    OpenTimer2(TIMER_INT_ON & T2_PS_1_16 & T2_POST_1_16);
+    OpenTimer2(TIMER_INT_ON | T2_PS_1_16 | T2_POST_1_16);
     PR2 = 0xFA;
     timing_inspection = shortInspecTime;
     time_lc_prec = 0;
@@ -7412,15 +7557,11 @@ uint32_t current_leak_inspection(void) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car les conversions implicites et certains tests etaient plus stricts sous XC8; le flux principal a ete ajuste pour garder le meme comportement runtime.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -8262,15 +8403,11 @@ void attente_bit1(char c) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car les delais C18 dynamiques et les hypotheses sur le signe de char ne sont pas robustes sous XC8; la logique 1-Wire a ete adaptee en conservant la sequence protocolaire.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -8859,15 +8996,11 @@ uint16_t adc_getvalue(unsigned char *canal)
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car XC8 met en evidence des pertes de precision implicites; les cast et types ont ete ajustes pour conserver les conversions ADC attendues.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -9240,15 +9373,11 @@ uint8_t getLTC2308Voltages(uint8_t mask, uint16_t *ADvoltages) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car les signatures et tailles d'entiers C18 n'etaient pas assez explicites sous XC8; l'acquisition et le formatage des mesures ont ete fiabilises.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -9672,15 +9801,11 @@ uint8_t slop_vhv(char tel, uint8_t module, uint16_t tension, uint32_t slopeVS) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car la migration expose des risques de troncature sur coefficients de calibration et impose des types explicites pour les calculs DAC/HV.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -10277,15 +10402,11 @@ void myStrCpyHex(char *container,uint16_t a,int format,char cend) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car XC8 signale davantage les conversions implicites sur index/masques; les routines de formatage ont ete harmonisees sans changer le protocole texte.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -10954,10 +11075,7 @@ uint16_t power10(uint8_t c) {
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -11447,15 +11565,11 @@ uint8_t set_off_V_preamp1b(uint16_t value) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car les interfaces SPI C18 et les retours implicites non securises devaient etre clarifies pour XC8 tout en gardant les trames registres identiques.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -11779,15 +11893,11 @@ uint8_t EERead(unsigned int ad) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car les sequences EEPROM C18 necessitent des types et signatures explicites en XC8 pour garantir des lectures/critures identiques.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -12054,8 +12164,8 @@ void ucsetup(void) {
     TXSTAbits.TXEN = 1;
     RCSTAbits.SPEN = 1;
     RCSTAbits.CREN = 1;
-    OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
-    OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW & T3_SOURCE_INT & T3_PS_1_1 & T3_SYNC_EXT_OFF);
+    OpenTimer1(TIMER_INT_OFF | T1_16BIT_RW | T1_SOURCE_INT | T1_PS_1_8 | T1_OSC1EN_OFF | T1_SYNC_EXT_OFF);
+    OpenTimer3(TIMER_INT_OFF | T3_16BIT_RW | T3_SOURCE_INT | T3_PS_1_1 | T3_SYNC_EXT_OFF);
     IPR2bits.TMR3IP=1;
     PIE2bits.TMR3IE=0;
     OpenSPI(SPI_FOSC_16, MODE_10,SMPMID);
@@ -12315,8 +12425,8 @@ void ucsetup(void) {
     TXSTAbits.TXEN = 1;
     RCSTAbits.SPEN = 1;
     RCSTAbits.CREN = 1;
-    OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
-    OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW & T3_SOURCE_INT & T3_PS_1_1 & T3_SYNC_EXT_OFF);
+    OpenTimer1(TIMER_INT_OFF | T1_16BIT_RW | T1_SOURCE_INT | T1_PS_1_8 | T1_OSC1EN_OFF | T1_SYNC_EXT_OFF);
+    OpenTimer3(TIMER_INT_OFF | T3_16BIT_RW | T3_SOURCE_INT | T3_PS_1_1 | T3_SYNC_EXT_OFF);
     IPR2bits.TMR3IP=1;
     PIE2bits.TMR3IE=0;
     OpenSPI(SPI_FOSC_16, MODE_10,SMPMID);
@@ -12408,15 +12518,11 @@ void memsetup(void) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car les macros de frequence/baudrate et certaines priorites d'operateurs devaient etre reformulees pour le compilateur XC8.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
@@ -12639,8 +12745,8 @@ J'ai du changer ce code car les macros de frequence/baudrate et certaines priori
      TXSTAbits.TXEN = 1;
      RCSTAbits.SPEN = 1;
      RCSTAbits.CREN = 1;
-     OpenTimer1(TIMER_INT_OFF & T1_16BIT_RW & T1_SOURCE_INT & T1_PS_1_8 & T1_OSC1EN_OFF & T1_SYNC_EXT_OFF);
-     OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW & T3_SOURCE_INT & T3_PS_1_1 & T3_SYNC_EXT_OFF);
+    OpenTimer1(TIMER_INT_OFF | T1_16BIT_RW | T1_SOURCE_INT | T1_PS_1_8 | T1_OSC1EN_OFF | T1_SYNC_EXT_OFF);
+    OpenTimer3(TIMER_INT_OFF | T3_16BIT_RW | T3_SOURCE_INT | T3_PS_1_1 | T3_SYNC_EXT_OFF);
      IPR2bits.TMR3IP=1;
      PIE2bits.TMR3IE=0;
      OpenSPI(SPI_FOSC_16, MODE_10,SMPMID);
@@ -12968,15 +13074,11 @@ void uartbuf_putframe(uint16_t channel, unsigned char *f) {
 }
 ```
 
-j'ai du changer ce code car...
 J'ai du changer ce code car XC8 est plus strict sur les chemins de retour des fonctions non-void et sur la coherence des types de buffer UART.
 
 ### pourquoi c'est equivalent
 
-- Les calculs numeriques et les constantes de calibration conservent les memes formules de base (conversion ADC/DAC, tables, seuils EEPROM).
-- Les changements de style (commentaires, indentation, factorisation mineure) ne modifient pas l'algorithme fonctionnel.
-- Les conversions de types visent a expliciter la largeur machine (8/16/32 bits) conforme au PIC18.
-- Reference Microchip XC8 (migration C18 -> XC8): https://onlinedocs.microchip.com/ (XC8 C Compiler User's Guide, sections C18 compatibility et memory qualifiers).
+Voir la section Criteres globaux d'equivalence fonctionnelle en tete de document.
 
 ### Diff exhaustif ligne a ligne
 
