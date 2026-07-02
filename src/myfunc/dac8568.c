@@ -116,11 +116,9 @@ void ask_hv_calibration(char *str) {
     str[cp] = '\0';
 }
 
-static UINT32 read_eeprom_u32(UINT addr) {
-    return  ((UINT32)EERead(addr + 3) << 24) |
-            ((UINT32)EERead(addr + 2) << 16) |
-            ((UINT32)EERead(addr + 1) <<  8) |
-            (UINT32)EERead(addr);
+static int read_eeprom_s16(UINT addr) {
+    return  ((int)EERead(addr + 1) <<  8) |
+            (int)EERead(addr);
 }
 
 /**
@@ -133,11 +131,11 @@ static UINT32 read_eeprom_u32(UINT addr) {
  * @return value UINT32 DAC code corresponding to the target voltage
  */
 
-UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const) {
-    UINT32 dac_cal_linear_coeff = read_eeprom_u32(eeprom_adr_coeff);
-    UINT32 dac_cal_linear_const = read_eeprom_u32(eeprom_adr_const);
+int get_value_dec(int tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const) {
+    int dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
+    int dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
     /* Integer-only arithmetic for PIC18. */
-    return (dac_cal_linear_coeff * (UINT32)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
+    return (dac_cal_linear_coeff * (int)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
 }
 
 /**

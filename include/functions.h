@@ -47,7 +47,7 @@
 #define snLSB 362
 #define snMSB 363
 #define SPI_KEY 0x38
-#define COEFF_SCALE_FACTOR 1000
+#define COEFF_SCALE_FACTOR 100
 
 #define REG_FPGA_REQUEST 0x220
 #define REG_FPGA_CMDE 0x221
@@ -720,9 +720,9 @@ void ask_hv_calibration(char *str);
  * @param tension Target voltage in volts
  * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
  * @param eeprom_adr_const EEPROM address for the DAC calibration linear constant
- * @return value UINT32 DAC code corresponding to the target voltage
+ * @return value int DAC code corresponding to the target voltage
  */
-UINT32 get_value_dec(UINT tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const);
+int get_value_dec(int tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.

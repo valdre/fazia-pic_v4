@@ -68,7 +68,7 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
     UINT32 *coeffA;
     UINT32 *coeffB;
     UINT32 inside_current;
-    UINT32 corrected_voltage;
+    int    corrected_voltage;
     UINT   lc = 0;
     static UINT32 leakage_current;
     static UINT32 leakage_current_na;
@@ -77,14 +77,14 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
         if (tel == 'B') {
             coeffA  =& coefA_B1;
             coeffB  =& coefB_B1;
-            corrected_voltage = HvPhysCorrect[2];
+            corrected_voltage = (int) HvPhysCorrect[2];
             canal   = 2;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 2 * EEPROM_CAL_HV_WIDTH + 8;
             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
         } else if (tel == 'A') {
             coeffA  =& coefA_A1;
             coeffB  =& coefB_A1;
-            corrected_voltage = HvPhysCorrect[0];
+            corrected_voltage = (int) HvPhysCorrect[0];
             canal   = 0;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 8;
             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
@@ -94,14 +94,14 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
         if (tel == 'A') {
             coeffA  =& coefA_A2;
             coeffB  =& coefB_A2;
-            corrected_voltage = HvPhysCorrect[1];
+            corrected_voltage = (int) HvPhysCorrect[1];
             canal   = 1;
             ad      = EEPROM_CAL_HV_FIRST_ADR + EEPROM_CAL_HV_WIDTH + 8;
             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
         } else if (tel == 'B') {
             coeffA  =& coefA_B2;
             coeffB  =& coefB_B2;
-            corrected_voltage = HvPhysCorrect[3];
+            corrected_voltage = (int) HvPhysCorrect[3];
             canal   = 3;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 3 * EEPROM_CAL_HV_WIDTH + 8;
             inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
