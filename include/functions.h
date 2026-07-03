@@ -720,9 +720,17 @@ void ask_hv_calibration(char *str);
  * @param tension Target voltage in volts
  * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
  * @param eeprom_adr_const EEPROM address for the DAC calibration linear constant
- * @return value int DAC code corresponding to the target voltage
+ * @return Signed 32-bit DAC code corresponding to the target voltage
  */
-int get_value_dec(int tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const);
+long int get_value_dec(int tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const);
+
+/**
+ * @brief Validate linear calibration coefficient/constant pair stored in EEPROM.
+ * @param coeff_addr EEPROM address of signed 16-bit coefficient.
+ * @param const_addr EEPROM address of signed 16-bit constant.
+ * @return 1 if calibration looks valid, 0 otherwise.
+ */
+BYTE is_linear_calibration_valid(UINT coeff_addr, UINT const_addr);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.

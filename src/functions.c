@@ -2100,4 +2100,15 @@ UINT getLowLcTrsh(void) {
     return (lsb | (msb << 8));
 }
 
+BYTE is_linear_calibration_valid(UINT coeff_addr, UINT const_addr) {
+    int coeff = ((int)EERead(coeff_addr + 1) << 8) | (int)EERead(coeff_addr);
+    int cst = ((int)EERead(const_addr + 1) << 8) | (int)EERead(const_addr);
+    // check if coeff and cst are both 0x0000 or 0xFFFF witch indicates uninitialized calibration data
+    // for aberant value nothing is done for the moment, but it could be improved.
+    if (((coeff == 0) && (cst == 0)) || ((coeff == -1) && (cst == -1))) {
+        return 0;
+    }
+    return 1;
+}
+
 // EOF

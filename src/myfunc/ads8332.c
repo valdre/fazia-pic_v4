@@ -80,14 +80,24 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[2];
             canal   = 2;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 2 * EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST)) {
+                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+            } else {
+                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                inside_current = 30001;
+            }
         } else if (tel == 'A') {
             coeffA  =& coefA_A1;
             coeffB  =& coefB_A1;
             corrected_voltage = (int) HvPhysCorrect[0];
             canal   = 0;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST)) {
+                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+            } else {
+                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                inside_current = 30001;
+            }
         }
     }
     if (module == '2') {
@@ -97,17 +107,27 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[1];
             canal   = 1;
             ad      = EEPROM_CAL_HV_FIRST_ADR + EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST)) {
+                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+            } else {
+                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                inside_current = 30001;
+            }
         } else if (tel == 'B') {
             coeffA  =& coefA_B2;
             coeffB  =& coefB_B2;
             corrected_voltage = (int) HvPhysCorrect[3];
             canal   = 3;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 3 * EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST)) {
+                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+            } else {
+                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                inside_current = 30001;
+            }
         }
     }
-    
+    // Default behavior for legacy leakage current model if the linear calibration is not valid that i talk about
     if (inside_current > 30000) {
 		while (TMR2 > 50);
 		inside_current = (*coeffA) * corrected_voltage;
