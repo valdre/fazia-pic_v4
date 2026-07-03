@@ -68,7 +68,7 @@ uint16_t leak_current(char tel, char module, uint32_t lcAdcRead) {
     uint32_t *coeffA;
     uint32_t *coeffB;
     uint32_t inside_current;
-    uint32_t corrected_voltage;
+    int      corrected_voltage;
     uint16_t   lc = 0;
     static uint32_t leakage_current;
     static uint32_t leakage_current_na;
@@ -77,34 +77,34 @@ uint16_t leak_current(char tel, char module, uint32_t lcAdcRead) {
         if (tel == 'B') {
             coeffA  =& coefA_B1;
             coeffB  =& coefB_B1;
-            corrected_voltage = HvPhysCorrect[2];
+            corrected_voltage = (int) HvPhysCorrect[2];
             canal   = 2;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 2 * EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
         } else if (tel == 'A') {
             coeffA  =& coefA_A1;
             coeffB  =& coefB_A1;
-            corrected_voltage = HvPhysCorrect[0];
+            corrected_voltage = (int) HvPhysCorrect[0];
             canal   = 0;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
         }
     }
     if (module == '2') {
         if (tel == 'A') {
             coeffA  =& coefA_A2;
             coeffB  =& coefB_A2;
-            corrected_voltage = HvPhysCorrect[1];
+            corrected_voltage = (int) HvPhysCorrect[1];
             canal   = 1;
             ad      = EEPROM_CAL_HV_FIRST_ADR + EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
         } else if (tel == 'B') {
             coeffA  =& coefA_B2;
             coeffB  =& coefB_B2;
-            corrected_voltage = HvPhysCorrect[3];
+            corrected_voltage = (int) HvPhysCorrect[3];
             canal   = 3;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 3 * EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
         }
     }
     
