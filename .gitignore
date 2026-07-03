@@ -5,6 +5,7 @@ build/
 _build/
 debug/
 disassembly/
+dist/
 
 # private project files
 nbproject/private/
@@ -38,3 +39,6 @@ build.ninja
 *.cache
 *.pyc
 *.pyo
+
+# linker/map output used by this project configuration
+toto.txt
