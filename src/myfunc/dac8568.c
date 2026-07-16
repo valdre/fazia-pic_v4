@@ -117,11 +117,6 @@ void ask_hv_calibration(char *str) {
     str[cp] = '\0';
 }
 
-static int read_eeprom_s16(uint16_t addr) {
-    return ((int)EERead(addr + 1) <<  8) |
-            (int)EERead(addr);
-}
-
 /**
  * @improve : Transfrom a reading of value in EEprom to a 2 value  in eeprom (instead of ~30,40) 
  * and then create a equation to get the desired values
@@ -129,14 +124,17 @@ static int read_eeprom_s16(uint16_t addr) {
  * @param tension Target voltage in volts
  * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
  * 
- * @return value uint32_t DAC code corresponding to the target voltage
+ * @return Signed 32-bit DAC code corresponding to the target voltage
  */
 
-int get_value_dec(int tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
-    int dac_cal_linear_coeff = read_eeprom_s16(eeprom_adr_coeff);
-    int dac_cal_linear_const = read_eeprom_s16(eeprom_adr_const);
+long int get_value_dec(int tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const) {
+    int dac_cal_linear_coeff = ((int)EERead(eeprom_adr_coeff + 1) << 8) | (int)EERead(eeprom_adr_coeff);
+    int dac_cal_linear_const = ((int)EERead(eeprom_adr_const + 1) << 8) | (int)EERead(eeprom_adr_const);
+    long int lin;
+
     /* Integer-only arithmetic for PIC18. */
-    return (dac_cal_linear_coeff * (int)tension  + dac_cal_linear_const) / COEFF_SCALE_FACTOR;
+    lin = ((long int)dac_cal_linear_coeff * (long int)tension) + (long int)dac_cal_linear_const;
+    return lin / COEFF_SCALE_FACTOR;
 }
 
 /**
@@ -188,7 +186,12 @@ uint8_t slop_vhv(char tel, uint8_t module, uint16_t tension, uint32_t slopeVS) {
     if (coef != 0) {
         default_value = ((uint32_t)tension) * coef / 1000;
         if (use_linear) {
-            value_dec = get_value_dec(tension, calibration_addr_coeff, calibration_addr_const);
+            if (is_linear_calibration_valid(calibration_addr_coeff, calibration_addr_const)) {
+                value_dec = (uint32_t)get_value_dec((int)tension, calibration_addr_coeff, calibration_addr_const);
+            } else {
+                value_dec = default_value;
+            }
+
             if (value_dec > max_dac) {
                 value_dec = default_value;
             }

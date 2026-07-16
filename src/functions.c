@@ -1881,4 +1881,15 @@ uint16_t getLowLcTrsh(void) {
     return (lsb | (msb << 8));
 }
 
+uint8_t is_linear_calibration_valid(uint16_t coeff_addr, uint16_t const_addr) {
+    int coeff = ((int)EERead(coeff_addr + 1) << 8) | (int)EERead(coeff_addr);
+    int cst = ((int)EERead(const_addr + 1) << 8) | (int)EERead(const_addr);
+
+    /* Treat erased/empty pairs as invalid calibration data. */
+    if (((coeff == 0) && (cst == 0)) || ((coeff == -1) && (cst == -1))) {
+        return 0;
+    }
+    return 1;
+}
+
 // EOF

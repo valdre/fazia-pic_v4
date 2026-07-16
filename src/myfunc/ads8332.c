@@ -80,14 +80,22 @@ uint16_t leak_current(char tel, char module, uint32_t lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[2];
             canal   = 2;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 2 * EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST)) {
+                inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+            } else {
+                inside_current = 30001;
+            }
         } else if (tel == 'A') {
             coeffA  =& coefA_A1;
             coeffB  =& coefB_A1;
             corrected_voltage = (int) HvPhysCorrect[0];
             canal   = 0;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 8;
-            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST)) {
+                inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+            } else {
+                inside_current = 30001;
+            }
         }
     }
     if (module == '2') {
@@ -97,17 +105,26 @@ uint16_t leak_current(char tel, char module, uint32_t lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[1];
             canal   = 1;
             ad      = EEPROM_CAL_HV_FIRST_ADR + EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST)) {
+                inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+            } else {
+                inside_current = 30001;
+            }
         } else if (tel == 'B') {
             coeffA  =& coefA_B2;
             coeffB  =& coefB_B2;
             corrected_voltage = (int) HvPhysCorrect[3];
             canal   = 3;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 3 * EEPROM_CAL_HV_WIDTH + 8;
-            inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+            if (is_linear_calibration_valid(EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST)) {
+                inside_current = (uint32_t)get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+            } else {
+                inside_current = 30001;
+            }
         }
     }
-    
+
+    /* Fallback to legacy leakage model when linear calibration is unavailable. */
     if (inside_current > 30000) {
 		while (TMR2 > 50);
 		inside_current = (*coeffA) * corrected_voltage;

@@ -139,22 +139,22 @@ unsigned int ReadTimer1(void);
 #define EEPROM_LOW_LC_TRSH_LSB 658
 #define EEPROM_LOW_LC_TRSH_MSB 659
 #define EEPROM_CAL_DAC_A1_LINEAR_COEFF 660
-#define EEPROM_CAL_DAC_A1_LINEAR_CONST 664
-#define EEPROM_CAL_DAC_A2_LINEAR_COEFF 668
-#define EEPROM_CAL_DAC_A2_LINEAR_CONST 672
-#define EEPROM_CAL_DAC_B1_LINEAR_COEFF 676
-#define EEPROM_CAL_DAC_B1_LINEAR_CONST 680
-#define EEPROM_CAL_DAC_B2_LINEAR_COEFF 684
-#define EEPROM_CAL_DAC_B2_LINEAR_CONST 688
+#define EEPROM_CAL_DAC_A1_LINEAR_CONST 662
+#define EEPROM_CAL_DAC_A2_LINEAR_COEFF 664
+#define EEPROM_CAL_DAC_A2_LINEAR_CONST 666
+#define EEPROM_CAL_DAC_B1_LINEAR_COEFF 668
+#define EEPROM_CAL_DAC_B1_LINEAR_CONST 670
+#define EEPROM_CAL_DAC_B2_LINEAR_COEFF 672
+#define EEPROM_CAL_DAC_B2_LINEAR_CONST 674
 
-#define EEPROM_CAL_ADC_A1_LINEAR_COEFF 692
-#define EEPROM_CAL_ADC_A1_LINEAR_CONST 696
-#define EEPROM_CAL_ADC_A2_LINEAR_COEFF 700
-#define EEPROM_CAL_ADC_A2_LINEAR_CONST 704
-#define EEPROM_CAL_ADC_B1_LINEAR_COEFF 708
-#define EEPROM_CAL_ADC_B1_LINEAR_CONST 712
-#define EEPROM_CAL_ADC_B2_LINEAR_COEFF 716
-#define EEPROM_CAL_ADC_B2_LINEAR_CONST 720
+#define EEPROM_CAL_ADC_A1_LINEAR_COEFF 676
+#define EEPROM_CAL_ADC_A1_LINEAR_CONST 678
+#define EEPROM_CAL_ADC_A2_LINEAR_COEFF 680
+#define EEPROM_CAL_ADC_A2_LINEAR_CONST 682
+#define EEPROM_CAL_ADC_B1_LINEAR_COEFF 684
+#define EEPROM_CAL_ADC_B1_LINEAR_CONST 686
+#define EEPROM_CAL_ADC_B2_LINEAR_COEFF 688
+#define EEPROM_CAL_ADC_B2_LINEAR_CONST 690
 struct parametres {
     uint16_t voltage_preamp1b;
     uint16_t voltage_preamp2b;
@@ -777,9 +777,17 @@ void ask_hv_calibration(char *str);
  * @param tension Target voltage in volts
  * @param eeprom_adr_coeff EEPROM address for the DAC calibration linear coefficient
  * @param eeprom_adr_const EEPROM address for the DAC calibration linear constant
- * @return value uint32_t DAC code corresponding to the target voltage
+ * @return Signed 32-bit DAC code corresponding to the target voltage
  */
-uint32_t get_value_dec(uint32_t tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const);
+long int get_value_dec(int tension, uint16_t eeprom_adr_coeff, uint16_t eeprom_adr_const);
+
+/**
+ * @brief Validate linear calibration coefficient/constant pair stored in EEPROM.
+ * @param coeff_addr EEPROM address of signed 16-bit coefficient.
+ * @param const_addr EEPROM address of signed 16-bit constant.
+ * @return 1 if calibration looks valid, 0 otherwise.
+ */
+uint8_t is_linear_calibration_valid(uint16_t coeff_addr, uint16_t const_addr);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.
