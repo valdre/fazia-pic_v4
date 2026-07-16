@@ -127,7 +127,7 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             }
         }
     }
-    // Default behavior for legacy leakage current model if the linear calibration is not valid that i talk about
+    // Default behavior for legacy leakage current model if the linear calibration is not valid
     if (inside_current > 30000) {
 		while (TMR2 > 50);
 		inside_current = (*coeffA) * corrected_voltage;
