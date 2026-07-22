@@ -2111,4 +2111,15 @@ BYTE is_linear_calibration_valid(UINT coeff_addr, UINT const_addr) {
     return 1;
 }
 
+BYTE use_linear_calibration(void) {
+    // EEPROM_CAL_METHOD_SEL selects the calibration method: only the value 1
+    // enables the new linear method; any other value (including blank EEPROM,
+    // which reads 0xFF) keeps the old table-based method, so boards without
+    // linear calibration data keep their previous behaviour.
+    if (EERead(EEPROM_CAL_METHOD_SEL) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
 // EOF

@@ -183,6 +183,42 @@ The main state variables are:
 - `HvPhysTarget[4]`: requested physical high voltage.
 - `HvPhysCorrect[4]`: corrected high voltage after leakage compensation.
 
+## Calibration Methods (NewCalibration branch)
+
+The firmware supports two HV calibration methods, selected at run time by an EEPROM cell:
+
+```c
+#define EEPROM_CAL_METHOD_SEL 692 // 1 = new linear method, any other value = old table-based method
+```
+
+`use_linear_calibration()` (in `src/functions.c`) returns 1 only when `EERead(692) == 1`.
+Any other value — including a blank cell, which reads 0xFF — selects the old method, so
+boards without linear calibration data keep their previous behaviour (fail-safe).
+
+- **New linear method**: `get_value_dec()` computes `(coeff * x + const) / COEFF_SCALE_FACTOR`
+  with signed 16-bit `coeff`/`const` stored LSB first at `EEPROM_CAL_DAC_*` (660–674) and
+  `EEPROM_CAL_ADC_*` (676–690). `is_linear_calibration_valid()` rejects uninitialized
+  pairs (0x0000/0x0000 or 0xFFFF/0xFFFF); on invalid data the DAC path falls back to the
+  default transfer and the ADC path falls back to the legacy leakage model.
+- **Old table-based method**: `get_value_dec_table()` (in `src/myfunc/dac8568.c`) was
+  reimplemented verbatim from the initial commit. It interpolates the discrete EEPROM
+  calibration tables (`EEPROM_SIxx_CAL_HV_DISCRET` for the DAC setpoint in `slop_vhv()`,
+  `EEPROM_SIxx_CAL_IHV_DISCRET` for the expected internal current in `leak_current()`),
+  exactly as the pre-NewCalibration firmware did.
+
+In `slop_vhv()`, the method selection happens inside the existing per-channel
+`EEPROM_IS_CAL_HV_DISCRET` guard, and the overflow clamp (`value_dec > max_dac` →
+default transfer) applies to both methods. In `leak_current()`, the old method feeds
+`inside_current` from the IHV tables; a blank table (reading > 30000) falls through to
+the legacy coefficient model, as in the original firmware.
+
+Note: while wiring the selector, `coef` in `slop_vhv()` was changed from `UINT` to
+`UINT32`: `coefHV_M200` (141100) does not fit in 16 bits, and the truncation corrupted
+`max_dac`, `default_value` and the ramp increment.
+
+All calibration cells (including the selector) are written with the generic EEPROM UART
+commands `0x95` (write `address,value`) and `0x90` (read `address`).
+
 ## UART Command Path
 
 The USART interrupt receives bytes and stores them in `Uart[SLAVE_RX]`.

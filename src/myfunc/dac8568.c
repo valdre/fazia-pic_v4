@@ -137,6 +137,41 @@ long int get_value_dec(int tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const
 }
 
 /**
+ * @brief Convert a high-voltage target value to a code using the old table-based
+ *        calibration method (reimplemented from the initial commit). The value is
+ *        interpolated from a discrete calibration table stored in EEPROM.
+ * @param tension Target voltage in volts
+ * @param adrCal EEPROM base address of the discrete calibration table
+ * @return UINT32 code interpolated from the calibration table
+ */
+UINT32 get_value_dec_table(UINT tension, UINT adrCal) {
+    UINT vinf, vsup, unites, dec, adr;
+    UINT32 value;
+
+    if (tension == 0) value = 0;
+    else {
+        vinf = 0; vsup = 0;
+        dec = tension / 10;
+        unites = tension - 10 * dec;
+        if (unites == 0) {
+            adr = 2 * dec + adrCal - 2;
+            value = 256 * EERead(adr + 1) + EERead(adr);
+        }
+        else {
+            if (tension < 10) vinf = 0;
+            else {
+                adr = 2 * dec + adrCal - 2;
+                vinf = 256 * EERead(adr + 1) + EERead(adr);
+            }
+            adr = 2 * dec + adrCal;
+            vsup = 256 * EERead(adr + 1) + EERead(adr);
+            value = vinf + ((vsup - vinf) * unites + 5) / 10;
+        }
+    }
+    return value;
+}
+
+/**
  * @brief Apply a high-voltage ramp with configurable slope to reach target voltage.
  * @param tel Telescope (A or B)
  * @param module Module (1 or 2)
@@ -150,10 +185,11 @@ BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS) {
     UINT32 inc              = 0;
     UINT32 default_value    = 0;
     UINT32 max_dac          = 0;
-    UINT coef               = 0;
+    UINT32 coef             = 0; // UINT32: coefHV_M200 (141100) does not fit in 16 bits
     UINT calibration_addr_coeff = 0;
     UINT calibration_addr_const = 0;
-    BYTE use_linear         = 0;
+    UINT table_addr         = 0;
+    BYTE is_calibrated      = 0;
     BYTE channel = module - 1 + 2 * ((BYTE)(tel - 'A'));
 
     if ((module == 1) && (tel == 'A')) {
@@ -161,35 +197,44 @@ BYTE slop_vhv(char tel, BYTE module, UINT tension, UINT32 slopeVS) {
         max_dac = (UINT32)HVSi1Max * coef / 1000;
         calibration_addr_coeff = EEPROM_CAL_DAC_A1_LINEAR_COEFF;
         calibration_addr_const = EEPROM_CAL_DAC_A1_LINEAR_CONST;
-        use_linear = (EERead(EEPROM_IS_CAL_HV_DISCRET) == 0);
+        table_addr = EEPROM_SI1A_CAL_HV_DISCRET;
+        is_calibrated = (EERead(EEPROM_IS_CAL_HV_DISCRET) == 0);
     } else if ((module == 1) && (tel == 'B')) {
         coef = coefHV_M200;
         max_dac = (UINT32)HVSi1Max * coef / 1000;
         calibration_addr_coeff = EEPROM_CAL_DAC_B1_LINEAR_COEFF;
         calibration_addr_const = EEPROM_CAL_DAC_B1_LINEAR_CONST;
-        use_linear = (EERead(EEPROM_IS_CAL_HV_DISCRET + 1) == 0);
+        table_addr = EEPROM_SI1B_CAL_HV_DISCRET;
+        is_calibrated = (EERead(EEPROM_IS_CAL_HV_DISCRET + 1) == 0);
     } else if ((module == 2) && (tel == 'A')) {
         coef = coefHV_M400;
         max_dac = (UINT32)HVSi2Max * coef / 1000;
         calibration_addr_coeff = EEPROM_CAL_DAC_A2_LINEAR_COEFF;
         calibration_addr_const = EEPROM_CAL_DAC_A2_LINEAR_CONST;
-        use_linear = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 2) == 0) && (tension <= HVSi2Max));
+        table_addr = EEPROM_SI2A_CAL_HV_DISCRET;
+        is_calibrated = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 2) == 0) && (tension <= HVSi2Max));
     } else if ((module == 2) && (tel == 'B')) {
         coef = coefHV_M400;
         max_dac = (UINT32)HVSi2Max * coef / 1000;
         calibration_addr_coeff = EEPROM_CAL_DAC_B2_LINEAR_COEFF;
         calibration_addr_const = EEPROM_CAL_DAC_B2_LINEAR_CONST;
-        use_linear = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 3) == 0) && (tension <= HVSi2Max));
+        table_addr = EEPROM_SI2B_CAL_HV_DISCRET;
+        is_calibrated = ((EERead(EEPROM_IS_CAL_HV_DISCRET + 3) == 0) && (tension <= HVSi2Max));
     }
 
     if (coef != 0) {
         default_value = ((UINT32)tension) * coef / 1000;
-        if (use_linear) {
-            if (is_linear_calibration_valid(calibration_addr_coeff, calibration_addr_const)) {
-                value_dec = get_value_dec(tension, calibration_addr_coeff, calibration_addr_const);
+        if (is_calibrated) {
+            if (use_linear_calibration()) {
+                if (is_linear_calibration_valid(calibration_addr_coeff, calibration_addr_const)) {
+                    value_dec = get_value_dec(tension, calibration_addr_coeff, calibration_addr_const);
+                } else {
+                    //TODO Error calibration routine: invalid linear DAC calibration, fallback to default transfer.
+                    value_dec = default_value;
+                }
             } else {
-                //TODO Error calibration routine: invalid linear DAC calibration, fallback to default transfer.
-                value_dec = default_value;
+                // Old table-based calibration method (reimplemented from the initial commit)
+                value_dec = get_value_dec_table(tension, table_addr);
             }
 
             if (value_dec > max_dac) {

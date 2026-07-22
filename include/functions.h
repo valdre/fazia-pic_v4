@@ -98,6 +98,8 @@
 #define EEPROM_CAL_ADC_B1_LINEAR_CONST 686
 #define EEPROM_CAL_ADC_B2_LINEAR_COEFF 688
 #define EEPROM_CAL_ADC_B2_LINEAR_CONST 690
+
+#define EEPROM_CAL_METHOD_SEL 692 // calibration method selector (1 = new linear method, any other value = old table-based method)
 ram struct parametres {
     UINT voltage_preamp1b;
     UINT voltage_preamp2b;
@@ -731,6 +733,21 @@ long int get_value_dec(int tension, UINT eeprom_adr_coeff, UINT eeprom_adr_const
  * @return 1 if calibration looks valid, 0 otherwise.
  */
 BYTE is_linear_calibration_valid(UINT coeff_addr, UINT const_addr);
+
+/**
+ * @brief Convert a value using the old table-based calibration method
+ *        (reimplemented from the initial commit, discrete EEPROM tables).
+ * @param tension Target voltage in volts
+ * @param adrCal EEPROM base address of the discrete calibration table
+ * @return UINT32 code interpolated from the calibration table
+ */
+UINT32 get_value_dec_table(UINT tension, UINT adrCal);
+
+/**
+ * @brief Read the calibration method selector from EEPROM (EEPROM_CAL_METHOD_SEL).
+ * @return 1 if the new linear method must be used, 0 for the old table-based method.
+ */
+BYTE use_linear_calibration(void);
 
 /**
  * @brief Apply a slope correction curve to a high-voltage setpoint.

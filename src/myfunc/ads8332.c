@@ -80,11 +80,16 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[2];
             canal   = 2;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 2 * EEPROM_CAL_HV_WIDTH + 8;
-            if (is_linear_calibration_valid(EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST)) {
-                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+            if (use_linear_calibration()) {
+                if (is_linear_calibration_valid(EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST)) {
+                    inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B1_LINEAR_COEFF, EEPROM_CAL_ADC_B1_LINEAR_CONST);
+                } else {
+                    //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                    inside_current = 30001;
+                }
             } else {
-                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
-                inside_current = 30001;
+                // Old table-based calibration method (reimplemented from the initial commit)
+                inside_current = get_value_dec_table((UINT)corrected_voltage, EEPROM_SI1B_CAL_IHV_DISCRET);
             }
         } else if (tel == 'A') {
             coeffA  =& coefA_A1;
@@ -92,11 +97,16 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[0];
             canal   = 0;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 8;
-            if (is_linear_calibration_valid(EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST)) {
-                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+            if (use_linear_calibration()) {
+                if (is_linear_calibration_valid(EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST)) {
+                    inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A1_LINEAR_COEFF, EEPROM_CAL_ADC_A1_LINEAR_CONST);
+                } else {
+                    //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                    inside_current = 30001;
+                }
             } else {
-                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
-                inside_current = 30001;
+                // Old table-based calibration method (reimplemented from the initial commit)
+                inside_current = get_value_dec_table((UINT)corrected_voltage, EEPROM_SI1A_CAL_IHV_DISCRET);
             }
         }
     }
@@ -107,11 +117,16 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[1];
             canal   = 1;
             ad      = EEPROM_CAL_HV_FIRST_ADR + EEPROM_CAL_HV_WIDTH + 8;
-            if (is_linear_calibration_valid(EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST)) {
-                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+            if (use_linear_calibration()) {
+                if (is_linear_calibration_valid(EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST)) {
+                    inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_A2_LINEAR_COEFF, EEPROM_CAL_ADC_A2_LINEAR_CONST);
+                } else {
+                    //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                    inside_current = 30001;
+                }
             } else {
-                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
-                inside_current = 30001;
+                // Old table-based calibration method (reimplemented from the initial commit)
+                inside_current = get_value_dec_table((UINT)corrected_voltage, EEPROM_SI2A_CAL_IHV_DISCRET);
             }
         } else if (tel == 'B') {
             coeffA  =& coefA_B2;
@@ -119,11 +134,16 @@ UINT leak_current(char tel, char module, UINT32 lcAdcRead) {
             corrected_voltage = (int) HvPhysCorrect[3];
             canal   = 3;
             ad      = EEPROM_CAL_HV_FIRST_ADR + 3 * EEPROM_CAL_HV_WIDTH + 8;
-            if (is_linear_calibration_valid(EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST)) {
-                inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+            if (use_linear_calibration()) {
+                if (is_linear_calibration_valid(EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST)) {
+                    inside_current = get_value_dec(corrected_voltage, EEPROM_CAL_ADC_B2_LINEAR_COEFF, EEPROM_CAL_ADC_B2_LINEAR_CONST);
+                } else {
+                    //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
+                    inside_current = 30001;
+                }
             } else {
-                //TODO Error calibration routine: invalid linear ADC calibration, fallback to legacy leakage model.
-                inside_current = 30001;
+                // Old table-based calibration method (reimplemented from the initial commit)
+                inside_current = get_value_dec_table((UINT)corrected_voltage, EEPROM_SI2B_CAL_IHV_DISCRET);
             }
         }
     }
