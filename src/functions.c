@@ -890,7 +890,7 @@ BYTE get_pic_version(char *data, char *result)
     result[1]='|';
     result[2]='\0';
     // TODO : change the date 
-    myStrCpyChar2(result,"11,06,2026,NewCalibration",'\0');
+    myStrCpyChar2(result,"27,07,2026,Old and NewCalibration",'\0');
 
     return FUNC_CMD_OK;
 }
